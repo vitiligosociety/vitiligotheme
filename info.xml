@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<extension key="vitiligotheme" type="module">
+  <file>vitiligotheme</file>
+  <name>Vitiligo Society Theme</name>
+  <description>This helps theme various CiviCRM forms to fit with the theme.</description>
+  <license>AGPL-3.0</license>
+  <maintainer>
+    <author>Rich Lott / Artful Robot</author>
+    <email>forums@artfulrobot.uk</email>
+  </maintainer>
+  <urls>
+    <url desc="Main Extension Page">http://FIXME</url>
+    <url desc="Documentation">http://FIXME</url>
+    <url desc="Support">https://artfulrobot.uk</url>
+    <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
+  </urls>
+  <releaseDate>2019-04-02</releaseDate>
+  <version>1.0</version>
+  <develStage>beta</develStage>
+  <compatibility>
+    <ver>5.11</ver>
+  </compatibility>
+  <comments>This is a custom module</comments>
+  <civix>
+    <namespace>CRM/Vitiligotheme</namespace>
+  </civix>
+</extension>
