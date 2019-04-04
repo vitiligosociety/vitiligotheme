@@ -1,4 +1,7 @@
 <?php
+const VITILIGO_MEMBERSHIP_FORM_ID = '1';
+const VITILIGO_DONATION_FORM_ID   = '2';
+const VITILIGO_MEMBERSHIP_RENEWAL_FORM_ID = '6';
 
 require_once 'vitiligotheme.civix.php';
 use CRM_Vitiligotheme_ExtensionUtil as E;
@@ -134,30 +137,57 @@ function vitiligotheme_civicrm_entityTypes(&$entityTypes) {
   _vitiligotheme_civix_civicrm_entityTypes($entityTypes);
 }
 
-// --- Functions below this ship commented out. Uncomment as required. ---
-
 /**
- * Implements hook_civicrm_preProcess().
+ * Implements hook_civicrm_buildForm in order to inject custom js for membership forms.
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_preProcess
- *
-function vitiligotheme_civicrm_preProcess($formName, &$form) {
+ * @see https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_buildForm/
+ */
+function vitiligotheme_civicrm_buildForm($formName, &$form) {
 
-} // */
+  if ($formName !== 'CRM_Contribute_Form_Contribution_Main') {
+    return;
+  }
 
-/**
- * Implements hook_civicrm_navigationMenu().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
- *
-function vitiligotheme_civicrm_navigationMenu(&$menu) {
-  _vitiligotheme_civix_insert_navigation_menu($menu, 'Mailings', array(
-    'label' => E::ts('New subliminal message'),
-    'name' => 'mailing_subliminal_message',
-    'url' => 'civicrm/mailing/subliminal',
-    'permission' => 'access CiviMail',
-    'operator' => 'OR',
-    'separator' => 0,
-  ));
-  _vitiligotheme_civix_navigationMenu($menu);
-} // */
+  $js = $css = '';
+  if (in_array($form->_id, [VITILIGO_MEMBERSHIP_FORM_ID, VITILIGO_MEMBERSHIP_RENEWAL_FORM_ID])) {
+    // We need to lookup Stripe and GoCardless payment processors' IDs.
+
+    // Lookup Stripe and GoCardless payment procesor types; create an array like <ID> => 'type'
+    $types = civicrm_api3('PaymentProcessorType', 'get', [
+      'sequential' => 1,
+      'return' => ["id", "name"],
+      'name' => ['IN' => ["Stripe", "GoCardless"]],
+    ]);
+    $type_ids = [];
+    foreach ($types['values'] as $_) {
+      $type_ids[$_['id']] = $_['name'];
+    }
+
+    // Find payment processors.
+    $processors = civicrm_api3('PaymentProcessor', 'get', [
+      'payment_processor_type_id' => ['IN' => array_keys($type_ids)],
+      'return' => ['id', 'payment_processor_type_id'],
+      'options' => ['limit' => 0]]);
+    $config = ['GoCardless' => [], 'Stripe' => []];
+    foreach ($processors['values'] as $_) {
+      $config[$type_ids[$_['payment_processor_type_id']]][] = $_['id'];
+    }
+    $config = json_encode($config);
+
+    // See https://docs.civicrm.org/dev/en/latest/framework/region/#adding-content-to-a-region
+    // Nb. there is a mechanism for adding a script tag that fetches a script by URL.
+    // However, that's likely to be slower than just including the file here since it's another
+    // round-trip.
+    // Also note 'Note: WP support is inconsistent pending refactor.' - from link above.
+    $js = file_get_contents(__DIR__ . '/js/membership-formtheme.js');
+    $js = str_replace('var payment_processor_ids = {}; //%config%', "var payment_processor_ids = $config;", $js);
+    //$js .= file_get_contents(__DIR__ . '/js/fix-radio-checkbox-layout.js');
+    $css = file_get_contents(__DIR__ . '/css/vitiligotheme.css');
+  }
+  elseif ($form->_id === VITILIGO_DONATION_FORM_ID) {
+  }
+
+  if ($js || $css) {
+    CRM_Core_Region::instance('page-body')->add(['markup' => "<script>$js</script><style>$css</style>"]);
+  }
+}
