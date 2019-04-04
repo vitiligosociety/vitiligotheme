@@ -5,6 +5,9 @@ body {
   box-sizing: border-box; }
   #crm-container.crm-public form#Main * {
     box-sizing: border-box; }
+  #crm-container.crm-public form#Main hr {
+    background-color: #ddd;
+    margin: 0.75rem 0; }
 
 #crm-container.crm-public .vt-grid1 {
   display: -ms-grid;
@@ -17,7 +20,7 @@ body {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  padding: 1rem 0; }
+  padding: 0.75rem 0; }
   #crm-container.crm-public .vt-grid1 .vt-label {
     padding-right: 1rem;
     font-weight: bold; }
@@ -27,7 +30,25 @@ body {
     padding: 1.3rem;
     background: white;
     border: none;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1); }
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+  #crm-container.crm-public .vt-grid1 .select2-container .select2-choice {
+    border: none;
+    background: white;
+    -webkit-filter: none;
+            filter: none;
+    padding: 0;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+  #crm-container.crm-public .vt-grid1 .select2-chosen {
+    padding: 0.5rem 1.3rem; }
+  #crm-container.crm-public .vt-grid1 .select2-arrow {
+    padding: 0.5rem 1.3rem;
+    background: none;
+    -webkit-filter: none;
+            filter: none;
+    border-left: none;
+    width: 56px; }
+  #crm-container.crm-public .vt-grid1 .select2-search-choice-close {
+    display: none; }
 
 #crm-container.crm-public .vt-col-1 {
   -ms-grid-column: 1;
@@ -45,5 +66,13 @@ body {
 #crm-container.crm-public .vt-col-3 {
   -ms-grid-column: 3;
       grid-column: 3; }
+
+.select2-drop {
+  border: none;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2); }
+
+.select2-drop-active {
+  border: none;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2); }
 
 /*# sourceMappingURL=vitiligotheme.css.map */

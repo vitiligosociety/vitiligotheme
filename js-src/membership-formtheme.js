@@ -11,21 +11,30 @@
   }
 
   const $niceForm = $('<div/>');
-  console.log($niceForm);
 
   $form.prepend($niceForm);
 
   function parseStdCiviField(selector) {
-    var $rowNode = $form.find(selector);
+    var $rowNode = $form.find(selector).hide();
+
     return {
       label: $rowNode.find('div.label label'),
       input: $rowNode.find('div.content input'),
     };
   }
+  function parseSelectCiviField(selector) {
+    var $rowNode = $form.find(selector).hide();
+    return {
+      label: $rowNode.find('div.label label'),
+      input: $rowNode.find('div.content').removeClass('content'),
+    };
+  }
   function createStdFields($label, fields) {
     const $container = $('<div class="vt-container vt-grid1"></div>');
 
-    $container.append($('<div class="vt-label vt-col-1 vt-colspan-1"></div>').append($label));
+    if ($label) {
+      $container.append($('<div class="vt-label vt-col-1 vt-colspan-1"></div>').append($label));
+    }
 
     if (fields.length === 1) {
       $container.append($('<div class="vt-input vt-col-2-span-2"></div>').append(fields[0]));
@@ -41,6 +50,7 @@
   }
 
   function yourInformation() {
+    var a, b;
 
     // Add name fields.
     var first_name = parseStdCiviField('#editrow-first_name');
@@ -60,6 +70,41 @@
     phone.input.attr('placeholder', 'Phone number');
     phone.label.text('Phone number');
     createStdFields(phone.label, [phone.input]);
+
+    // address.
+    $niceForm.append('<hr/>');
+    a = parseStdCiviField('#editrow-street_address-Primary');
+    a.label.text('Your address');
+    a.input.attr('placeholder', 'Address line 1*');
+    createStdFields(a.label, [a.input]);
+    // ...
+    a = parseStdCiviField('#editrow-supplemental_address_1-Primary');
+    a.input.attr('placeholder', 'Address line 2*');
+    createStdFields(null, [a.input]);
+    // ...
+    a = parseStdCiviField('#editrow-city-Primary');
+    a.input.attr('placeholder', 'Town/City');
+    b = parseSelectCiviField('#editrow-state_province-Primary');
+    createStdFields(null, [a.input, b.input]);
+    // ...
+    a = parseStdCiviField('#editrow-postal_code-Primary');
+    a.input.attr('placeholder', 'Postcode*');
+    b = parseSelectCiviField('#editrow-country-Primary');
+    createStdFields(null, [a.input, b.input]);
+
+    $niceForm.append('<hr/>');
+    // DOB
+    a = parseSelectCiviField('#editrow-birth_date');
+    a.input.find('.crm-clear-link').hide();
+    createStdFields(a.label, [a.input, null]);
+
+    // Ethnicity
+    a = parseSelectCiviField('#editrow-custom_14');
+    b = parseStdCiviField('#editrow-custom_15');
+    b.input.attr('placeholder', 'Other'); // Q. how to be reactive to an existing select2 element? @todo
+
+    // Gender, Do you have Vitiligo @todo these need transforming from radio buttons to selects!
+
   }
 
   yourInformation();
