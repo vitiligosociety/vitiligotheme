@@ -1,5 +1,34 @@
+@charset "UTF-8";
 body {
   background: #f4f6f4; }
+
+#crm-container.crm-public .vt-select-container {
+  position: relative;
+  border-radius: 1px;
+  background-clip: hidden; }
+  #crm-container.crm-public .vt-select-container:after {
+    content: '\25BE';
+    font-size: 0.8rem;
+    color: #666;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    padding: 0.4rem 1rem; }
+
+#crm-container.crm-public .vt-select {
+  background: white;
+  border-radius: 0;
+  border: none;
+  padding: 0.5rem 1.3rem;
+  width: 100%;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+  #crm-container.crm-public .vt-select option {
+    margin-right: 3rem; }
 
 #crm-container.crm-public form#Main {
   box-sizing: border-box; }
@@ -8,6 +37,36 @@ body {
   #crm-container.crm-public form#Main hr {
     background-color: #ddd;
     margin: 0.75rem 0; }
+
+#crm-container.crm-public .vt-container textarea,
+#crm-container.crm-public .vt-container input {
+  width: 100%;
+  padding: 1.3rem;
+  background: white;
+  border: none;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+
+#crm-container.crm-public .vt-container .select2-container .select2-choice {
+  border: none;
+  background: white;
+  -webkit-filter: none;
+          filter: none;
+  padding: 0;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+
+#crm-container.crm-public .vt-container .select2-chosen {
+  padding: 0.5rem 1.3rem; }
+
+#crm-container.crm-public .vt-container .select2-arrow {
+  padding: 0.5rem 1.3rem;
+  background: none;
+  -webkit-filter: none;
+          filter: none;
+  border-left: none;
+  width: 56px; }
+
+#crm-container.crm-public .vt-container .select2-search-choice-close {
+  display: none; }
 
 #crm-container.crm-public .vt-grid1 {
   display: -ms-grid;
@@ -24,31 +83,6 @@ body {
   #crm-container.crm-public .vt-grid1 .vt-label {
     padding-right: 1rem;
     font-weight: bold; }
-  #crm-container.crm-public .vt-grid1 input {
-    width: 100%;
-    border-radius: 2px;
-    padding: 1.3rem;
-    background: white;
-    border: none;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
-  #crm-container.crm-public .vt-grid1 .select2-container .select2-choice {
-    border: none;
-    background: white;
-    -webkit-filter: none;
-            filter: none;
-    padding: 0;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
-  #crm-container.crm-public .vt-grid1 .select2-chosen {
-    padding: 0.5rem 1.3rem; }
-  #crm-container.crm-public .vt-grid1 .select2-arrow {
-    padding: 0.5rem 1.3rem;
-    background: none;
-    -webkit-filter: none;
-            filter: none;
-    border-left: none;
-    width: 56px; }
-  #crm-container.crm-public .vt-grid1 .select2-search-choice-close {
-    display: none; }
 
 #crm-container.crm-public .vt-col-1 {
   -ms-grid-column: 1;
@@ -66,6 +100,160 @@ body {
 #crm-container.crm-public .vt-col-3 {
   -ms-grid-column: 3;
       grid-column: 3; }
+
+.vt-payment-box {
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+
+.vt-payment-box__header {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #66e; }
+
+.vt-payment-box__gbp {
+  -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto; }
+
+.crm-container .vt-payment-box__heading {
+  -webkit-flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  background: none;
+  margin: 0;
+  font-size: 2rem;
+  padding: 1rem;
+  font-weight: bold;
+  color: white; }
+
+.vt-payment-box__heading:before {
+  content: '£';
+  border-radius: 2rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.5rem;
+  display: inline-block;
+  margin-right: 1rem;
+  background-color: white;
+  color: #66e;
+  text-align: center;
+  line-height: 1; }
+
+.vt-payment-box__switch-container {
+  -webkit-flex: 0 0 16rem;
+      -ms-flex: 0 0 16rem;
+          flex: 0 0 16rem;
+  padding: 1rem; }
+
+.vt-payment-box__payby {
+  -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  padding: 1rem;
+  color: white; }
+
+.vt-payment-box__switch-wrapper {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 2rem;
+  background: black;
+  padding: 6px;
+  position: relative; }
+  .vt-payment-box__switch-wrapper:before {
+    transition: all 0.3s ease;
+    content: '';
+    top: 6px;
+    bottom: 6px;
+    background-color: white;
+    position: absolute;
+    border-radius: 2rem;
+    z-index: 1; }
+  .vt-payment-box__switch-wrapper.selected-dd:before {
+    left: 6px;
+    width: 7.5rem; }
+  .vt-payment-box__switch-wrapper.selected-c:before {
+    left: 9.3rem;
+    width: 4.3rem; }
+
+.crm-container .vt-payment-box__dd, .crm-container .vt-payment-box__c {
+  color: white;
+  position: relative;
+  z-index: 2;
+  padding: 0.5rem 1rem; }
+
+.crm-container .selected-dd .vt-payment-box__dd {
+  color: black; }
+
+.crm-container .selected-c .vt-payment-box__c {
+  color: black; }
+
+.vt-payment-box__dd {
+  -webkit-flex: 0 0 9rem;
+      -ms-flex: 0 0 9rem;
+          flex: 0 0 9rem; }
+
+.vt-payment-box__c {
+  -webkit-flex: 0 0 6rem;
+      -ms-flex: 0 0 6rem;
+          flex: 0 0 6rem; }
+
+.vt-amount-buttons {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 1rem -0.5rem; }
+
+.vt-amount-buttons__button {
+  -webkit-flex: 1 1 5em;
+      -ms-flex: 1 1 5em;
+          flex: 1 1 5em;
+  padding: 0 0.5rem; }
+  .vt-amount-buttons__button button {
+    height: 100%;
+    width: 100%;
+    background: white;
+    text-align: center;
+    border-radius: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #005;
+    padding: 1rem;
+    border: solid 2px transparent;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+    .vt-amount-buttons__button button.selected {
+      border-color: #005; }
+
+h3.vt-heading {
+  margin: 3rem 0 2rem;
+  padding: 0;
+  font-size: 1.6rem;
+  color: #555;
+  font-weight: bold;
+  background: none; }
+
+.vt-your-info {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  margin: 2rem 0 1rem; }
+  .vt-your-info h2 {
+    padding: 0;
+    margin: 0;
+    padding-right: 1rem;
+    font-weight: bold;
+    color: #005; }
+  .vt-your-info span {
+    color: #800; }
 
 .select2-drop {
   border: none;

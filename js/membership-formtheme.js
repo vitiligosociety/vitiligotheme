@@ -8,6 +8,7 @@
     // The config placeholder here is replaced by php. Do not alter the line below at all.
 
     var payment_processor_ids = {}; //%config%
+    console.log(payment_processor_ids);
 
     var $form = $('form#Main');
     if (!$form.length) {
@@ -21,16 +22,48 @@
     function parseStdCiviField(selector) {
       var $rowNode = $form.find(selector).hide();
 
-      return {
+      var rtn = {
         label: $rowNode.find('div.label label'),
         input: $rowNode.find('div.content input')
       };
+      if (rtn.input.length === 0) {
+        rtn.input = $rowNode.find('div.content textarea');
+      }
+      return rtn;
     }
-    function parseSelectCiviField(selector) {
+    function parseSelect2CiviField(selector) {
+      var $rowNode = $form.find(selector).hide();
+      var $select = $rowNode.find('select').select2('destroy').removeClass('crm-select2 crm-chain-select-target crm-form-select').addClass('vt-select');
+      return {
+        label: $rowNode.find('div.label label'),
+        input: $('<div class="vt-select-container"/>').append($select)
+      };
+    }
+    function parseComplexCiviField(selector) {
       var $rowNode = $form.find(selector).hide();
       return {
         label: $rowNode.find('div.label label'),
         input: $rowNode.find('div.content').removeClass('content')
+      };
+    }
+    function parseRadiosIntoSelect(selector) {
+      var $rowNode = $form.find(selector).hide();
+      var $select = $('<select class="vt-select" />');
+      $select.append($('<option value="">--Please select--</option>').on('click', function () {
+        $rowNode.find('input:checked').prop('checked', false);
+      }));
+      $rowNode.find('input[type="radio"]').each(function () {
+        var $originalInput = $(this);
+        $option = $('<option/>').attr('value', this.value).text($originalInput.next('label').text()).on('click', function (e) {
+          e.preventDefault();$originalInput.click();
+        });
+        $select.append($option);
+      });
+
+      var $selectFix = $('<div class="vt-select-container" />').append($select);
+      return {
+        label: $rowNode.find('div.label label'),
+        input: $selectFix
       };
     }
     function createStdFields($label, fields) {
@@ -42,18 +75,18 @@
 
       if (fields.length === 1) {
         $container.append($('<div class="vt-input vt-col-2-span-2"></div>').append(fields[0]));
-      }
-      if (fields.length === 2) {
+      } else if (fields.length === 2) {
         $container.append($('<div class="vt-input vt-col-2"></div>').append(fields[0]));
         $container.append($('<div class="vt-input vt-col-3"></div>').append(fields[1]));
       } else {
-        console.error("fields must be 1 or two big.");
+        console.error("fields must be 1 or two big.", fields);
       }
       $niceForm.append($container);
     }
 
     function yourInformation() {
       var a, b;
+      $niceForm.append('<div class="vt-your-info"><h2>Your information</h2><span>*Required fields</span></div>');
 
       // Add name fields.
       var first_name = parseStdCiviField('#editrow-first_name');
@@ -87,29 +120,88 @@
       // ...
       a = parseStdCiviField('#editrow-city-Primary');
       a.input.attr('placeholder', 'Town/City');
-      b = parseSelectCiviField('#editrow-state_province-Primary');
+      b = parseSelect2CiviField('#editrow-state_province-Primary');
       createStdFields(null, [a.input, b.input]);
       // ...
       a = parseStdCiviField('#editrow-postal_code-Primary');
       a.input.attr('placeholder', 'Postcode*');
-      b = parseSelectCiviField('#editrow-country-Primary');
+      b = parseSelect2CiviField('#editrow-country-Primary');
+      // b.input.find('select').select2('destroy');
       createStdFields(null, [a.input, b.input]);
 
       $niceForm.append('<hr/>');
       // DOB
-      a = parseSelectCiviField('#editrow-birth_date');
+      a = parseComplexCiviField('#editrow-birth_date');
       a.input.find('.crm-clear-link').hide();
       createStdFields(a.label, [a.input, null]);
 
       // Ethnicity
-      a = parseSelectCiviField('#editrow-custom_14');
+      a = parseSelect2CiviField('#editrow-custom_14');
       b = parseStdCiviField('#editrow-custom_15');
       b.input.attr('placeholder', 'Other'); // Q. how to be reactive to an existing select2 element? @todo
+      createStdFields(a.label, [a.input, b.input]);
 
-      // Gender, Do you have Vitiligo @todo these need transforming from radio buttons to selects!
+      a = parseRadiosIntoSelect('#editrow-gender_id');
+      createStdFields(a.label, [a.input, null]);
+
+      // Do you have Vitiligo.
+      a = parseRadiosIntoSelect('#editrow-custom_16');
+      createStdFields(a.label, [a.input, null]);
+    }
+    function membershipAmountButtons() {
+      var a, b;
+      var $priceset = $('#priceset').hide();
+      var map = [['#price_7_a', '£50'], ['#price_7_7', '£25'], ['#price_7_b', '£100'], ['#price_7_c', '£200'], ['#price_7_d', '£500']];
+      var $container = $('<div class="vt-container vt-amount-buttons"></div>');
+      map.forEach(function (m) {
+        $container.append($('<div class="vt-amount-buttons__button"></div>').append($('<button/>').text(m[1]).on('click', function (e) {
+          e.preventDefault();
+          $(m[0]).click();
+          $(this).addClass('selected').parent().siblings().find('button').removeClass('selected');
+        })));
+      });
+
+      $niceForm.append('<h3 class="vt-heading">My contribution</h3>');
+      $niceForm.append($container);
+      $niceForm.append('<div>Annual membership renews automatically, can be cancelled upto 14 days before renewal date</div>');
+      $niceForm.append('<hr/>');
+    }
+    function whyJoining() {
+      var a, b;
+      a = parseStdCiviField('#editrow-custom_17');
+      a.label.html("<h3 class='vt-heading'>Why are you signing up to membership with the Vitiligo Society?</h3>");
+      $niceForm.append($('<div class="vt-container"/>').append(a.label, a.input), '<hr/>');
+    }
+    function paymentDetails() {
+      var $originalInput = $form.find("fieldset.payment_options-group").hide();
+
+      var $paymentDetails = $('<div class="vt-payment-box"/>');
+      var $header = $('<div class="vt-payment-box__header">\n      <h3 class="vt-payment-box__heading">Your payment details</h3>\n      <div class="vt-payment-box__payby">Pay by:</div>\n      <div class="vt-payment-box__switch-container">\n        <div class="vt-payment-box__switch-wrapper">\n          <label class="vt-payment-box__dd" for="CIVICRM_QFID_11_payment_processor_id">Direct Debit</label>\n          <label class="vt-payment-box__c" for="CIVICRM_QFID_9_payment_processor_id">Card</label>\n        </div>\n      </div>\n      ');
+      var $content = $('<div class="vt-payment-box__content"/>');
+      $paymentDetails.append($header, $content);
+      $content.append($form.find('#billing-payment-block'));
+      var $wrapper = $header.find('.vt-payment-box__switch-wrapper');
+
+      function selectPaymentMethod() {
+        var selected_processor_id = $originalInput.find('input:checked').val();
+        console.log("selectPaymentMethod running ", selected_processor_id);
+        if (payment_processor_ids.GoCardless.indexOf(selected_processor_id) > -1) {
+          $wrapper.addClass('selected-dd').removeClass('selected-c');
+        } else {
+          $wrapper.addClass('selected-c').removeClass('selected-dd');
+        }
+      }
+
+      $originalInput.find('input').on('click', selectPaymentMethod);
+      $wrapper.find('label').on('click', selectPaymentMethod);
+      $niceForm.append($paymentDetails);
+      selectPaymentMethod();
     }
 
+    membershipAmountButtons();
     yourInformation();
+    whyJoining();
+    paymentDetails();
     return;
 
     // Create UK radios.
