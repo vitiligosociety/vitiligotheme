@@ -1,11 +1,16 @@
 // input[type="text"], #crm-container.crm-public input[type="password"], #crm-container.crm-public input[type="email"], #crm-container.crm-public select
+$colour_dull_blue: #4E5076;
+$colour_deep_blue: #30325B;
+$colour_beige: #DBDBDB;
+$colour_grey_headings: #555;
 
 // @todo remove this.
 body {
   background:#f4f6f4;
 }
-#crm-container.crm-public {
 
+#crm-container.crm-public {
+  // Custom (native) select theming {{{
   .vt-select-container {
 
     position: relative;
@@ -15,7 +20,7 @@ body {
     &:after {
       content: '\25BE';
       font-size: 0.8rem;
-      color: #666;
+      color: $colour_grey_headings;
       position: absolute;
       right:0;
       top:0;
@@ -37,6 +42,8 @@ body {
       margin-right: 3rem;
     }
   }
+  // }}}
+  // General form styles {{{
   form#Main {
     box-sizing: border-box;
     * { box-sizing: border-box;}
@@ -47,40 +54,69 @@ body {
     }
   }
 
-
   .vt-container {
 
     textarea,
-    input {
+    input[type="text"] {
       width: 100%;
       // border-radius:2px;
       padding: 1.3rem;
       background: white;
-      border:none;
+      border:solid 2px transparent;
       box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+      &:focus {
+        border-color: $colour_deep_blue;
+      }
     }
 
-    .select2-container .select2-choice {
-      border:none;
-      background:white;
-      filter:none;
-      padding: 0;
-      box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-    }
-    .select2-chosen {
-      padding: 0.5rem 1.3rem;
-    }
-    .select2-arrow {
-      padding: 0.5rem 1.3rem;
-      background:none;
-      filter:none;
-      border-left:none;
-      width: 56px;
-    }
-    .select2-search-choice-close {
-      display: none; // Can't figure out how to style this.
-    }
   }
+  // }}}
+}
+
+// Select2 overrides - not used {{{
+//   .select2-container .select2-choice {
+//     border:none;
+//     background:white;
+//     filter:none;
+//     padding: 0;
+//     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+//   }
+//   .select2-chosen {
+//     padding: 0.5rem 1.3rem;
+//   }
+//   .select2-arrow {
+//     padding: 0.5rem 1.3rem;
+//     background:none;
+//     filter:none;
+//     border-left:none;
+//     width: 56px;
+//   }
+//   .select2-search-choice-close {
+//     display: none; // Can't figure out how to style this.
+//   }
+// We have to overwrite global styles, since this element is put directly under body.
+// .select2-drop {
+//   border:none;
+//   box-shadow: 4px 4px 4px rgba(0,0,0,0.2);
+// }
+// .select2-drop-active {
+//   border:none;
+//   box-shadow: 4px 4px 4px rgba(0,0,0,0.2);
+// }
+// }}}
+
+// Main grid with labels on left, 1 or 2 fields on right. {{{
+.vt-grid1 {
+  padding: 0.75rem;
+
+  .vt-label {
+    font-weight: bold;
+  }
+  .vt-input {
+    margin-bottom: 0.75rem;
+  }
+}
+@media screen and (min-width: 768px) {
   .vt-grid1 {
     display: grid;
     grid-template-columns: 33.3333fr 33.3333fr 33.3333fr;
@@ -91,63 +127,75 @@ body {
 
     .vt-label {
       padding-right:1rem;
-      font-weight: bold;
     }
-
   }
   .vt-col-1 { grid-column: 1; }
   .vt-col-2 { grid-column: 2; }
   .vt-col-2-span-2 { grid-column: 2 / span 2; }
   .vt-col-3 { grid-column: 3; }
 }
+// }}}
 
-// Payment info.
+// Payment info. {{{
 .vt-payment-box {
   box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
 .vt-payment-box__header {
-  display:flex;
-  align-items: center;
-  background: #66e;
-}
-.vt-payment-box__gbp {
-  flex:0 0 auto;
+  background: $colour_dull_blue;
+
 }
 .crm-container .vt-payment-box__heading {
-  flex:1 1 auto;
   background:none;
   margin:0;
   font-size: 2rem;
-  padding:1rem;
+  padding:1rem 1rem 1rem 5rem;
+  position:relative;
   font-weight: bold;
   color: white;
 }
 .vt-payment-box__heading:before {
   content: '£';
-  border-radius:2rem;
+  position:absolute;
+  margin-left:-4rem;
   width:3rem;
   height:3rem;
+
   padding:0.5rem;
-  display:inline-block;
+  border-radius:2rem;
+  display:block;
   margin-right:1rem;
   background-color: white;
-  color: #66e;
+  color: $colour_dull_blue;
   text-align: center;
   line-height: 1;
 }
-.vt-payment-box__switch-container {
-  flex: 0 0 16rem;
-  padding:1rem;
-}
 .vt-payment-box__payby {
-  flex: 0 0 auto;
-  padding:1rem;
+  padding: 0 1rem;
   color:white;
+}
+.vt-payment-box__switch-container {
+  margin-left: 1rem;
+  padding:1rem 1rem 1rem 0;
+  width:16rem;
+}
+@media screen and (min-width: 768px) {
+  .vt-payment-box__header {
+    display:grid;
+    align-items: center;
+    column-gap: 1rem;
+    grid-template-columns: 1fr 4rem 16rem;
+  }
+  .crm-container .vt-payment-box__heading { grid-column: 1; }
+  .vt-payment-box__payby { grid-column: 2;  padding:1rem 0; }
+  .vt-payment-box__switch-container {
+    grid-column: 3;
+    margin-left: 0;
+  }
 }
 .vt-payment-box__switch-wrapper {
   display: flex;
   border-radius: 2rem;
-  background: black;
+  background: $colour_deep_blue;
   padding: 6px;
   position:relative;
 
@@ -164,28 +212,34 @@ body {
   &.selected-dd:before { left:6px; width:7.5rem; }
   &.selected-c:before { left:9.3rem; width:4.3rem; }
 }
+
 .crm-container {
 
-.vt-payment-box__dd, .vt-payment-box__c {
-  color: white;
-  position:relative;
-  z-index:2;
-  padding:0.5rem 1rem;
-}
-.selected-dd .vt-payment-box__dd { color: black; }
-.selected-c  .vt-payment-box__c { color: black; }
+  .vt-payment-box__dd, .vt-payment-box__c {
+    color: white;
+    position:relative;
+    z-index:2;
+    padding:0.5rem 1rem;
+  }
+  .selected-dd .vt-payment-box__dd { color: $colour_deep_blue;; }
+  .selected-c  .vt-payment-box__c { color: $colour_deep_blue;; }
 
 }
 .vt-payment-box__dd { flex: 0 0 9rem; }
 .vt-payment-box__c { flex: 0 0 6rem; }
+// }}}
 
+// Payment amount buttons {{{
 .vt-amount-buttons {
   display:flex;
+  flex-wrap:wrap;
   margin:1rem -0.5rem;
 }
 .vt-amount-buttons__button {
-  flex: 1 1 5em;
+  flex: 0 0 50%;
   padding:0 0.5rem;
+  margin-bottom:1rem;
+
   button {
     height:100%;
     width:100%;
@@ -194,23 +248,35 @@ body {
     border-radius:0;
     font-size: 2rem;
     font-weight: bold;
-    color: #005;
+    color: $colour_deep_blue;
     padding:1rem;
     border: solid 2px transparent;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
     &.selected {
-      border-color: #005;
+      border-color: $colour_deep_blue;
     }
   }
 }
+@media screen and (min-width: 768px) {
+  .vt-amount-buttons {
+    flex-wrap:nowrap;
+  }
+  .vt-amount-buttons__button {
+    flex: 1 0 5rem;
+  }
+}
+// }}}
+// Headings (need to override civi styles) {{{
 h3.vt-heading {
   margin: 3rem 0 2rem;
   padding:0;
   font-size: 1.6rem;
-  color: #555;
+  color: $colour_grey_headings;
   font-weight: bold;
   background: none;
 }
+// }}}
+// Your Info Heading styles {{{
 .vt-your-info {
   display:flex;
   justify-content: space-between;
@@ -222,20 +288,38 @@ h3.vt-heading {
     margin:0;
     padding-right: 1rem;
     font-weight: bold;
-    color: #005;
+    color: $colour_deep_blue;
   }
   span {
     color: #800;
   }
 }
-
-
-// We have to overwrite global styles, since this element is put directly under body.
-.select2-drop {
-  border:none;
-  box-shadow: 4px 4px 4px rgba(0,0,0,0.2);
+// }}}
+// Gift Aid {{{
+.vt-giftaid-layout-1 {
 }
-.select2-drop-active {
-  border:none;
-  box-shadow: 4px 4px 4px rgba(0,0,0,0.2);
+.vt-giftaid-inputs {
+  margin-bottom:1rem;
+  input, label { display: inline-block; }
+  label { margin-right: 2rem; color: black; font-size:(18rem/16);}
 }
+.vt-giftaid-declaration {
+  border: dotted 1px $colour_grey_headings;
+  padding: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .vt-giftaid-layout-1 {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    column-gap: 1rem;
+  }
+  .vt-giftaid-inputs {
+    column: 1;
+  }
+  .vt-giftaid-declaration {
+    column: 2;
+  }
+}
+
+// }}}
+

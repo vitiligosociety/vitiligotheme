@@ -217,11 +217,36 @@
     $niceForm.append($paymentDetails);
     selectPaymentMethod();
   }
+  function giftAid() {
+    //editrow-custom_10
+    const $gaRow = $('#editrow-custom_10');
+    const $inputs = $gaRow.find('input');
+    const $yes = $inputs.eq(0);
+    const $yes_label = $yes.next();
+    const $no = $inputs.eq(1);
+    const $no_label = $no.next();
+    const $helpRow = $('#helprow-custom_10>div');
+    const $intro = $helpRow.find('>p').slice(3,5);
+    const $declaration = $helpRow.find('p').eq(0).add($helpRow.find('ol').eq(0));
+
+    // Now re-assemble.
+    const $container = $('<div class="vt-container"></div>');
+    $container.append('<h3 class="vt-heading">Gift Aid</h3>', $intro);
+    // Now the grid layout
+    const $layout = $('<div class="vt-giftaid-layout-1"/>');
+    const $inputs_container = $('<div class="vt-giftaid-inputs" />');
+    $inputs_container.append($yes, $yes_label, $no, $no_label);
+    $layout.append($inputs_container, $('<div class="vt-giftaid-declaration"/>').append($declaration));
+    $container.append($layout);
+    $niceForm.append($container, '<hr/>');
+
+  }
 
   membershipAmountButtons();
   yourInformation();
   whyJoining();
   paymentDetails();
+  giftAid();
   return;
 
   // Create UK radios.
