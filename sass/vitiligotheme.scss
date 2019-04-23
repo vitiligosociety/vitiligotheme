@@ -1,8 +1,10 @@
 // input[type="text"], #crm-container.crm-public input[type="password"], #crm-container.crm-public input[type="email"], #crm-container.crm-public select
 $colour_dull_blue: #4E5076;
 $colour_deep_blue: #30325B;
+$colour_teal: #46B8B0;
 $colour_beige: #DBDBDB;
 $colour_grey_headings: #555;
+$colour_not_quite_white: #FBFBFA;
 
 // @todo remove this.
 body {
@@ -138,7 +140,6 @@ body {
 
 // Payment info. {{{
 .vt-payment-box {
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
 .vt-payment-box__header {
   background: $colour_dull_blue;
@@ -227,6 +228,67 @@ body {
 }
 .vt-payment-box__dd { flex: 0 0 9rem; }
 .vt-payment-box__c { flex: 0 0 6rem; }
+// }}}
+// Payment: Card details {{{
+.crm-container .credit_card_info-group {
+  background: $colour_not_quite_white;
+  padding: 2rem;
+  margin:0 0 2rem;
+  border:none;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+
+  &>legend {
+    position:absolute;
+    width:1px;
+    height: 1px;
+    overflow: hidden;
+    text-indent:-99999px;
+  }
+}
+.credit_card_info-section {
+
+
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -2rem;
+
+  .cvv2-icon,
+  .credit_card_type-section { display: none; }
+
+  .credit_card_number-section,
+  .direct-debit-benefits-para,
+  .credit_card_exp_date-section,
+  .cvv2-section {
+    padding:0 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .credit_card_number-section {
+    margin-bottom: 1rem;
+    flex: 0 1 24rem;
+    order: 1;
+  }
+  .direct-debit-benefits-para {
+    margin-bottom: 1rem;
+    flex: 1 0 10rem;
+    order: 2;
+  }
+
+  .credit_card_exp_date-section {
+    order: 3;
+    flex: 0 0 auto;
+  }
+
+  .cvv2-section {
+    order: 4;
+    flex: 0 0 auto;
+  }
+
+  .vt-card-expiry {
+    display: inline-block;
+    margin-right:1rem;
+  }
+}
 // }}}
 
 // Payment amount buttons {{{
@@ -323,3 +385,43 @@ h3.vt-heading {
 
 // }}}
 
+// GDPR fields {{{
+.vt-gdpr {
+  .terms-conditions-link {
+    display: block;
+    font-weight: bold;
+    margin: 1rem 0;
+    text-decoration: underline;
+
+    &:link, &:visited { color: $colour_grey_headings; }
+    &:hover, &:active { color: black; }
+
+  }
+  label { color: $colour_grey_headings; }
+}
+// Two column layout above mobile.
+@media screen and (min-width: 768px) {
+  .vt-gdpr {
+    display: grid;
+    grid-template-columns: 50fr 50fr;
+    column-gap: 2rem;
+    row-gap: 1rem;
+    .vt-gdpr__text {
+      grid-column: 1 / span 2;
+    }
+  }
+}
+// }}}
+// Submit button.
+button.vt-submit {
+  margin: 2rem 0;
+  background-color: $colour_teal;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 1rem 3rem;
+  border:none;
+  border-radius: 0;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+}

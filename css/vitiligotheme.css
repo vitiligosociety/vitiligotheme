@@ -85,9 +85,6 @@ body {
     -ms-grid-column: 3;
         grid-column: 3; } }
 
-.vt-payment-box {
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
-
 .vt-payment-box__header {
   background: #4E5076; }
 
@@ -193,6 +190,70 @@ body {
       -ms-flex: 0 0 6rem;
           flex: 0 0 6rem; }
 
+.crm-container .credit_card_info-group {
+  background: #FBFBFA;
+  padding: 2rem;
+  margin: 0 0 2rem;
+  border: none;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+  .crm-container .credit_card_info-group > legend {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    text-indent: -99999px; }
+
+.credit_card_info-section {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  margin: 0 -2rem; }
+  .credit_card_info-section .cvv2-icon,
+  .credit_card_info-section .credit_card_type-section {
+    display: none; }
+  .credit_card_info-section .credit_card_number-section,
+  .credit_card_info-section .direct-debit-benefits-para,
+  .credit_card_info-section .credit_card_exp_date-section,
+  .credit_card_info-section .cvv2-section {
+    padding: 0 2rem;
+    margin-bottom: 2rem; }
+  .credit_card_info-section .credit_card_number-section {
+    margin-bottom: 1rem;
+    -webkit-flex: 0 1 24rem;
+        -ms-flex: 0 1 24rem;
+            flex: 0 1 24rem;
+    -webkit-order: 1;
+        -ms-flex-order: 1;
+            order: 1; }
+  .credit_card_info-section .direct-debit-benefits-para {
+    margin-bottom: 1rem;
+    -webkit-flex: 1 0 10rem;
+        -ms-flex: 1 0 10rem;
+            flex: 1 0 10rem;
+    -webkit-order: 2;
+        -ms-flex-order: 2;
+            order: 2; }
+  .credit_card_info-section .credit_card_exp_date-section {
+    -webkit-order: 3;
+        -ms-flex-order: 3;
+            order: 3;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto; }
+  .credit_card_info-section .cvv2-section {
+    -webkit-order: 4;
+        -ms-flex-order: 4;
+            order: 4;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto; }
+  .credit_card_info-section .vt-card-expiry {
+    display: inline-block;
+    margin-right: 1rem; }
+
 .vt-amount-buttons {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -286,5 +347,44 @@ h3.vt-heading {
     column: 1; }
   .vt-giftaid-declaration {
     column: 2; } }
+
+.vt-gdpr .terms-conditions-link {
+  display: block;
+  font-weight: bold;
+  margin: 1rem 0;
+  text-decoration: underline; }
+  .vt-gdpr .terms-conditions-link:link, .vt-gdpr .terms-conditions-link:visited {
+    color: #555; }
+  .vt-gdpr .terms-conditions-link:hover, .vt-gdpr .terms-conditions-link:active {
+    color: black; }
+
+.vt-gdpr label {
+  color: #555; }
+
+@media screen and (min-width: 768px) {
+  .vt-gdpr {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 50fr 50fr;
+        grid-template-columns: 50fr 50fr;
+    -webkit-column-gap: 2rem;
+            column-gap: 2rem;
+    row-gap: 1rem; }
+    .vt-gdpr .vt-gdpr__text {
+      -ms-grid-column-span: 2;
+      -ms-grid-column: 1;
+          grid-column: 1 / span 2; } }
+
+button.vt-submit {
+  margin: 2rem 0;
+  background-color: #46B8B0;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 0;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
 
 /*# sourceMappingURL=vitiligotheme.css.map */

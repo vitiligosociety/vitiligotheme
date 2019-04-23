@@ -209,6 +209,12 @@
       var $intro = $helpRow.find('>p').slice(3, 5);
       var $declaration = $helpRow.find('p').eq(0).add($helpRow.find('ol').eq(0));
 
+      // Remove the remaining help text.
+      $helpRow.remove();
+
+      // Remove the third input ("Yes, in the past 4 years")
+      $inputs.eq(2).parent().parent().remove();
+
       // Now re-assemble.
       var $container = $('<div class="vt-container"></div>');
       $container.append('<h3 class="vt-heading">Gift Aid</h3>', $intro);
@@ -220,12 +226,116 @@
       $container.append($layout);
       $niceForm.append($container, '<hr/>');
     }
+    function gdprFields() {
+      var $gdpr = $('#gdpr-terms-conditions');
+      var $niceGdpr = $('<div class="vt-gdpr"></div>');
+      $niceGdpr.append($('<div class="vt-gdpr__text"/>').append('<h2>Terms and conditions</h2>', $gdpr.find('.terms-conditions-acceptance-intro')));
+
+      $niceGdpr.append($gdpr.find('.terms-conditions-item'));
+
+      $niceForm.append($niceGdpr);
+      $gdpr.remove();
+    }
+    function renameSubmitButton(text) {
+      // Hide the original button, make a new button which clicks it by JS.
+      var $submitButtonWrapper = $form.find('#crm-submit-buttons input').hide();
+
+      var $niceSubmitButton = $('<button class="vt-submit"/>').text(text).on('click', function (e) {
+        e.preventDefault();$submitButtonWrapper.find('input[type="submit"]').trigger('click');
+      });
+
+      $niceForm.append($niceSubmitButton);
+    }
+    /**
+     * We need to look out for changes that are interactively made by CiviCRM.
+     */
+    function watchPaymentFields() {
+      var wrapper = $niceForm.find('.vt-payment-box')[0];
+      var config = { childList: true, subtree: true };
+      var delayed = false;
+
+      var vitiligoTweakDynamicPaymentFields = function vitiligoTweakDynamicPaymentFields() {
+        var $content = $niceForm.find('.vt-payment-box__content');
+
+        // Reconfigure payment block.
+        var $billingBlock = $content.find('#billing-payment-block');
+        $billingBlock.find('.credit_card_number-section').after($('<div class="direct-debit-benefits-para">Para on benefits of DD.</div>'));
+        // Strip out some CiviCRM classes that give us grief.
+        $billingBlock.find('.crm-section').removeClass('crm-section');
+        $billingBlock.find('div.label').removeClass('label').addClass('vt-payment-label');
+        $billingBlock.find('div.content').removeClass('content').addClass('vt-container');
+        $billingBlock.find('.clear').remove();
+
+        // Re-class the selects.
+        $billingBlock.find('#credit_card_exp_date_M, #credit_card_exp_date_Y').addClass('vt-select').wrap('<div class="vt-select-container vt-card-expiry"/>');
+
+        if (0) {
+          $billingBlock.find('.credit_card_type-section').hide();
+
+          var $cardNo = $billingBlock.find('.credit_card_number-section').removeClass('crm-section').addClass('vt-container vt-grid1');
+          $cardNo.find('div.label').removeClass('label').addClass('vt-label vt-col-1 vt-colspan-1');
+          $cardNo.find('div.content').removeClass('content').addClass('vt-input vt-col-2');
+        }
+
+        console.log("Showing payment block again", $content);
+        $content.find('#billing-payment-block').show();
+      };
+
+      var callback = function callback(mutationsList, observer) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = mutationsList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var mutation = _step.value;
+
+            // We need to detect whether the change was the payment block.
+            if (mutation.target.id == 'billing-payment-block') {
+              console.log("Should act");
+              // Hide the element while we build this and mess it around.
+              $(mutation.target).hide();
+              if (delayed) {
+                window.clearTimeout(delayed);
+              }
+              // Allow some time for things to settle. Is this enough?
+              delayed = window.setTimeout(vitiligoTweakDynamicPaymentFields, 500);
+            }
+            //var i = 0; while((node = nodeList.item(i++))) doSomething(node);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      };
+
+      // Create an observer instance linked to the callback function
+      var observer = new MutationObserver(callback);
+
+      // Start observing the target node for configured mutations
+      observer.observe(wrapper, config);
+    }
 
     membershipAmountButtons();
     yourInformation();
     whyJoining();
     paymentDetails();
     giftAid();
+    gdprFields();
+    renameSubmitButton('Join');
+    watchPaymentFields();
+    // Remove left over elements.
+    $('fieldset.crm-profile-name-name_and_address').remove();
     return;
 
     // Create UK radios.
