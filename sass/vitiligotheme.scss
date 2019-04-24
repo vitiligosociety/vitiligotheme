@@ -1,15 +1,25 @@
 // input[type="text"], #crm-container.crm-public input[type="password"], #crm-container.crm-public input[type="email"], #crm-container.crm-public select
 $colour_dull_blue: #4E5076;
-$colour_deep_blue: #30325B;
-$colour_teal: #46B8B0;
-$colour_beige: #DBDBDB;
+$colour_deep_blue: #363864; // From style guide. #31325A is "blue tone"
+$colour_teal: #42AFA7; // green tone from style guide. #46B8B0 is "green"
+$colour_beige: #F2F0EF; // Grey/tone
 $colour_grey_headings: #555;
-$colour_not_quite_white: #FBFBFA;
+$colour_grey_dashes: #aaa;
+$colour_not_quite_white: #FAF9F8; // Grey
 
 // @todo remove this.
 body {
   background:#f4f6f4;
+  font-family: Arimo, sans-serif;
 }
+h1, h2, h3, h4, h5, h6 {
+  font-family: Arimo, sans-serif;
+}
+@mixin dashed {
+  border: dashed 1px $colour_grey_dashes;
+  padding: 1rem;
+}
+.dashed { @include dashed; }
 
 #crm-container.crm-public {
   // Custom (native) select theming {{{
@@ -68,6 +78,9 @@ body {
       box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
       &:focus {
         border-color: $colour_deep_blue;
+      }
+      &.error {
+        border-color: red;
       }
     }
 
@@ -177,14 +190,14 @@ body {
 .vt-payment-box__switch-container {
   margin-left: 1rem;
   padding:1rem 1rem 1rem 0;
-  width:16rem;
+  width:15rem;
 }
 @media screen and (min-width: 768px) {
   .vt-payment-box__header {
     display:grid;
     align-items: center;
     column-gap: 1rem;
-    grid-template-columns: 1fr 4rem 16rem;
+    grid-template-columns: 1fr 4rem 15rem;
   }
   .crm-container .vt-payment-box__heading { grid-column: 1; }
   .vt-payment-box__payby { grid-column: 2;  padding:1rem 0; }
@@ -270,7 +283,7 @@ body {
   }
   .direct-debit-benefits-para {
     margin-bottom: 1rem;
-    flex: 1 0 10rem;
+    flex: 1 0 20rem;
     order: 2;
   }
 
@@ -288,6 +301,19 @@ body {
     display: inline-block;
     margin-right:1rem;
   }
+}
+// }}}
+// Payment: Billing details {{{
+.crm-container .billing_name_address-group {
+  &>legend {
+    position:absolute;
+    width:1px;
+    height: 1px;
+    overflow: hidden;
+    text-indent:-99999px;
+  }
+}
+.billing_name_address-section {
 }
 // }}}
 
@@ -366,8 +392,7 @@ h3.vt-heading {
   label { margin-right: 2rem; color: black; font-size:(18rem/16);}
 }
 .vt-giftaid-declaration {
-  border: dotted 1px $colour_grey_headings;
-  padding: 1rem;
+  @include dashed;
 }
 @media screen and (min-width: 768px) {
   .vt-giftaid-layout-1 {

@@ -5,8 +5,11 @@
 
     ;;
 
-    // The config placeholder here is replaced by php. Do not alter the line below at all.
+    // Bodge for now:
 
+    $('head').append('<link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">');
+
+    // The config placeholder here is replaced by php. Do not alter the line below at all.
     var payment_processor_ids = {}; //%config%
     console.log(payment_processor_ids);
 
@@ -33,11 +36,14 @@
     }
     function parseSelect2CiviField(selector) {
       var $rowNode = $form.find(selector).hide();
-      var $select = $rowNode.find('select').select2('destroy').removeClass('crm-select2 crm-chain-select-target crm-form-select').addClass('vt-select');
+      var $select = $rowNode.find('select');
       return {
         label: $rowNode.find('div.label label'),
-        input: $('<div class="vt-select-container"/>').append($select)
+        input: killSelect2($select)
       };
+    }
+    function killSelect2($select) {
+      return $('<div class="vt-select-container"/>').append($select.select2('destroy').removeClass('crm-select2 crm-chain-select-target crm-form-select').addClass('vt-select'));
     }
     function parseComplexCiviField(selector) {
       var $rowNode = $form.find(selector).hide();
@@ -66,7 +72,11 @@
         input: $selectFix
       };
     }
-    function createStdFields($label, fields) {
+    function createStdFields($label, fields, $appendTo) {
+      var $container = buildStdContainer($label, fields);
+      $niceForm.append($container);
+    }
+    function buildStdContainer($label, fields) {
       var $container = $('<div class="vt-container vt-grid1"></div>');
 
       if ($label) {
@@ -81,7 +91,7 @@
       } else {
         console.error("fields must be 1 or two big.", fields);
       }
-      $niceForm.append($container);
+      return $container;
     }
 
     function yourInformation() {
@@ -238,7 +248,7 @@
     }
     function renameSubmitButton(text) {
       // Hide the original button, make a new button which clicks it by JS.
-      var $submitButtonWrapper = $form.find('#crm-submit-buttons input').hide();
+      var $submitButtonWrapper = $form.find('#crm-submit-buttons input').parent().hide();
 
       var $niceSubmitButton = $('<button class="vt-submit"/>').text(text).on('click', function (e) {
         e.preventDefault();$submitButtonWrapper.find('input[type="submit"]').trigger('click');
@@ -250,16 +260,25 @@
      * We need to look out for changes that are interactively made by CiviCRM.
      */
     function watchPaymentFields() {
-      var wrapper = $niceForm.find('.vt-payment-box')[0];
+      var wrapper = $niceForm.find('#billing-payment-block')[0];
       var config = { childList: true, subtree: true };
       var delayed = false;
 
       var vitiligoTweakDynamicPaymentFields = function vitiligoTweakDynamicPaymentFields() {
+        observer.disconnect();
+        console.log("Tweaking form ...");
         var $content = $niceForm.find('.vt-payment-box__content');
 
         // Reconfigure payment block.
         var $billingBlock = $content.find('#billing-payment-block');
-        $billingBlock.find('.credit_card_number-section').after($('<div class="direct-debit-benefits-para">Para on benefits of DD.</div>'));
+        if ($billingBlock[0].vtTweaksDone) {
+          console.log("Already tweaked it.");
+        }
+        $billingBlock[0].vtTweaksDone = true;
+        // We'll use this existing container for the address fields.
+        var $billingAddressSection = $billingBlock.find('.billing_name_address-section');
+
+        $billingBlock.find('.credit_card_number-section').after($('<div class="direct-debit-benefits-para"><div class="dashed" >Para on benefits of DD.</div></div>'));
         // Strip out some CiviCRM classes that give us grief.
         $billingBlock.find('.crm-section').removeClass('crm-section');
         $billingBlock.find('div.label').removeClass('label').addClass('vt-payment-label');
@@ -269,19 +288,33 @@
         // Re-class the selects.
         $billingBlock.find('#credit_card_exp_date_M, #credit_card_exp_date_Y').addClass('vt-select').wrap('<div class="vt-select-container vt-card-expiry"/>');
 
-        if (0) {
-          $billingBlock.find('.credit_card_type-section').hide();
+        // ... add a title and move the 'same as above' checkbox.
+        $billingAddressSection.append('<h2>Your billing information</h2>', $billingBlock.find('#billingcheckbox'), $billingBlock.find('label[for="billingcheckbox"]'));
 
-          var $cardNo = $billingBlock.find('.credit_card_number-section').removeClass('crm-section').addClass('vt-container vt-grid1');
-          $cardNo.find('div.label').removeClass('label').addClass('vt-label vt-col-1 vt-colspan-1');
-          $cardNo.find('div.content').removeClass('content').addClass('vt-input vt-col-2');
-        }
+        // Move the Name fields.
+        $billingBlock.append(buildStdContainer($billingBlock.find('.billing_first_name-section label').text('Name on card'), [$billingBlock.find('.billing_first_name-section input'), $billingBlock.find('.billing_last_name-section input')]));
 
-        console.log("Showing payment block again", $content);
+        // Move Street addres.,
+        $billingBlock.append(buildStdContainer($billingBlock.find('.billing_street_address-5-section label').text('Address'), [$billingBlock.find('.billing_street_address-5-section input').attr('placeholder', 'Address line 1*')]));
+
+        // Move City., county.
+        $billingBlock.append(buildStdContainer(null, [$billingBlock.find('.billing_city-5-section input').attr('placeholder', 'Town/City'), killSelect2($billingBlock.find('.billing_state_province_id-5-section select'))]));
+
+        // Move Post code, country.
+        $billingBlock.append(buildStdContainer(null, [$billingBlock.find('.billing_postal_code-5-section input').attr('placeholder', 'Postcode'), killSelect2($billingBlock.find('.billing_country_id-5-section select'))]));
+
+        // Hide left over crud.
+        $billingBlock.find(['.billing_first_name-section', '.billing_middle_name-section', '.billing_last_name-section', '.billing_street_address-5-section', '.billing_city-5-section', '.billing_state_province_id-5-section', '.billing_postal_code-5-section', '.billing_country_id-5-section'].join(',')).hide();
+
+        if (0) {}
+
+        console.log("End tweaks. Showing payment block again and reconnecting observer", $content);
         $content.find('#billing-payment-block').show();
+        observer.observe(wrapper, config);
       };
 
       var callback = function callback(mutationsList, observer) {
+        var needToTweakUi = false;
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -292,16 +325,8 @@
 
             // We need to detect whether the change was the payment block.
             if (mutation.target.id == 'billing-payment-block') {
-              console.log("Should act");
-              // Hide the element while we build this and mess it around.
-              $(mutation.target).hide();
-              if (delayed) {
-                window.clearTimeout(delayed);
-              }
-              // Allow some time for things to settle. Is this enough?
-              delayed = window.setTimeout(vitiligoTweakDynamicPaymentFields, 500);
+              needToTweakUi = true;
             }
-            //var i = 0; while((node = nodeList.item(i++))) doSomething(node);
           }
         } catch (err) {
           _didIteratorError = true;
@@ -316,6 +341,21 @@
               throw _iteratorError;
             }
           }
+        }
+
+        if (needToTweakUi) {
+          console.log("Found billing-payment-block in mutation targets", mutationsList);
+
+          // Hide the element while we build this and mess it around.
+          $('#billing-payment-block').hide();
+
+          // If already queued, requeue with new delay.
+          if (delayed) {
+            window.clearTimeout(delayed);
+            delayed = false;
+          }
+          // Allow some time for things to settle.
+          delayed = window.setTimeout(vitiligoTweakDynamicPaymentFields, 500);
         }
       };
 
