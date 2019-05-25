@@ -1,25 +1,108 @@
 // input[type="text"], #crm-container.crm-public input[type="password"], #crm-container.crm-public input[type="email"], #crm-container.crm-public select
 $colour_dull_blue: #4E5076;
 $colour_deep_blue: #363864; // From style guide. #31325A is "blue tone"
+$colour_background_blue_opacity_applied: #4E5076;
 $colour_teal: #42AFA7; // green tone from style guide. #46B8B0 is "green"
 $colour_beige: #F2F0EF; // Grey/tone
-$colour_grey_headings: #555;
+$colour_grey_headings: #666666; // From figma
+$colour_grey_2: #969696; // From figma
 $colour_grey_dashes: #aaa;
-$colour_not_quite_white: #FAF9F8; // Grey
+$colour_not_quite_white: #FDFDFD; // From Figma background of inputs.
+$colour_grey_payment_box_opacity_applied: #E3E3E8;
+
+$box_shadow_1: 2px 3px 8px rgba(54, 56, 100, 0.32821);
+$box_shadow_2:  1px 2px 4px rgba(0, 0, 0, 0.218807);
 
 // @todo remove this.
 body {
   background:#f4f6f4;
   font-family: Arimo, sans-serif;
 }
-h1, h2, h3, h4, h5, h6 {
+
+// CiviCRM resets / removals {{{
+#crm-container>.crm-title,
+#printer-friendly { display:none; }
+
+nav, label, input {
   font-family: Arimo, sans-serif;
 }
+// }}}
+
+// Mixins and custom classes used throughout {{{
+// This from figma.
+@mixin dark-blue-headings-1 {
+  font-size: 27px;
+  line-height: 45px;
+
+  /* or 167% */
+  letter-spacing: -0.961527px;
+  color: $colour_deep_blue; /* styleguide */
+}
+@mixin grey-smaller-heading-1 {
+  font-size: 23px;
+  line-height: 45px;
+  /* or 196% */
+  letter-spacing: 0.23px;
+  color: $colour_grey_headings;
+}
+h1, h2, h3, h4, h5, h6,
+.vt-heading {
+  font-family: Arimo;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: -0.841429px;
+}
+.vt-heading--smaller-grey1 {
+  @include grey-smaller-heading-1;
+}
+
 @mixin dashed {
   border: dashed 1px $colour_grey_dashes;
   padding: 1rem;
 }
 .dashed { @include dashed; }
+// We need to over-rule this: 'div.crm-container label'
+.billing_name_address-section label,
+div.crm-container .vt-label label {
+	font-family: Arimo;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 19px;
+	line-height: 28px;
+
+	/* identical to box height, or 147% */
+	letter-spacing: -0.174167px;
+	color: $colour_grey_headings;
+}
+
+// Sprite
+%sprite {
+  background-image:url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=" + random(100000));
+}
+.vt-icon {
+  @extend %sprite;
+  display:inline-block;
+}
+@mixin sprite ($left, $top, $width, $height:'same') {
+  @if ($height == 'same') {
+    $height: $width;
+  }
+  @extend %sprite;
+  @include spriteAlter($left, $top);
+  width: $width * 1px;
+  height: $height * 1px;
+}
+@mixin spriteAlter($left, $top) {
+  background-position: ($left * -1px) ($top * -1px);
+}
+.vt-icon--gbp-circle {
+  @include sprite(85, 0, 34);
+}
+.vt-icon--info { @include sprite(50, 0, 27); }
+.vt-icon--padlock { @include sprite(50, 30, 18, 36); }
+
+// }}}
+
 
 #crm-container.crm-public {
   // Custom (native) select theming {{{
@@ -38,7 +121,7 @@ h1, h2, h3, h4, h5, h6 {
       top:0;
       bottom:0;
       pointer-events:none;
-      padding: 0.4rem 1rem;
+      padding: 0.6rem 1rem;
     }
   }
 
@@ -48,8 +131,9 @@ h1, h2, h3, h4, h5, h6 {
     border: none;
     padding: 0.5rem 1.3rem;
     width: 100%;
+    height:44px;
     appearance: none;
-    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+    box-shadow: $box_shadow_2;
     option {
       margin-right: 3rem;
     }
@@ -60,9 +144,58 @@ h1, h2, h3, h4, h5, h6 {
     box-sizing: border-box;
     * { box-sizing: border-box;}
 
+		input[type="text"], textarea, select {
+			background: $colour_not_quite_white;
+		}
     hr {
       background-color: #ddd;
       margin: 0.75rem 0;
+    }
+    input[type="text"], textarea
+    {
+      ::placeholder {
+        font-family: Arimo;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 17px;
+        //  line-height: 45px; /* or 265% */
+        letter-spacing: 0.257704px;
+
+        color: $colour_grey_2;
+      }
+    }
+    // Replace radios and checkboxes.
+    .vt-checkbox-radio-wrapper {
+      overflow: hidden;
+      position: relative;
+      input {
+        // Visually hide.
+        position: absolute;
+        left:-200vh;
+      }
+      label {
+        min-height: 30px;
+        display:inline-block;
+        margin-bottom:1rem;
+        position: relative;
+        padding-left: 36px; // allow for sprite
+        padding-top: 4px;
+      }
+      label:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        content: '';
+        @include sprite(0, 0, 25);
+      }
+      &.radio {
+        input:checked+label:before { @include spriteAlter(0, 25); }
+      }
+      &.checkbox {
+        label:before { @include spriteAlter(25, 0); }
+        input:checked+label:before { @include spriteAlter(25, 25); }
+      }
     }
   }
 
@@ -74,8 +207,8 @@ h1, h2, h3, h4, h5, h6 {
       // border-radius:2px;
       padding: 1.3rem;
       background: white;
-      border:solid 2px transparent;
-      box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+      border:solid 1.5px transparent; //1.5 from figma
+      box-shadow: $box_shadow_2;
       &:focus {
         border-color: $colour_deep_blue;
       }
@@ -124,9 +257,6 @@ h1, h2, h3, h4, h5, h6 {
 .vt-grid1 {
   padding: 0.75rem;
 
-  .vt-label {
-    font-weight: bold;
-  }
   .vt-input {
     margin-bottom: 0.75rem;
   }
@@ -152,60 +282,79 @@ h1, h2, h3, h4, h5, h6 {
 // }}}
 
 // Payment info. {{{
-.vt-payment-box {
-}
+// Your Payment Details header {{{
+// Mobile {{{
 .vt-payment-box__header {
-  background: $colour_dull_blue;
-
+  background: $colour_background_blue_opacity_applied;
+  display:grid;
+  column-gap: 1rem;
+  grid-template-columns: 42px 1fr;
+  padding: 0 1rem;
 }
-.crm-container .vt-payment-box__heading {
+.vt-payment-box__gbp {
+  padding:1.2rem 0 0 1rem;
+}
+// Circle £ {{{
+.vt-icon--gbp-circle {
+  display:block;
+} // }}}
+.crm-container .vt-payment-box__heading // {{{
+{
   background:none;
   margin:0;
-  font-size: 2rem;
-  padding:1rem 1rem 1rem 5rem;
+  font-size: 31px; // figma
+  padding:1rem 1rem 1rem 0;
   position:relative;
   font-weight: bold;
   color: white;
-}
-.vt-payment-box__heading:before {
-  content: '£';
-  position:absolute;
-  margin-left:-4rem;
-  width:3rem;
-  height:3rem;
-
-  padding:0.5rem;
-  border-radius:2rem;
-  display:block;
-  margin-right:1rem;
-  background-color: white;
-  color: $colour_dull_blue;
-  text-align: center;
-  line-height: 1;
-}
-.vt-payment-box__payby {
+} // }}}
+.vt-payment-box__payby // {{{
+{
+  grid-column: 1 / span 2;
   padding: 0 1rem;
   color:white;
-}
+	font-size: 22px;
+  letter-spacing: -0.23375px;
+} // }}}
+$payment_dd_width:7rem;
+$payment_cc_width:2.8rem;
 .vt-payment-box__switch-container {
   margin-left: 1rem;
   padding:1rem 1rem 1rem 0;
-  width:15rem;
+  width:($payment_dd_width + $payment_cc_width + 5.8rem);
 }
+// To override div.crm-container label
+div.crm-container .vt-payment-box__switch-container label {
+  font-size: 19px; // Figma
+  font-weight: bold;
+}
+
+// }}}
+
+// Desktop {{{
 @media screen and (min-width: 768px) {
   .vt-payment-box__header {
-    display:grid;
     align-items: center;
-    column-gap: 1rem;
-    grid-template-columns: 1fr 4rem 15rem;
+    padding: 0;
+    grid-template-columns: 4rem 1fr 5rem ($payment_dd_width + $payment_cc_width + 7rem);
   }
-  .crm-container .vt-payment-box__heading { grid-column: 1; }
-  .vt-payment-box__payby { grid-column: 2;  padding:1rem 0; }
+  .vt-payment-box__gbp {
+    padding:1rem 0 1rem 1rem;
+     grid-column: 1;
+   }
+  .crm-container .vt-payment-box__heading {
+    grid-column: 2;
+    font-size: 35px; // figma
+  }
+  .vt-payment-box__payby { grid-column: 3;  padding:1rem 0; }
   .vt-payment-box__switch-container {
-    grid-column: 3;
+    grid-column: 4;
     margin-left: 0;
   }
+  .vt-icon--gbp-circle {
+  }
 }
+//}}}
 .vt-payment-box__switch-wrapper {
   display: flex;
   border-radius: 2rem;
@@ -223,8 +372,8 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 2rem;
     z-index:1;
   }
-  &.selected-dd:before { left:6px; width:7.5rem; }
-  &.selected-c:before { left:9.3rem; width:4.3rem; }
+  &.selected-dd:before { left:6px; width:($payment_dd_width + 2rem); }
+  &.selected-c:before { left:($payment_dd_width +2.4rem); width:($payment_cc_width + 2rem); }
 }
 
 .crm-container {
@@ -239,16 +388,17 @@ h1, h2, h3, h4, h5, h6 {
   .selected-c  .vt-payment-box__c { color: $colour_deep_blue;; }
 
 }
-.vt-payment-box__dd { flex: 0 0 9rem; }
-.vt-payment-box__c { flex: 0 0 6rem; }
+.vt-payment-box__dd { flex: 0 0 ($payment_dd_width + 2rem); }
+.vt-payment-box__c { flex: 0 0 ($payment_cc_width + 2rem); }
+// }}}
 // }}}
 // Payment: Card details {{{
 .crm-container .credit_card_info-group {
-  background: $colour_not_quite_white;
+  background: $colour_grey_payment_box_opacity_applied;
   padding: 2rem;
   margin:0 0 2rem;
   border:none;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+  box-shadow: $box_shadow_1;
 
   &>legend {
     position:absolute;
@@ -282,14 +432,30 @@ h1, h2, h3, h4, h5, h6 {
     order: 1;
   }
   .direct-debit-benefits-para {
+    position:relative;
     margin-bottom: 1rem;
     flex: 1 0 20rem;
     order: 2;
+    padding-right:4rem; // 2rem for padlock
+
+    .dashed {
+      padding-left:4rem;
+      .vt-icon {
+        position:absolute;
+        margin-left: -3rem;
+      }
+    }
+    .vt-icon--padlock {
+      position: absolute;
+      top:0;
+      right: 2rem;
+    }
   }
 
   .credit_card_exp_date-section {
     order: 3;
     flex: 0 0 auto;
+    max-width: 100%; // forces wrap.
   }
 
   .cvv2-section {
@@ -300,6 +466,7 @@ h1, h2, h3, h4, h5, h6 {
   .vt-card-expiry {
     display: inline-block;
     margin-right:1rem;
+    select { margin-bottom: 0.5rem; } // for mobile
   }
 }
 // }}}
@@ -339,7 +506,7 @@ h1, h2, h3, h4, h5, h6 {
     color: $colour_deep_blue;
     padding:1rem;
     border: solid 2px transparent;
-    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+		box-shadow: $box_shadow_1;
     &.selected {
       border-color: $colour_deep_blue;
     }
@@ -356,12 +523,14 @@ h1, h2, h3, h4, h5, h6 {
 // }}}
 // Headings (need to override civi styles) {{{
 h3.vt-heading {
+  background: none;
   margin: 3rem 0 2rem;
   padding:0;
-  font-size: 1.6rem;
+
+	font-size: 23px;
+	line-height: 28px;
+
   color: $colour_grey_headings;
-  font-weight: bold;
-  background: none;
 }
 // }}}
 // Your Info Heading styles {{{
@@ -375,8 +544,7 @@ h3.vt-heading {
     padding:0;
     margin:0;
     padding-right: 1rem;
-    font-weight: bold;
-    color: $colour_deep_blue;
+    @include dark-blue-headings-1;
   }
   span {
     color: #800;
@@ -448,5 +616,5 @@ button.vt-submit {
   padding: 1rem 3rem;
   border:none;
   border-radius: 0;
-  box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+  box-shadow: $box_shadow_1;
 }

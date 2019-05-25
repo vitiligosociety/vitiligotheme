@@ -1,14 +1,63 @@
-@charset "UTF-8";
 body {
   background: #f4f6f4;
   font-family: Arimo, sans-serif; }
 
-h1, h2, h3, h4, h5, h6 {
+#crm-container > .crm-title,
+#printer-friendly {
+  display: none; }
+
+nav, label, input {
   font-family: Arimo, sans-serif; }
+
+h1, h2, h3, h4, h5, h6,
+.vt-heading {
+  font-family: Arimo;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: -0.841429px; }
+
+.vt-heading--smaller-grey1 {
+  font-size: 23px;
+  line-height: 45px;
+  /* or 196% */
+  letter-spacing: 0.23px;
+  color: #666666; }
 
 .dashed {
   border: dashed 1px #aaa;
   padding: 1rem; }
+
+.billing_name_address-section label,
+div.crm-container .vt-label label {
+  font-family: Arimo;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 28px;
+  /* identical to box height, or 147% */
+  letter-spacing: -0.174167px;
+  color: #666666; }
+
+.vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=68038"); }
+
+.vt-icon {
+  display: inline-block; }
+
+.vt-icon--gbp-circle {
+  background-position: -85px 0px;
+  width: 34px;
+  height: 34px; }
+
+.vt-icon--info {
+  background-position: -50px 0px;
+  width: 27px;
+  height: 27px; }
+
+.vt-icon--padlock {
+  background-position: -50px -30px;
+  width: 18px;
+  height: 36px; }
 
 #crm-container.crm-public .vt-select-container {
   position: relative;
@@ -17,13 +66,13 @@ h1, h2, h3, h4, h5, h6 {
   #crm-container.crm-public .vt-select-container:after {
     content: '\25BE';
     font-size: 0.8rem;
-    color: #555;
+    color: #666666;
     position: absolute;
     right: 0;
     top: 0;
     bottom: 0;
     pointer-events: none;
-    padding: 0.4rem 1rem; }
+    padding: 0.6rem 1rem; }
 
 #crm-container.crm-public .vt-select {
   background: white;
@@ -31,10 +80,11 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
   padding: 0.5rem 1.3rem;
   width: 100%;
+  height: 44px;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.218807); }
   #crm-container.crm-public .vt-select option {
     margin-right: 3rem; }
 
@@ -42,17 +92,68 @@ h1, h2, h3, h4, h5, h6 {
   box-sizing: border-box; }
   #crm-container.crm-public form#Main * {
     box-sizing: border-box; }
+  #crm-container.crm-public form#Main input[type="text"], #crm-container.crm-public form#Main textarea, #crm-container.crm-public form#Main select {
+    background: #FDFDFD; }
   #crm-container.crm-public form#Main hr {
     background-color: #ddd;
     margin: 0.75rem 0; }
+  #crm-container.crm-public form#Main input[type="text"] ::-webkit-input-placeholder, #crm-container.crm-public form#Main textarea ::-webkit-input-placeholder {
+    font-family: Arimo;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    letter-spacing: 0.257704px;
+    color: #969696; }
+  #crm-container.crm-public form#Main input[type="text"] :-ms-input-placeholder, #crm-container.crm-public form#Main textarea :-ms-input-placeholder {
+    font-family: Arimo;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    letter-spacing: 0.257704px;
+    color: #969696; }
+  #crm-container.crm-public form#Main input[type="text"] ::placeholder, #crm-container.crm-public form#Main textarea ::placeholder {
+    font-family: Arimo;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    letter-spacing: 0.257704px;
+    color: #969696; }
+  #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper {
+    overflow: hidden;
+    position: relative; }
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper input {
+      position: absolute;
+      left: -200vh; }
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label {
+      min-height: 30px;
+      display: inline-block;
+      margin-bottom: 1rem;
+      position: relative;
+      padding-left: 36px;
+      padding-top: 4px; }
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: inline-block;
+      content: '';
+      background-position: 0px 0px;
+      width: 25px;
+      height: 25px; }
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.radio input:checked + label:before {
+      background-position: 0px -25px; }
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.checkbox label:before {
+      background-position: -25px 0px; }
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.checkbox input:checked + label:before {
+      background-position: -25px -25px; }
 
 #crm-container.crm-public .vt-container textarea,
 #crm-container.crm-public .vt-container input[type="text"] {
   width: 100%;
   padding: 1.3rem;
   background: white;
-  border: solid 2px transparent;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+  border: solid 1.5px transparent;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.218807); }
   #crm-container.crm-public .vt-container textarea:focus,
   #crm-container.crm-public .vt-container input[type="text"]:focus {
     border-color: #363864; }
@@ -62,8 +163,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .vt-grid1 {
   padding: 0.75rem; }
-  .vt-grid1 .vt-label {
-    font-weight: bold; }
   .vt-grid1 .vt-input {
     margin-bottom: 0.75rem; }
 
@@ -97,62 +196,71 @@ h1, h2, h3, h4, h5, h6 {
         grid-column: 3; } }
 
 .vt-payment-box__header {
-  background: #4E5076; }
+  background: #4E5076;
+  display: -ms-grid;
+  display: grid;
+  -webkit-column-gap: 1rem;
+          column-gap: 1rem;
+  -ms-grid-columns: 42px 1fr;
+      grid-template-columns: 42px 1fr;
+  padding: 0 1rem; }
+
+.vt-payment-box__gbp {
+  padding: 1.2rem 0 0 1rem; }
+
+.vt-icon--gbp-circle {
+  display: block; }
 
 .crm-container .vt-payment-box__heading {
   background: none;
   margin: 0;
-  font-size: 2rem;
-  padding: 1rem 1rem 1rem 5rem;
+  font-size: 31px;
+  padding: 1rem 1rem 1rem 0;
   position: relative;
   font-weight: bold;
   color: white; }
 
-.vt-payment-box__heading:before {
-  content: '£';
-  position: absolute;
-  margin-left: -4rem;
-  width: 3rem;
-  height: 3rem;
-  padding: 0.5rem;
-  border-radius: 2rem;
-  display: block;
-  margin-right: 1rem;
-  background-color: white;
-  color: #4E5076;
-  text-align: center;
-  line-height: 1; }
-
 .vt-payment-box__payby {
+  -ms-grid-column-span: 2;
+  -ms-grid-column: 1;
+      grid-column: 1 / span 2;
   padding: 0 1rem;
-  color: white; }
+  color: white;
+  font-size: 22px;
+  letter-spacing: -0.23375px; }
 
 .vt-payment-box__switch-container {
   margin-left: 1rem;
   padding: 1rem 1rem 1rem 0;
-  width: 15rem; }
+  width: 15.6rem; }
+
+div.crm-container .vt-payment-box__switch-container label {
+  font-size: 19px;
+  font-weight: bold; }
 
 @media screen and (min-width: 768px) {
   .vt-payment-box__header {
-    display: -ms-grid;
-    display: grid;
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
-    -webkit-column-gap: 1rem;
-            column-gap: 1rem;
-    -ms-grid-columns: 1fr 4rem 15rem;
-        grid-template-columns: 1fr 4rem 15rem; }
-  .crm-container .vt-payment-box__heading {
+    padding: 0;
+    -ms-grid-columns: 4rem 1fr 5rem 16.8rem;
+        grid-template-columns: 4rem 1fr 5rem 16.8rem; }
+  .vt-payment-box__gbp {
+    padding: 1rem 0 1rem 1rem;
     -ms-grid-column: 1;
         grid-column: 1; }
-  .vt-payment-box__payby {
+  .crm-container .vt-payment-box__heading {
     -ms-grid-column: 2;
         grid-column: 2;
-    padding: 1rem 0; }
-  .vt-payment-box__switch-container {
+    font-size: 35px; }
+  .vt-payment-box__payby {
     -ms-grid-column: 3;
         grid-column: 3;
+    padding: 1rem 0; }
+  .vt-payment-box__switch-container {
+    -ms-grid-column: 4;
+        grid-column: 4;
     margin-left: 0; } }
 
 .vt-payment-box__switch-wrapper {
@@ -174,10 +282,10 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 1; }
   .vt-payment-box__switch-wrapper.selected-dd:before {
     left: 6px;
-    width: 7.5rem; }
+    width: 9rem; }
   .vt-payment-box__switch-wrapper.selected-c:before {
-    left: 9.3rem;
-    width: 4.3rem; }
+    left: 9.4rem;
+    width: 4.8rem; }
 
 .crm-container .vt-payment-box__dd, .crm-container .vt-payment-box__c {
   color: white;
@@ -197,16 +305,16 @@ h1, h2, h3, h4, h5, h6 {
           flex: 0 0 9rem; }
 
 .vt-payment-box__c {
-  -webkit-flex: 0 0 6rem;
-      -ms-flex: 0 0 6rem;
-          flex: 0 0 6rem; }
+  -webkit-flex: 0 0 4.8rem;
+      -ms-flex: 0 0 4.8rem;
+          flex: 0 0 4.8rem; }
 
 .crm-container .credit_card_info-group {
-  background: #FAF9F8;
+  background: #E3E3E8;
   padding: 2rem;
   margin: 0 0 2rem;
   border: none;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 2px 3px 8px rgba(54, 56, 100, 0.32821); }
   .crm-container .credit_card_info-group > legend {
     position: absolute;
     width: 1px;
@@ -240,20 +348,32 @@ h1, h2, h3, h4, h5, h6 {
         -ms-flex-order: 1;
             order: 1; }
   .credit_card_info-section .direct-debit-benefits-para {
+    position: relative;
     margin-bottom: 1rem;
     -webkit-flex: 1 0 20rem;
         -ms-flex: 1 0 20rem;
             flex: 1 0 20rem;
     -webkit-order: 2;
         -ms-flex-order: 2;
-            order: 2; }
+            order: 2;
+    padding-right: 4rem; }
+    .credit_card_info-section .direct-debit-benefits-para .dashed {
+      padding-left: 4rem; }
+      .credit_card_info-section .direct-debit-benefits-para .dashed .vt-icon {
+        position: absolute;
+        margin-left: -3rem; }
+    .credit_card_info-section .direct-debit-benefits-para .vt-icon--padlock {
+      position: absolute;
+      top: 0;
+      right: 2rem; }
   .credit_card_info-section .credit_card_exp_date-section {
     -webkit-order: 3;
         -ms-flex-order: 3;
             order: 3;
     -webkit-flex: 0 0 auto;
         -ms-flex: 0 0 auto;
-            flex: 0 0 auto; }
+            flex: 0 0 auto;
+    max-width: 100%; }
   .credit_card_info-section .cvv2-section {
     -webkit-order: 4;
         -ms-flex-order: 4;
@@ -264,6 +384,8 @@ h1, h2, h3, h4, h5, h6 {
   .credit_card_info-section .vt-card-expiry {
     display: inline-block;
     margin-right: 1rem; }
+    .credit_card_info-section .vt-card-expiry select {
+      margin-bottom: 0.5rem; }
 
 .crm-container .billing_name_address-group > legend {
   position: absolute;
@@ -298,7 +420,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #363864;
     padding: 1rem;
     border: solid 2px transparent;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+    box-shadow: 2px 3px 8px rgba(54, 56, 100, 0.32821); }
     .vt-amount-buttons__button button.selected {
       border-color: #363864; }
 
@@ -313,12 +435,12 @@ h1, h2, h3, h4, h5, h6 {
             flex: 1 0 5rem; } }
 
 h3.vt-heading {
+  background: none;
   margin: 3rem 0 2rem;
   padding: 0;
-  font-size: 1.6rem;
-  color: #555;
-  font-weight: bold;
-  background: none; }
+  font-size: 23px;
+  line-height: 28px;
+  color: #666666; }
 
 .vt-your-info {
   display: -webkit-flex;
@@ -335,8 +457,12 @@ h3.vt-heading {
     padding: 0;
     margin: 0;
     padding-right: 1rem;
-    font-weight: bold;
-    color: #363864; }
+    font-size: 27px;
+    line-height: 45px;
+    /* or 167% */
+    letter-spacing: -0.961527px;
+    color: #363864;
+    /* styleguide */ }
   .vt-your-info span {
     color: #800; }
 
@@ -372,12 +498,12 @@ h3.vt-heading {
   margin: 1rem 0;
   text-decoration: underline; }
   .vt-gdpr .terms-conditions-link:link, .vt-gdpr .terms-conditions-link:visited {
-    color: #555; }
+    color: #666666; }
   .vt-gdpr .terms-conditions-link:hover, .vt-gdpr .terms-conditions-link:active {
     color: black; }
 
 .vt-gdpr label {
-  color: #555; }
+  color: #666666; }
 
 @media screen and (min-width: 768px) {
   .vt-gdpr {
@@ -403,6 +529,6 @@ button.vt-submit {
   padding: 1rem 3rem;
   border: none;
   border-radius: 0;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); }
+  box-shadow: 2px 3px 8px rgba(54, 56, 100, 0.32821); }
 
 /*# sourceMappingURL=vitiligotheme.css.map */

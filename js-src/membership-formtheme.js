@@ -2,7 +2,7 @@
 
 'use strict';
 
-  // Bodge for now:
+  // Bodge for now: @todo
   $('head').append('<link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">');
 
   // The config placeholder here is replaced by php. Do not alter the line below at all.
@@ -162,10 +162,10 @@
     var a, b;
     var $priceset = $('#priceset').hide();
     const map = [
-      ['#price_7_a', '£50'],
       ['#price_7_7', '£25'],
+      ['#price_7_a', '£50'],
       ['#price_7_b', '£100'],
-      ['#price_7_c', '£200'],
+      ['#price_7_c', '£250'],
       ['#price_7_d', '£500'],
     ];
     const $container = $('<div class="vt-container vt-amount-buttons"></div>');
@@ -183,7 +183,7 @@
       );
     });
 
-    $niceForm.append('<h3 class="vt-heading">My contribution</h3>');
+    $niceForm.append('<h3 class="vt-heading vt-heading--smaller-grey1">My contribution</h3>');
     $niceForm.append($container);
     $niceForm.append('<div>Annual membership renews automatically, can be cancelled upto 14 days before renewal date</div>');
     $niceForm.append('<hr/>');
@@ -199,6 +199,7 @@
 
     const $paymentDetails = $('<div class="vt-payment-box"/>');
     const $header = $(`<div class="vt-payment-box__header">
+      <div class="vt-payment-box__gbp"><i class="vt-icon vt-icon--gbp-circle"></i></div>
       <h3 class="vt-payment-box__heading">Your payment details</h3>
       <div class="vt-payment-box__payby">Pay by:</div>
       <div class="vt-payment-box__switch-container">
@@ -302,7 +303,7 @@
       const $billingAddressSection = $billingBlock.find('.billing_name_address-section');
 
       $billingBlock.find('.credit_card_number-section').after(
-        $('<div class="direct-debit-benefits-para"><div class="dashed" >Para on benefits of DD.</div></div>')
+        $('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>Para on benefits of DD.</div><i class="vt-icon vt-icon--padlock"></i></div>')
       );
       // Strip out some CiviCRM classes that give us grief.
       $billingBlock.find('.crm-section').removeClass('crm-section');
@@ -405,6 +406,21 @@
     // Start observing the target node for configured mutations
     observer.observe(wrapper, config);
   }
+  function themeRadiosAndCheckboxes() {
+    $('input[type="radio"], input[type="checkbox"]').each(function() {
+      const $input = $(this);
+      const $label = $(this).next();
+      const $wrapper = $('<div class="vt-checkbox-radio-wrapper"/>');
+      if ($input.is('input[type="checkbox"]')) {
+        $wrapper.addClass('checkbox');
+      }
+      else {
+        $wrapper.addClass('radio');
+      }
+      $input.before($wrapper);
+      $wrapper.append($input, $label);
+    });
+  }
 
   membershipAmountButtons();
   yourInformation();
@@ -413,6 +429,7 @@
   giftAid();
   gdprFields();
   renameSubmitButton('Join');
+  themeRadiosAndCheckboxes();
   watchPaymentFields();
   // Remove left over elements.
   $('fieldset.crm-profile-name-name_and_address').remove();
