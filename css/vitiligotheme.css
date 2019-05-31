@@ -39,7 +39,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=68038"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=77743"); }
 
 .vt-icon {
   display: inline-block; }
@@ -309,6 +309,13 @@ div.crm-container .vt-payment-box__switch-container label {
       -ms-flex: 0 0 4.8rem;
           flex: 0 0 4.8rem; }
 
+.vt-payment-box.disable-dd .vt-payment-box__payby,
+.vt-payment-box.disable-dd .vt-payment-box__switch-container {
+  display: none; }
+
+.vt-payment-box.disable-dd .direct-debit-benefits-para .dashed {
+  display: none; }
+
 .crm-container .credit_card_info-group {
   background: #E3E3E8;
   padding: 2rem;
@@ -350,9 +357,9 @@ div.crm-container .vt-payment-box__switch-container label {
   .credit_card_info-section .direct-debit-benefits-para {
     position: relative;
     margin-bottom: 1rem;
-    -webkit-flex: 1 0 20rem;
-        -ms-flex: 1 0 20rem;
-            flex: 1 0 20rem;
+    -webkit-flex: 1 0 50%;
+        -ms-flex: 1 0 50%;
+            flex: 1 0 50%;
     -webkit-order: 2;
         -ms-flex-order: 2;
             order: 2;

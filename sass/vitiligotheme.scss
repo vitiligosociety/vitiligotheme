@@ -390,6 +390,16 @@ div.crm-container .vt-payment-box__switch-container label {
 }
 .vt-payment-box__dd { flex: 0 0 ($payment_dd_width + 2rem); }
 .vt-payment-box__c { flex: 0 0 ($payment_cc_width + 2rem); }
+
+// If dd disabled...
+.vt-payment-box.disable-dd {
+  .vt-payment-box__payby,
+  .vt-payment-box__switch-container
+  { display: none; }
+  .direct-debit-benefits-para .dashed {
+    display:none;
+  }
+}
 // }}}
 // }}}
 // Payment: Card details {{{
@@ -434,7 +444,8 @@ div.crm-container .vt-payment-box__switch-container label {
   .direct-debit-benefits-para {
     position:relative;
     margin-bottom: 1rem;
-    flex: 1 0 20rem;
+    // flex: 1 0 20rem;
+    flex: 1 0 50%;
     order: 2;
     padding-right:4rem; // 2rem for padlock
 

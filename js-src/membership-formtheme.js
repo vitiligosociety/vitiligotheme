@@ -135,8 +135,10 @@
     a = parseStdCiviField('#editrow-postal_code-Primary');
     a.input.attr('placeholder', 'Postcode*');
     b = parseSelect2CiviField('#editrow-country-Primary');
-    // b.input.find('select').select2('destroy');
     createStdFields(null, [a.input, b.input]);
+    // We also need to hook up the country selector to the payment selector logic.
+    b.input.find('select').on('change', alterPaymentMethodsAvailable);
+
 
     $niceForm.append('<hr/>');
     // DOB
@@ -161,6 +163,7 @@
   function membershipAmountButtons() {
     var a, b;
     var $priceset = $('#priceset').hide();
+    // @todo match these with price set ids.
     const map = [
       ['#price_7_7', '£25'],
       ['#price_7_a', '£50'],
@@ -169,19 +172,35 @@
       ['#price_7_d', '£500'],
     ];
     const $container = $('<div class="vt-container vt-amount-buttons"></div>');
+    // @todo set defaults.
+    var selectedOption;
+    function showButtonAsSelected($btn) {
+      $btn.addClass('selected').parent().siblings().find('button').removeClass('selected');
+    }
     map.forEach(m => {
+      const $btn = $('<button/>')
+        .attr('data-input-selector', m[0])
+        .text(m[1])
+        .on('click', function(e) {
+          e.preventDefault();
+          $(m[0]).click();
+          showButtonAsSelected($(this));
+        });
       $container.append(
         $('<div class="vt-amount-buttons__button"></div>')
-        .append($('<button/>')
-          .text(m[1])
-          .on('click', function(e) {
-            e.preventDefault();
-            $(m[0]).click();
-            $(this).addClass('selected').parent().siblings().find('button').removeClass('selected');
-          })
-        )
+        .append($btn)
       );
+      if ($(m[0]).is(':checked')) {
+        selectedOption= m[0];
+      }
     });
+    if (!selectedOption) {
+      // @todo set this to actual default price set id.
+      // Nb. might be different for membership/donation.
+      selectedOption = '#price_7_b';
+    }
+    // Initial show selected button.
+    showButtonAsSelected($container.find('button[data-input-selector="' + selectedOption + '"]'));
 
     $niceForm.append('<h3 class="vt-heading vt-heading--smaller-grey1">My contribution</h3>');
     $niceForm.append($container);
@@ -194,8 +213,10 @@
     a.label.html("<h3 class='vt-heading'>Why are you signing up to membership with the Vitiligo Society?</h3>");
     $niceForm.append($('<div class="vt-container"/>').append(a.label, a.input), '<hr/>');
   }
+  const $payment_processor_selection_ui = $form.find("fieldset.payment_options-group");
+  var $payment_processor_switch_wrapper; // set in paymentDetails()
   function paymentDetails() {
-    const $originalInput = $form.find("fieldset.payment_options-group").hide();
+    $payment_processor_selection_ui.hide();
 
     const $paymentDetails = $('<div class="vt-payment-box"/>');
     const $header = $(`<div class="vt-payment-box__header">
@@ -210,25 +231,23 @@
       </div>
       `);
     const $content = $('<div class="vt-payment-box__content"/>');
+    $payment_processor_switch_wrapper = $header.find('.vt-payment-box__switch-wrapper');
     $paymentDetails.append($header, $content);
     $content.append($form.find('#billing-payment-block'));
-    const $wrapper = $header.find('.vt-payment-box__switch-wrapper');
-
-    function selectPaymentMethod() {
-      const selected_processor_id = $originalInput.find('input:checked').val();
-      console.log("selectPaymentMethod running ", selected_processor_id);
-      if (payment_processor_ids.GoCardless.indexOf(selected_processor_id) > -1) {
-        $wrapper.addClass('selected-dd').removeClass('selected-c');
-      }
-      else {
-        $wrapper.addClass('selected-c').removeClass('selected-dd');
-      }
-    }
-
-    $originalInput.find('input').on('click', selectPaymentMethod);
-    $wrapper.find('label').on('click', selectPaymentMethod);
+    $payment_processor_selection_ui.find('input').on('click', selectPaymentMethod);
+    $payment_processor_switch_wrapper.find('label').on('click', selectPaymentMethod);
     $niceForm.append($paymentDetails);
     selectPaymentMethod();
+  }
+  function selectPaymentMethod() {
+    const selected_processor_id = $payment_processor_selection_ui.find('input:checked').val();
+    console.log("selectPaymentMethod running ", selected_processor_id);
+    if (payment_processor_ids.GoCardless.indexOf(selected_processor_id) > -1) {
+      $payment_processor_switch_wrapper.addClass('selected-dd').removeClass('selected-c');
+    }
+    else {
+      $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd');
+    }
   }
   function giftAid() {
     //editrow-custom_10
@@ -283,18 +302,23 @@
   /**
    * We need to look out for changes that are interactively made by CiviCRM.
    */
+  // CiviCRM ends up creating nested versions of this :-(
+  // So make a reference to the original.
+  const $original_billing_payment_block = $('#billing-payment-block');
   function watchPaymentFields() {
-    const wrapper = $niceForm.find('#billing-payment-block')[0];
+    const wrapper = $original_billing_payment_block[0];
     const config = { childList: true, subtree: true };
     var delayed = false;
 
+    // This function deals with re-presenting card payment fields in the billing-payment-block
     const vitiligoTweakDynamicPaymentFields = function() {
       observer.disconnect();
       console.log("Tweaking form ...");
-      const $content = $niceForm.find('.vt-payment-box__content');
 
       // Reconfigure payment block.
-      const $billingBlock = $content.find('#billing-payment-block');
+      // Remove the non-unique id from the billing-payment-block.
+      $original_billing_payment_block.find('#billing-payment-block').attr('id', 'nested-billing-payment-block');
+      const $billingBlock = $original_billing_payment_block;
       if ($billingBlock[0].vtTweaksDone) {
         console.log("Already tweaked it.");
       }
@@ -311,70 +335,77 @@
       $billingBlock.find('div.content').removeClass('content').addClass('vt-container');
       $billingBlock.find('.clear').remove();
 
+
       // Re-class the selects.
       $billingBlock.find('#credit_card_exp_date_M, #credit_card_exp_date_Y')
         .addClass('vt-select')
         .wrap('<div class="vt-select-container vt-card-expiry"/>');
 
-      // ... add a title and move the 'same as above' checkbox.
-      $billingAddressSection.append('<h2>Your billing information</h2>',
-        $billingBlock.find('#billingcheckbox'),
-        $billingBlock.find('label[for="billingcheckbox"]')
-      );
+      // If we have a billingAddressSection we need to theme that now.
+      if ($billingAddressSection.length) {
+        // ... add a title and move the 'same as above' checkbox.
+        $billingAddressSection.append('<h2>Your billing information</h2>',
+          $billingBlock.find('#billingcheckbox'),
+          $billingBlock.find('label[for="billingcheckbox"]')
+        );
+        // Theme the "My billing address is same..."
+        themeRadiosAndCheckboxes($billingAddressSection);
 
-      // Move the Name fields.
-      $billingBlock.append(buildStdContainer(
-        $billingBlock.find('.billing_first_name-section label').text('Name on card'),
-        [
-          $billingBlock.find('.billing_first_name-section input'),
-          $billingBlock.find('.billing_last_name-section input'),
-        ]
-      ));
+        // Move the Name fields.
+        $billingAddressSection.append(buildStdContainer(
+          $billingBlock.find('.billing_first_name-section label').text('Name on card'),
+          [
+            $billingBlock.find('.billing_first_name-section input'),
+            $billingBlock.find('.billing_last_name-section input'),
+          ]
+        ));
 
-      // Move Street addres.,
-      $billingBlock.append(buildStdContainer(
-        $billingBlock.find('.billing_street_address-5-section label').text('Address'),
-        [$billingBlock.find('.billing_street_address-5-section input').attr('placeholder', 'Address line 1*')]
-      ));
+        // Move Street addres.,
+        $billingAddressSection.append(buildStdContainer(
+          $billingBlock.find('.billing_street_address-5-section label').text('Address'),
+          [$billingBlock.find('.billing_street_address-5-section input').attr('placeholder', 'Address line 1*')]
+        ));
 
-      // Move City., county.
-      $billingBlock.append(buildStdContainer(
-        null,
-        [
-          $billingBlock.find('.billing_city-5-section input').attr('placeholder', 'Town/City'),
-          killSelect2($billingBlock.find('.billing_state_province_id-5-section select'))
-        ]
-      ));
+        // Move City., county.
+        $billingAddressSection.append(buildStdContainer(
+          null,
+          [
+            $billingBlock.find('.billing_city-5-section input').attr('placeholder', 'Town/City'),
+            killSelect2($billingBlock.find('.billing_state_province_id-5-section select'))
+          ]
+        ));
 
-      // Move Post code, country.
-      $billingBlock.append(buildStdContainer(
-        null,
-        [
-          $billingBlock.find('.billing_postal_code-5-section input').attr('placeholder', 'Postcode'),
-          killSelect2($billingBlock.find('.billing_country_id-5-section select'))
-        ]
-      ));
+        // Move Post code, country.
+        $billingAddressSection.append(buildStdContainer(
+          null,
+          [
+            $billingBlock.find('.billing_postal_code-5-section input').attr('placeholder', 'Postcode'),
+            killSelect2($billingBlock.find('.billing_country_id-5-section select'))
+          ]
+        ));
 
-      // Hide left over crud.
-      $billingBlock.find([
-        '.billing_first_name-section',
-        '.billing_middle_name-section',
-        '.billing_last_name-section',
-        '.billing_street_address-5-section',
-        '.billing_city-5-section',
-        '.billing_state_province_id-5-section',
-        '.billing_postal_code-5-section',
-        '.billing_country_id-5-section',
-      ].join(',')).hide();
-
-      if(0) {
+        // Hide left over crud.
+        $billingBlock.find([
+          '.billing_first_name-section',
+          '.billing_middle_name-section',
+          '.billing_last_name-section',
+          '.billing_street_address-5-section',
+          '.billing_city-5-section',
+          '.billing_state_province_id-5-section',
+          '.billing_postal_code-5-section',
+          '.billing_country_id-5-section',
+        ].join(',')).hide();
       }
 
-      console.log("End tweaks. Showing payment block again and reconnecting observer", $content);
-      $content.find('#billing-payment-block').show();
+
+      console.log("End tweaks. Showing payment block again and reconnecting observer");
+      $original_billing_payment_block.fadeIn('fast');
       observer.observe(wrapper, config);
     };
 
+    // This callback is used in the mutation observer.
+    // Its job is to identify if a DOM mutation is relevant to the billing payment block.
+    // If so it will call vitiligoTweakDynamicPaymentFields after half a second.
     const callback = function(mutationsList, observer) {
       var needToTweakUi = false;
       for(var mutation of mutationsList) {
@@ -386,9 +417,10 @@
 
       if (needToTweakUi) {
         console.log("Found billing-payment-block in mutation targets", mutationsList);
+        // Note CiviCRM ends up creating nested #billing-payment-block elements :-(
 
         // Hide the element while we build this and mess it around.
-        $('#billing-payment-block').hide();
+        $original_billing_payment_block.hide();
 
         // If already queued, requeue with new delay.
         if (delayed) {
@@ -406,10 +438,13 @@
     // Start observing the target node for configured mutations
     observer.observe(wrapper, config);
   }
-  function themeRadiosAndCheckboxes() {
-    $('input[type="radio"], input[type="checkbox"]').each(function() {
+  function themeRadiosAndCheckboxes($context) {
+    $context.find('input[type="radio"], input[type="checkbox"]').each(function() {
       const $input = $(this);
-      const $label = $(this).next();
+      if ($input.is('.vt-themed')) {
+        return;
+      }
+      const $label = $input.next();
       const $wrapper = $('<div class="vt-checkbox-radio-wrapper"/>');
       if ($input.is('input[type="checkbox"]')) {
         $wrapper.addClass('checkbox');
@@ -419,8 +454,49 @@
       }
       $input.before($wrapper);
       $wrapper.append($input, $label);
+      $input.addClass('vt-themed');
     });
   }
+  // Returns DOM node.
+  function findPaymentProcessorRadioForProcessorType(processorType) {
+    var processorIds = payment_processor_ids[processorType] || [];
+
+    var found;
+    $('fieldset.payment_options-group [name="payment_processor_id"]').each(function() {
+      var m =this.id.match(/CIVICRM_QFID_(\d+)_payment_processor_id$/);
+      if (m && m.length === 2 && processorIds.indexOf(m[1])>-1) {
+        found = this;
+      }
+    });
+
+    return found;
+  }
+  function alterPaymentMethodsAvailable() {
+    const selected_uk = 'United Kingdom' === $('#country-Primary option:selected').text();
+    const selected_processor_id = $form.find('fieldset.payment_options-group input:checked').val();
+    const vt_payment = $('.vt-payment-box');
+    const ddProcessor = $(findPaymentProcessorRadioForProcessorType('GoCardless'));
+    console.log({selected_uk, selected_processor_id,vt_payment,ddProcessor});
+    if (selected_uk) {
+      // Allow DD and Card.
+      vt_payment.removeClass('disable-dd');
+    }
+    else {
+      // Disable DD payments.
+      vt_payment.addClass('disable-dd');
+      // If currently selected processor is DD then do the change now.
+      if (ddProcessor.is(':checked')) {
+        // Need to change it.
+        $(findPaymentProcessorRadioForProcessorType('Stripe')).click();
+        selectPaymentMethod();
+      }
+    }
+    // Now disable DD radio input unless in uk.
+    // This is done for accessibility reasons - visual users will already not
+    // have a way to select those.
+    $(ddProcessor).prop('disabled', !selected_uk);
+  }
+
 
   membershipAmountButtons();
   yourInformation();
@@ -429,7 +505,7 @@
   giftAid();
   gdprFields();
   renameSubmitButton('Join');
-  themeRadiosAndCheckboxes();
+  themeRadiosAndCheckboxes($('body'));
   watchPaymentFields();
   // Remove left over elements.
   $('fieldset.crm-profile-name-name_and_address').remove();
