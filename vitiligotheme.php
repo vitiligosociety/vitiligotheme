@@ -180,11 +180,20 @@ function vitiligotheme_civicrm_buildForm($formName, &$form) {
     // round-trip.
     // Also note 'Note: WP support is inconsistent pending refactor.' - from link above.
     $js = file_get_contents(__DIR__ . '/js/membership-formtheme.js');
-    $js = str_replace('var payment_processor_ids = {}; //%config%', "var payment_processor_ids = $config;", $js);
+    $js = strtr($js, [
+      'var payment_processor_ids = {}; //%config%' => "var payment_processor_ids = $config;",
+      'var form_name = \'\'; //%formname%'          => 'var form_name = "membership";',
+    ]);
     //$js .= file_get_contents(__DIR__ . '/js/fix-radio-checkbox-layout.js');
     $css = file_get_contents(__DIR__ . '/css/vitiligotheme.css');
   }
   elseif ($form->_id === VITILIGO_DONATION_FORM_ID) {
+    $js = file_get_contents(__DIR__ . '/js/membership-formtheme.js');
+    $js = strtr($js, [
+      'var form_name = \'\'; //%formname%' => 'var form_name = "donate";',
+    ]);
+    //$js .= file_get_contents(__DIR__ . '/js/fix-radio-checkbox-layout.js');
+    $css = file_get_contents(__DIR__ . '/css/vitiligotheme.css');
   }
 
   if ($js || $css) {

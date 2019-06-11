@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   background: #f4f6f4;
   font-family: Arimo, sans-serif; }
@@ -38,8 +39,8 @@ div.crm-container .vt-label label {
   letter-spacing: -0.174167px;
   color: #666666; }
 
-.vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=74017"); }
+.vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=18693"); }
 
 .vt-icon {
   display: inline-block; }
@@ -58,6 +59,11 @@ div.crm-container .vt-label label {
   background-position: -50px -30px;
   width: 18px;
   height: 36px; }
+
+.vt-icon--member {
+  background-position: -80px -35px;
+  width: 26px;
+  height: 26px; }
 
 #crm-container.crm-public .vt-select-container {
   position: relative;
@@ -501,6 +507,97 @@ h3.vt-heading {
     column: 1; }
   .vt-giftaid-declaration {
     column: 2; } }
+
+.vt-donation-layout h3.vt-heading {
+  color: #363864; }
+
+.vt-donation-amount-blurb-header {
+  background-color: #363864;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0.5rem 1rem; }
+
+.vt-donation-blurb-title {
+  -webkit-flex: 1 1 10rem;
+      -ms-flex: 1 1 10rem;
+          flex: 1 1 10rem;
+  font-weight: bold;
+  font-size: 21.5px;
+  color: white;
+  padding-left: 42px;
+  padding-right: 1rem; }
+  .vt-donation-blurb-title .vt-icon {
+    position: absolute;
+    margin-left: -42px; }
+
+.crm-container a.vt-donation-blurb-readmore {
+  -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  display: block;
+  border: solid 2px white;
+  padding: 0.2rem 0.5rem;
+  font-size: 15px;
+  letter-spacing: -0.159375px;
+  font-style: bold; }
+  .crm-container a.vt-donation-blurb-readmore:visited, .crm-container a.vt-donation-blurb-readmore:link {
+    color: white; }
+  .crm-container a.vt-donation-blurb-readmore:hover {
+    background-color: rgba(255, 255, 255, 0.2); }
+
+.vt-donation-amount-blurb-text {
+  border: dashed 1px #aaa;
+  padding: 1rem;
+  border-top: 0px none;
+  background: rgba(255, 255, 255, 0.38001);
+  color: #666666;
+  font-size: 18px;
+  line-height: 29px; }
+
+.vt-donation-amount-wrapper label {
+  font-size: 1rem;
+  margin: 0 0 0.5rem; }
+
+.vt-donation-amount-input-wrapper {
+  position: relative; }
+  .vt-donation-amount-input-wrapper:after {
+    display: block;
+    position: absolute;
+    top: 1.4rem;
+    left: 0.9rem;
+    color: #888;
+    content: '£';
+    font-weight: bold;
+    font-size: 18px; }
+
+#crm-container.crm-public .vt-donation-amount-input-wrapper input[type="text"] {
+  font-weight: bold;
+  padding: 0.5rem 2rem 0.5rem 3rem;
+  font-size: 37px;
+  color: black;
+  text-align: right; }
+
+@media screen and (min-width: 768px) {
+  .vt-donation-layout {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
+  .vt-donation-amount-wrapper {
+    -webkit-flex: 0 1 13rem;
+        -ms-flex: 0 1 13rem;
+            flex: 0 1 13rem; }
+  .vt-donation-amount-blurb {
+    padding-left: 2rem;
+    -webkit-flex: 0 1 45rem;
+        -ms-flex: 0 1 45rem;
+            flex: 0 1 45rem; } }
 
 .vt-gdpr .terms-conditions-link {
   display: block;

@@ -100,6 +100,7 @@ div.crm-container .vt-label label {
 }
 .vt-icon--info { @include sprite(50, 0, 27); }
 .vt-icon--padlock { @include sprite(50, 30, 18, 36); }
+.vt-icon--member { @include sprite(80, 35, 26, 26); }
 
 // }}}
 
@@ -588,6 +589,96 @@ h3.vt-heading {
   }
   .vt-giftaid-declaration {
     column: 2;
+  }
+}
+
+// }}}
+// Donation amount {{{
+.vt-donation-layout {
+  h3.vt-heading {
+    color: $colour_deep_blue;
+  }
+}
+.vt-donation-amount-blurb {
+  
+}
+.vt-donation-amount-blurb-header {
+  background-color: $colour_deep_blue;
+  display:flex;
+  align-items: center;
+  padding:0.5rem 1rem;
+}
+.vt-donation-blurb-title {
+  flex: 1 1 10rem;
+  font-weight: bold;
+  font-size: 21.5px; // figma
+  color:white;
+  padding-left: (26px + 16px);
+  padding-right: 1rem;
+  .vt-icon {
+    position:absolute;
+    margin-left: (-26px - 16px);
+  }
+}
+// need this specificity.
+.crm-container a.vt-donation-blurb-readmore {
+  flex: 0 0 auto;
+  display:block;
+  border: solid 2px white;
+  padding: 0.2rem 0.5rem;
+  font-size: 15px; // figma
+  letter-spacing: -0.159375px;
+  font-style: bold;
+  &:visited,
+  &:link { color: white; }
+  &:hover { background-color: rgba(255, 255, 255, 0.2); }
+}
+.vt-donation-amount-blurb-text {
+  @include dashed;
+  border-top: 0px none;
+  background: rgba(255, 255, 255, 0.38001);
+  color: #666666;
+  font-size: 18px;
+  line-height: 29px;
+}
+.vt-donation-amount-wrapper {
+  label {
+    font-size: 1rem;
+    margin: 0 0 0.5rem;
+  }
+}
+.vt-donation-amount-input-wrapper {
+  position: relative;
+  &:after {
+    display: block;
+    position:absolute;
+    top: 1.4rem;
+    left: 0.9rem;
+    color: #888;
+    content: '£';
+    font-weight:bold;
+    font-size: 18px;
+  }
+}
+// Oversized input.
+#crm-container.crm-public .vt-donation-amount-input-wrapper input[type="text"] {
+  font-weight:bold;
+  padding: 0.5rem 2rem 0.5rem 3rem;
+  font-size: 37px;
+  color: black;
+  text-align: right;
+}
+@media screen and (min-width: 768px) {
+  .vt-donation-layout {
+    display: flex;
+    justify-content: space-between;
+  }
+  .vt-donation-amount-wrapper {
+    flex: 0 1 13rem;
+  }
+  .vt-donation-amount-blurb {
+    padding-left: 2rem;
+    flex: 0 1 45rem;
   }
 }
 
