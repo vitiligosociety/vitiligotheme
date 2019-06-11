@@ -518,6 +518,10 @@ div.crm-container .vt-payment-box__switch-container label {
     padding:1rem;
     border: solid 2px transparent;
 		box-shadow: $box_shadow_1;
+    &:focus {
+      outline:0;
+      border-color: $colour_dull_blue;
+    }
     &.selected {
       border-color: $colour_deep_blue;
     }

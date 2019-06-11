@@ -39,7 +39,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=77743"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=74017"); }
 
 .vt-icon {
   display: inline-block; }
@@ -428,6 +428,9 @@ div.crm-container .vt-payment-box__switch-container label {
     padding: 1rem;
     border: solid 2px transparent;
     box-shadow: 2px 3px 8px rgba(54, 56, 100, 0.32821); }
+    .vt-amount-buttons__button button:focus {
+      outline: 0;
+      border-color: #4E5076; }
     .vt-amount-buttons__button button.selected {
       border-color: #363864; }
 

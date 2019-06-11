@@ -214,6 +214,7 @@
       $payment_processor_selection_ui.find('input').on('click', selectPaymentMethod);
       $payment_processor_switch_wrapper.find('label').on('click', selectPaymentMethod);
       $niceForm.append($paymentDetails);
+      alterPaymentMethodsAvailable();
       selectPaymentMethod();
     }
     function selectPaymentMethod() {
@@ -432,7 +433,6 @@
       var selected_processor_id = $form.find('fieldset.payment_options-group input:checked').val();
       var vt_payment = $('.vt-payment-box');
       var ddProcessor = $(findPaymentProcessorRadioForProcessorType('GoCardless'));
-      console.log({ selected_uk: selected_uk, selected_processor_id: selected_processor_id, vt_payment: vt_payment, ddProcessor: ddProcessor });
       if (selected_uk) {
         // Allow DD and Card.
         vt_payment.removeClass('disable-dd');
