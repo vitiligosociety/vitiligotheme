@@ -106,7 +106,7 @@
       createStdFields(first_name.label, [first_name.input, last_name.input]);
 
       // Add email
-      var email = parseStdCiviField('#editrow-email-1');
+      var email = parseStdCiviField('#editrow-email-1, #editrow-email-Primary');
       email.input.attr('placeholder', 'Email');
       createStdFields(email.label, [email.input]);
 
@@ -226,6 +226,13 @@
     }
     function selectPaymentMethod() {
       var selected_processor_id = $payment_processor_selection_ui.find('input:checked').val();
+
+      // Card selected if we dno't have a choice. (Donate page)
+      if (typeof selected_processor_id === 'undefined') {
+        $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd');
+        return;
+      }
+
       console.log("selectPaymentMethod running ", selected_processor_id);
       if (payment_processor_ids.GoCardless.indexOf(selected_processor_id) > -1) {
         $payment_processor_switch_wrapper.addClass('selected-dd').removeClass('selected-c');
@@ -272,6 +279,10 @@
       $niceForm.append($niceGdpr);
       $gdpr.remove();
     }
+    function donateOtherComments() {
+      var c = parseStdCiviField('#editrow-custom_17');
+      $niceForm.append($('<div class="vt-container vt-donate-other-comment"/>').append(c.label.text('Any other comments?'), c.input.attr('placeholder', 'Type here...')));
+    }
     function renameSubmitButton(text) {
       // Hide the original button, make a new button which clicks it by JS.
       var $submitButtonWrapper = $form.find('#crm-submit-buttons input').parent().hide();
@@ -297,51 +308,7 @@
       var vitiligoTweakDynamicPaymentFields = function vitiligoTweakDynamicPaymentFields() {
         observer.disconnect();
         console.log("Tweaking form ...");
-
-        // Reconfigure payment block.
-        // Remove the non-unique id from the billing-payment-block.
-        $original_billing_payment_block.find('#billing-payment-block').attr('id', 'nested-billing-payment-block');
-        var $billingBlock = $original_billing_payment_block;
-        if ($billingBlock[0].vtTweaksDone) {
-          console.log("Already tweaked it.");
-        }
-        $billingBlock[0].vtTweaksDone = true;
-        // We'll use this existing container for the address fields.
-        var $billingAddressSection = $billingBlock.find('.billing_name_address-section');
-
-        $billingBlock.find('.credit_card_number-section').after($('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>Para on benefits of DD.</div><i class="vt-icon vt-icon--padlock"></i></div>'));
-        // Strip out some CiviCRM classes that give us grief.
-        $billingBlock.find('.crm-section').removeClass('crm-section');
-        $billingBlock.find('div.label').removeClass('label').addClass('vt-payment-label');
-        $billingBlock.find('div.content').removeClass('content').addClass('vt-container');
-        $billingBlock.find('.clear').remove();
-
-        // Re-class the selects.
-        $billingBlock.find('#credit_card_exp_date_M, #credit_card_exp_date_Y').addClass('vt-select').wrap('<div class="vt-select-container vt-card-expiry"/>');
-
-        // If we have a billingAddressSection we need to theme that now.
-        if ($billingAddressSection.length) {
-          // ... add a title and move the 'same as above' checkbox.
-          $billingAddressSection.append('<h2>Your billing information</h2>', $billingBlock.find('#billingcheckbox'), $billingBlock.find('label[for="billingcheckbox"]'));
-          // Theme the "My billing address is same..."
-          themeRadiosAndCheckboxes($billingAddressSection);
-
-          // Move the Name fields.
-          $billingAddressSection.append(buildStdContainer($billingBlock.find('.billing_first_name-section label').text('Name on card'), [$billingBlock.find('.billing_first_name-section input'), $billingBlock.find('.billing_last_name-section input')]));
-
-          // Move Street addres.,
-          $billingAddressSection.append(buildStdContainer($billingBlock.find('.billing_street_address-5-section label').text('Address'), [$billingBlock.find('.billing_street_address-5-section input').attr('placeholder', 'Address line 1*')]));
-
-          // Move City., county.
-          $billingAddressSection.append(buildStdContainer(null, [$billingBlock.find('.billing_city-5-section input').attr('placeholder', 'Town/City'), killSelect2($billingBlock.find('.billing_state_province_id-5-section select'))]));
-
-          // Move Post code, country.
-          $billingAddressSection.append(buildStdContainer(null, [$billingBlock.find('.billing_postal_code-5-section input').attr('placeholder', 'Postcode'), killSelect2($billingBlock.find('.billing_country_id-5-section select'))]));
-
-          // Hide left over crud.
-          $billingBlock.find(['.billing_first_name-section', '.billing_middle_name-section', '.billing_last_name-section', '.billing_street_address-5-section', '.billing_city-5-section', '.billing_state_province_id-5-section', '.billing_postal_code-5-section', '.billing_country_id-5-section'].join(',')).hide();
-        }
-
+        reconfigurePaymentBlock();
         console.log("End tweaks. Showing payment block again and reconnecting observer");
         $original_billing_payment_block.fadeIn('fast');
         observer.observe(wrapper, config);
@@ -403,6 +370,51 @@
       // Start observing the target node for configured mutations
       observer.observe(wrapper, config);
     }
+    function reconfigurePaymentBlock() {
+      // Reconfigure payment block.
+      // Remove the non-unique id from the billing-payment-block.
+      $original_billing_payment_block.find('#billing-payment-block').attr('id', 'nested-billing-payment-block');
+      var $billingBlock = $original_billing_payment_block;
+      if ($billingBlock[0].vtTweaksDone) {
+        console.log("Already tweaked it.");
+      }
+      $billingBlock[0].vtTweaksDone = true;
+      // We'll use this existing container for the address fields.
+      var $billingAddressSection = $billingBlock.find('.billing_name_address-section');
+
+      $billingBlock.find('.credit_card_number-section').after($('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>Para on benefits of DD.</div><i class="vt-icon vt-icon--padlock"></i></div>'));
+      // Strip out some CiviCRM classes that give us grief.
+      $billingBlock.find('.crm-section').removeClass('crm-section');
+      $billingBlock.find('div.label').removeClass('label').addClass('vt-payment-label');
+      $billingBlock.find('div.content').removeClass('content').addClass('vt-container');
+      $billingBlock.find('.clear').remove();
+
+      // Re-class the selects.
+      $billingBlock.find('#credit_card_exp_date_M, #credit_card_exp_date_Y').addClass('vt-select').wrap('<div class="vt-select-container vt-card-expiry"/>');
+
+      // If we have a billingAddressSection we need to theme that now.
+      if ($billingAddressSection.length) {
+        // ... add a title and move the 'same as above' checkbox.
+        $billingAddressSection.append('<h2>Your billing information</h2>', $billingBlock.find('#billingcheckbox'), $billingBlock.find('label[for="billingcheckbox"]'));
+        // Theme the "My billing address is same..."
+        themeRadiosAndCheckboxes($billingAddressSection);
+
+        // Move the Name fields.
+        $billingAddressSection.append(buildStdContainer($billingBlock.find('.billing_first_name-section label').text('Name on card'), [$billingBlock.find('.billing_first_name-section input'), $billingBlock.find('.billing_last_name-section input')]));
+
+        // Move Street addres.,
+        $billingAddressSection.append(buildStdContainer($billingBlock.find('.billing_street_address-5-section label').text('Address'), [$billingBlock.find('.billing_street_address-5-section input').attr('placeholder', 'Address line 1*')]));
+
+        // Move City., county.
+        $billingAddressSection.append(buildStdContainer(null, [$billingBlock.find('.billing_city-5-section input').attr('placeholder', 'Town/City'), killSelect2($billingBlock.find('.billing_state_province_id-5-section select'))]));
+
+        // Move Post code, country.
+        $billingAddressSection.append(buildStdContainer(null, [$billingBlock.find('.billing_postal_code-5-section input').attr('placeholder', 'Postcode'), killSelect2($billingBlock.find('.billing_country_id-5-section select'))]));
+
+        // Hide left over crud.
+        $billingBlock.find(['.billing_first_name-section', '.billing_middle_name-section', '.billing_last_name-section', '.billing_street_address-5-section', '.billing_city-5-section', '.billing_state_province_id-5-section', '.billing_postal_code-5-section', '.billing_country_id-5-section'].join(',')).hide();
+      }
+    }
     function themeRadiosAndCheckboxes($context) {
       $context.find('input[type="radio"], input[type="checkbox"]').each(function () {
         var $input = $(this);
@@ -421,6 +433,9 @@
         $input.addClass('vt-themed');
       });
     }
+    function donateMovePaymentBlock() {
+      reconfigurePaymentBlock();
+    }
     // Returns DOM node.
     function findPaymentProcessorRadioForProcessorType(processorType) {
       var processorIds = payment_processor_ids[processorType] || [];
@@ -436,11 +451,19 @@
       return found;
     }
     function alterPaymentMethodsAvailable() {
-      var selected_uk = 'United Kingdom' === $('#country-Primary option:selected').text();
+
+      var allow_dd = false;
+
       var selected_processor_id = $form.find('fieldset.payment_options-group input:checked').val();
+      if (form_name === 'membership') {
+        // Membership. Allow DD if in uk.
+        allow_dd = 'United Kingdom' === $('#country-Primary option:selected').text();
+      }
+
       var vt_payment = $('.vt-payment-box');
       var ddProcessor = $(findPaymentProcessorRadioForProcessorType('GoCardless'));
-      if (selected_uk) {
+
+      if (allow_dd) {
         // Allow DD and Card.
         vt_payment.removeClass('disable-dd');
       } else {
@@ -456,11 +479,12 @@
       // Now disable DD radio input unless in uk.
       // This is done for accessibility reasons - visual users will already not
       // have a way to select those.
-      $(ddProcessor).prop('disabled', !selected_uk);
+      $(ddProcessor).prop('disabled', !allow_dd);
     }
 
     if (form_name === 'membership') {
 
+      $niceForm.addClass('vt-membership-form');
       membershipAmountButtons();
       yourInformation();
       whyJoining();
@@ -474,16 +498,18 @@
       $('fieldset.crm-profile-name-name_and_address').remove();
     } else if (form_name === 'donate') {
 
+      $niceForm.addClass('vt-donate-form');
       donateAmountLayout();
       yourInformation();
-      // paymentDetails();
       giftAid();
+      donateOtherComments();
+      paymentDetails();
+      donateMovePaymentBlock();
       gdprFields();
       renameSubmitButton('Donate');
       themeRadiosAndCheckboxes($('body'));
-      // watchPaymentFields();
       // Remove left over elements.
-      $('fieldset.crm-profile-name-name_and_address').remove();
+      $('fieldset.crm-profile-name-name_and_address, fieldset.crm-profile-name-supporter_profile').remove();
     }
   });
 })(CRM, CRM.$);

@@ -40,7 +40,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=18693"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=37912"); }
 
 .vt-icon {
   display: inline-block; }
@@ -598,6 +598,17 @@ h3.vt-heading {
     -webkit-flex: 0 1 45rem;
         -ms-flex: 0 1 45rem;
             flex: 0 1 45rem; } }
+
+div.crm-container .vt-donate-other-comment label {
+  font-size: 23px;
+  line-height: 45px;
+  /* or 196% */
+  letter-spacing: 0.23px;
+  color: #666666;
+  font-weight: bold; }
+
+.vt-donate-form .vt-payment-box {
+  margin-top: 4rem; }
 
 .vt-gdpr .terms-conditions-link {
   display: block;

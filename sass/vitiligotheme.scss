@@ -683,6 +683,15 @@ h3.vt-heading {
 }
 
 // }}}
+div.crm-container .vt-donate-other-comment {
+  label {
+    @include grey-smaller-heading-1;
+    font-weight: bold;
+  }
+}
+.vt-donate-form .vt-payment-box {
+  margin-top: 4rem;
+}
 
 // GDPR fields {{{
 .vt-gdpr {
