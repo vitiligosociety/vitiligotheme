@@ -382,7 +382,7 @@
       // We'll use this existing container for the address fields.
       var $billingAddressSection = $billingBlock.find('.billing_name_address-section');
 
-      $billingBlock.find('.credit_card_number-section').after($('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>Para on benefits of DD.</div><i class="vt-icon vt-icon--padlock"></i></div>'));
+      $billingBlock.find('.credit_card_number-section').after($('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>If you have a UK bank account please consider using Direct Debit, we are charged a lesser fee and more of your money goes to supporting those with Vitiligo.</div><i class="vt-icon vt-icon--padlock"></i></div>'));
       // Strip out some CiviCRM classes that give us grief.
       $billingBlock.find('.crm-section').removeClass('crm-section');
       $billingBlock.find('div.label').removeClass('label').addClass('vt-payment-label');
