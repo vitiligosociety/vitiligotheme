@@ -1,7 +1,13 @@
 <?php
-const VITILIGO_MEMBERSHIP_FORM_ID = '1';
-const VITILIGO_DONATION_FORM_ID   = '2';
-const VITILIGO_MEMBERSHIP_RENEWAL_FORM_ID = '6';
+if (!defined('VITILIGO_MEMBERSHIP_FORM_ID')) {
+  define('VITILIGO_MEMBERSHIP_FORM_ID', '1');
+}
+if (!defined('VITILIGO_DONATION_FORM_ID')) {
+  define('VITILIGO_DONATION_FORM_ID', '2');
+}
+if (!defined('VITILIGO_MEMBERSHIP_RENEWAL_FORM_ID')) {
+  define('VITILIGO_MEMBERSHIP_RENEWAL_FORM_ID', '6');
+}
 
 require_once 'vitiligotheme.civix.php';
 use CRM_Vitiligotheme_ExtensionUtil as E;
