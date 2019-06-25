@@ -1,44 +1,22 @@
 # vitiligotheme
 
-![Screenshot](/images/screenshot.png)
-
-(*FIXME: In one or two paragraphs, describe what the extension does and why one would download it. *)
-
-The extension is licensed under [AGPL-3.0](LICENSE.txt).
+Custom theme of donation/membership forms. Note that this extension is
+hard-coded to specific forms; if they change this extension will probably need
+updating.
 
 ## Requirements
 
-* PHP v5.4+
-* CiviCRM (*FIXME: Version number*)
+- PHP v7.0+
+- CiviCRM 5.13+
 
-## Installation (Web UI)
+## Installing
 
-This extension has not yet been published for installation via the web UI.
+Add in the CiviCRM extensions directory, then enable it through the Manage Extensions page.
 
-## Installation (CLI, Zip)
 
-Sysadmins and developers may download the `.zip` file for this extension and
-install it with the command-line tool [cv](https://github.com/civicrm/cv).
+## Author, License
 
-```bash
-cd <extension-dir>
-cv dl vitiligotheme@https://github.com/FIXME/vitiligotheme/archive/master.zip
-```
+This was written by Rich Lott / Artful Robot.
 
-## Installation (CLI, Git)
+The extension is licensed under [AGPL-3.0](LICENSE.txt).
 
-Sysadmins and developers may clone the [Git](https://en.wikipedia.org/wiki/Git) repo for this extension and
-install it with the command-line tool [cv](https://github.com/civicrm/cv).
-
-```bash
-git clone https://github.com/FIXME/vitiligotheme.git
-cv en vitiligotheme
-```
-
-## Usage
-
-(* FIXME: Where would a new user navigate to get started? What changes would they see? *)
-
-## Known Issues
-
-(* FIXME *)

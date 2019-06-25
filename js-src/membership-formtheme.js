@@ -146,10 +146,20 @@
     createStdFields(a.label, [a.input, null]);
 
     // Ethnicity
-    a = parseSelect2CiviField('#editrow-custom_14');
-    b = parseStdCiviField('#editrow-custom_15');
-    b.input.attr('placeholder', 'Other'); // Q. how to be reactive to an existing select2 element? @todo
-    createStdFields(a.label, [a.input, b.input]);
+    var ethnicitySelect = parseSelect2CiviField('#editrow-custom_14');
+    var ethnicityOther = parseStdCiviField('#editrow-custom_15');
+    function showHideEthnicityOther() {
+      if (ethnicitySelect.input.find('select').val() == 18) {
+        ethnicityOther.input.show();
+      }
+      else {
+        ethnicityOther.input.hide().find('input').val("");
+      }
+    }
+    ethnicitySelect.input.on('change', showHideEthnicityOther);
+    ethnicityOther.input.attr('placeholder', 'Other');
+    createStdFields(ethnicitySelect.label, [ethnicitySelect.input, ethnicityOther.input]);
+    showHideEthnicityOther();
 
     a = parseRadiosIntoSelect('#editrow-gender_id');
     createStdFields(a.label, [a.input, null]);
@@ -189,44 +199,48 @@
   function membershipAmountButtons() {
     var a, b;
     var $priceset = $('#priceset').hide();
-    // @todo match these with price set ids.
-    const map = [
-      ['#price_7_7', '£25'],
-      ['#price_7_a', '£50'],
-      ['#price_7_b', '£100'],
-      ['#price_7_c', '£250'],
-      ['#price_7_d', '£500'],
-    ];
     const $container = $('<div class="vt-container vt-amount-buttons"></div>');
-    // @todo set defaults.
-    var selectedOption;
+    var $selectedOption;
     function showButtonAsSelected($btn) {
       $btn.addClass('selected').parent().siblings().find('button').removeClass('selected');
     }
-    map.forEach(m => {
+    $priceset.find('input[data-amount]').each(function() {
+      var amount = this.dataset.amount;
+      const $original_input=$(this);
+      // Reformat amount.
+      var m = amount.match(/(\d+)(?:(\.\d\d)0*)?$/);
+      if (!m) return;
+
+      // @todo remove this, it's just while we apparently need to keep the £26 option
+      // but not display it.
+      if (m[1] === '26') return;
+
+      if (m[2] === '.00') m[2] = '';
+
       const $btn = $('<button/>')
-        .attr('data-input-selector', m[0])
-        .text(m[1])
+        .text(m[1]+m[2])
         .on('click', function(e) {
           e.preventDefault();
-          $(m[0]).click();
-          showButtonAsSelected($(this));
+          $original_input.click();
+          showButtonAsSelected($original_input);
         });
+      // Save a reference to the button on the input.
+      $original_input[0].vitButton = $btn;
+
       $container.append(
         $('<div class="vt-amount-buttons__button"></div>')
         .append($btn)
       );
-      if ($(m[0]).is(':checked')) {
-        selectedOption= m[0];
+      if ($original_input.is(':checked')) {
+        $selectedOption= $btn;
       }
     });
-    if (!selectedOption) {
-      // @todo set this to actual default price set id.
-      // Nb. might be different for membership/donation.
-      selectedOption = '#price_7_b';
+    if (!$selectedOption) {
+      // Pre-select the 2nd option if no option selected.
+      $selectedOption = $priceset.find('input[data-amount]')[1].vitButton;
     }
     // Initial show selected button.
-    showButtonAsSelected($container.find('button[data-input-selector="' + selectedOption + '"]'));
+    showButtonAsSelected($selectedOption);
 
     $niceForm.append('<h3 class="vt-heading vt-heading--smaller-grey1">My contribution</h3>');
     $niceForm.append($container);
@@ -274,7 +288,6 @@
       return;
     }
 
-    console.log("selectPaymentMethod running ", selected_processor_id);
     if (payment_processor_ids.GoCardless.indexOf(selected_processor_id) > -1) {
       $payment_processor_switch_wrapper.addClass('selected-dd').removeClass('selected-c');
     }
