@@ -1,6 +1,8 @@
 ((CRM, $) => $(() => {
 
 'use strict';
+  // change for empty function.
+  const vtDebug = 1 ? console.log : () => {};
 
   $('body').addClass('vitiligo-theme-civicrm-page');
 
@@ -12,9 +14,11 @@
   if (!$form.length) {
     return;
   }
+  vtDebug("found form ", $form);
 
   const $niceForm = $('<div/>');
   $form.prepend($niceForm);
+  vtDebug("new form", $niceForm);
 
   function parseStdCiviField(selector) {
     var $rowNode = $form.find(selector).hide();
@@ -259,6 +263,7 @@
     $niceForm.append($('<div class="vt-container"/>').append(a.label, a.input), '<hr/>');
   }
   const $payment_processor_selection_ui = $form.find("fieldset.payment_options-group");
+  vtDebug('payment processor selection ui', $payment_processor_selection_ui);
   var $payment_processor_switch_wrapper; // set in paymentDetails()
   function paymentDetails() {
     $payment_processor_selection_ui.hide();
@@ -270,11 +275,17 @@
       <div class="vt-payment-box__payby">Pay by:</div>
       <div class="vt-payment-box__switch-container">
         <div class="vt-payment-box__switch-wrapper">
-          <label class="vt-payment-box__dd" for="CIVICRM_QFID_11_payment_processor_id">Direct Debit</label>
-          <label class="vt-payment-box__c" for="CIVICRM_QFID_9_payment_processor_id">Card</label>
+          <label class="vt-payment-box__dd" >Direct Debit</label>
+          <label class="vt-payment-box__c"  >Card</label>
         </div>
       </div>
       `);
+    // link the new labels with the old inputs.
+    $header.find('label.vt-payment-box__dd')
+      .attr('for', findPaymentProcessorRadioForProcessorType('GoCardless').id);
+    $header.find('label.vt-payment-box__c')
+      .attr('for', findPaymentProcessorRadioForProcessorType('Stripe').id);
+
     const $content = $('<div class="vt-payment-box__content"/>');
     $payment_processor_switch_wrapper = $header.find('.vt-payment-box__switch-wrapper');
     $paymentDetails.append($header, $content);
@@ -525,14 +536,20 @@
   // Returns DOM node.
   function findPaymentProcessorRadioForProcessorType(processorType) {
     var processorIds = payment_processor_ids[processorType] || [];
+    vtDebug("Looking for processor type", processorType, " matching ids:", processorIds);
 
     var found;
     $('fieldset.payment_options-group [name="payment_processor_id"]').each(function() {
       var m =this.id.match(/CIVICRM_QFID_(\d+)_payment_processor_id$/);
       if (m && m.length === 2 && processorIds.indexOf(m[1])>-1) {
+        vtDebug("Found match", this);
         found = this;
       }
+      else {
+        vtDebug("No match", this);
+      }
     });
+    vtDebug("processor find result", found);
 
     return found;
   }

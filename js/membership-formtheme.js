@@ -4,6 +4,9 @@
   return $(function () {
 
     ;;
+    // change for empty function.
+
+    var vtDebug = 1 ? console.log : function () {};
 
     $('body').addClass('vitiligo-theme-civicrm-page');
 
@@ -15,9 +18,11 @@
     if (!$form.length) {
       return;
     }
+    vtDebug("found form ", $form);
 
     var $niceForm = $('<div/>');
     $form.prepend($niceForm);
+    vtDebug("new form", $niceForm);
 
     function parseStdCiviField(selector) {
       var $rowNode = $form.find(selector).hide();
@@ -232,12 +237,17 @@
       $niceForm.append($('<div class="vt-container"/>').append(a.label, a.input), '<hr/>');
     }
     var $payment_processor_selection_ui = $form.find("fieldset.payment_options-group");
+    vtDebug('payment processor selection ui', $payment_processor_selection_ui);
     var $payment_processor_switch_wrapper; // set in paymentDetails()
     function paymentDetails() {
       $payment_processor_selection_ui.hide();
 
       var $paymentDetails = $('<div class="vt-payment-box"/>');
-      var $header = $('<div class="vt-payment-box__header">\n      <div class="vt-payment-box__gbp"><i class="vt-icon vt-icon--gbp-circle"></i></div>\n      <h3 class="vt-payment-box__heading">Your payment details</h3>\n      <div class="vt-payment-box__payby">Pay by:</div>\n      <div class="vt-payment-box__switch-container">\n        <div class="vt-payment-box__switch-wrapper">\n          <label class="vt-payment-box__dd" for="CIVICRM_QFID_11_payment_processor_id">Direct Debit</label>\n          <label class="vt-payment-box__c" for="CIVICRM_QFID_9_payment_processor_id">Card</label>\n        </div>\n      </div>\n      ');
+      var $header = $('<div class="vt-payment-box__header">\n      <div class="vt-payment-box__gbp"><i class="vt-icon vt-icon--gbp-circle"></i></div>\n      <h3 class="vt-payment-box__heading">Your payment details</h3>\n      <div class="vt-payment-box__payby">Pay by:</div>\n      <div class="vt-payment-box__switch-container">\n        <div class="vt-payment-box__switch-wrapper">\n          <label class="vt-payment-box__dd" >Direct Debit</label>\n          <label class="vt-payment-box__c"  >Card</label>\n        </div>\n      </div>\n      ');
+      // link the new labels with the old inputs.
+      $header.find('label.vt-payment-box__dd').attr('for', findPaymentProcessorRadioForProcessorType('GoCardless').id);
+      $header.find('label.vt-payment-box__c').attr('for', findPaymentProcessorRadioForProcessorType('Stripe').id);
+
       var $content = $('<div class="vt-payment-box__content"/>');
       $payment_processor_switch_wrapper = $header.find('.vt-payment-box__switch-wrapper');
       $paymentDetails.append($header, $content);
@@ -462,14 +472,19 @@
     // Returns DOM node.
     function findPaymentProcessorRadioForProcessorType(processorType) {
       var processorIds = payment_processor_ids[processorType] || [];
+      vtDebug("Looking for processor type", processorType, " matching ids:", processorIds);
 
       var found;
       $('fieldset.payment_options-group [name="payment_processor_id"]').each(function () {
         var m = this.id.match(/CIVICRM_QFID_(\d+)_payment_processor_id$/);
         if (m && m.length === 2 && processorIds.indexOf(m[1]) > -1) {
+          vtDebug("Found match", this);
           found = this;
+        } else {
+          vtDebug("No match", this);
         }
       });
+      vtDebug("processor find result", found);
 
       return found;
     }
