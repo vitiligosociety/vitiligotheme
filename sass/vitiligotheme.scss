@@ -13,10 +13,11 @@ $colour_grey_payment_box_opacity_applied: #E3E3E8;
 $box_shadow_1: 2px 3px 8px rgba(54, 56, 100, 0.32821);
 $box_shadow_2:  1px 2px 4px rgba(0, 0, 0, 0.218807);
 
-// @todo remove this.
-body {
-  background:#f4f6f4;
-  font-family: Arimo, sans-serif;
+body.vitiligo-theme-civicrm-page {
+  div.core.paragraph {
+    width: 100%;
+    max-width: 1000px;
+  }
 }
 
 // CiviCRM resets / removals {{{
@@ -149,6 +150,8 @@ div.crm-container .vt-label label {
 			background: $colour_not_quite_white;
 		}
     hr {
+      height: 1px;
+      border: medium none;
       background-color: #ddd;
       margin: 0.75rem 0;
     }

@@ -1,7 +1,7 @@
 @charset "UTF-8";
-body {
-  background: #f4f6f4;
-  font-family: Arimo, sans-serif; }
+body.vitiligo-theme-civicrm-page div.core.paragraph {
+  width: 100%;
+  max-width: 1000px; }
 
 #crm-container > .crm-title,
 #printer-friendly {
@@ -40,7 +40,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=25623"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=93334"); }
 
 .vt-icon {
   display: inline-block; }
@@ -101,6 +101,8 @@ div.crm-container .vt-label label {
   #crm-container.crm-public form#Main input[type="text"], #crm-container.crm-public form#Main textarea, #crm-container.crm-public form#Main select {
     background: #FDFDFD; }
   #crm-container.crm-public form#Main hr {
+    height: 1px;
+    border: medium none;
     background-color: #ddd;
     margin: 0.75rem 0; }
   #crm-container.crm-public form#Main input[type="text"] ::-webkit-input-placeholder, #crm-container.crm-public form#Main textarea ::-webkit-input-placeholder {

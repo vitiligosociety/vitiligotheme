@@ -2,8 +2,7 @@
 
 'use strict';
 
-  // Bodge for now: @todo
-  $('head').append('<link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">');
+  $('body').addClass('vitiligo-theme-civicrm-page');
 
   // The config placeholder here is replaced by php. Do not alter the line below at all.
   var payment_processor_ids = {};//%config%
@@ -222,7 +221,7 @@
         .on('click', function(e) {
           e.preventDefault();
           $original_input.click();
-          showButtonAsSelected($original_input);
+          showButtonAsSelected($btn);
         });
       // Save a reference to the button on the input.
       $original_input[0].vitButton = $btn;
@@ -368,9 +367,7 @@
     // This function deals with re-presenting card payment fields in the billing-payment-block
     const vitiligoTweakDynamicPaymentFields = function() {
       observer.disconnect();
-      console.log("Tweaking form ...");
       reconfigurePaymentBlock();
-      console.log("End tweaks. Showing payment block again and reconnecting observer");
       $original_billing_payment_block.fadeIn('fast');
       observer.observe(wrapper, config);
     };
@@ -388,7 +385,6 @@
       }
 
       if (needToTweakUi) {
-        console.log("Found billing-payment-block in mutation targets", mutationsList);
         // Note CiviCRM ends up creating nested #billing-payment-block elements :-(
 
         // Hide the element while we build this and mess it around.
@@ -416,7 +412,7 @@
     $original_billing_payment_block.find('#billing-payment-block').attr('id', 'nested-billing-payment-block');
     const $billingBlock = $original_billing_payment_block;
     if ($billingBlock[0].vtTweaksDone) {
-      console.log("Already tweaked it.");
+      //console.log("Already tweaked it.");
     }
     $billingBlock[0].vtTweaksDone = true;
     // We'll use this existing container for the address fields.
