@@ -171,9 +171,11 @@
         <a class="vt-donation-blurb-readmore" href="/membership" >Read more</a>
       </div>
       <div class="vt-donation-amount-blurb-text">
-        <p>This copy will explain what their membership contribution does. Apparently it's 3-4 paragraphs, which is a lot.</p>
-        <p>Apparently it's 3-4 paragraphs, which is a lot. This copy will explain what their membership contribution does. </p>
-        <p>Apparently it's 3-4 paragraphs, which is a lot.</p>
+        <p>We are grateful for all contributions made to The Vitiligo Society
+        to help support our cause. Consider becoming a member to get the latest
+        Vitiligo news straight to your inbox, access premium content, early
+        bird registration to conferences and events, and special discounts with our
+        great partners.</p>
       </div>
     </div>`);
     const amount = parseStdCiviField('.other_amount-section');
