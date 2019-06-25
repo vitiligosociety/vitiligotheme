@@ -188,9 +188,16 @@
       </div>
     </div>`);
     const amount = parseStdCiviField('.other_amount-section');
+    const $origInputAmount = $(amount.input);
+    const $vitAmount = $('<input type="text" />')
+      .on('blur keyup', (e) => {
+        // Copy the value to the original CiviCRM
+        $origInputAmount.val($vitAmount.val());
+        $origInputAmount.trigger('keyup', e);
+      });
     $amount.append('<h3 class="vt-heading" >Your donation</h3>',
       amount.label.text('I would like to give'),
-      $('<div class="vt-donation-amount-input-wrapper"/>').append(amount.input)
+      $('<div class="vt-donation-amount-input-wrapper"/>').append($vitAmount)
       );
     $container.append($amount, $blurb);
     $niceForm.append($container);
@@ -511,6 +518,8 @@
   }
   function donateMovePaymentBlock() {
     reconfigurePaymentBlock();
+    $original_billing_payment_block.show();
+    console.log($original_billing_payment_block);
   }
   // Returns DOM node.
   function findPaymentProcessorRadioForProcessorType(processorType) {

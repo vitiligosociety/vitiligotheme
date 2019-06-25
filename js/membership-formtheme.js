@@ -170,7 +170,13 @@
       var $amount = $('<div class="vt-donation-amount-wrapper"></div>');
       var $blurb = $('<div class="vt-donation-amount-blurb">\n      <div class="vt-donation-amount-blurb-header">\n        <div class="vt-donation-blurb-title">\n          <i class="vt-icon vt-icon--member"></i>\n          Membership is the best way to support us\n        </div>\n        <a class="vt-donation-blurb-readmore" href="/membership" >Read more</a>\n      </div>\n      <div class="vt-donation-amount-blurb-text">\n        <p>We are grateful for all contributions made to The Vitiligo Society\n        to help support our cause. Consider becoming a member to get the latest\n        Vitiligo news straight to your inbox, access premium content, early\n        bird registration to conferences and events, and special discounts with our\n        great partners.</p>\n      </div>\n    </div>');
       var amount = parseStdCiviField('.other_amount-section');
-      $amount.append('<h3 class="vt-heading" >Your donation</h3>', amount.label.text('I would like to give'), $('<div class="vt-donation-amount-input-wrapper"/>').append(amount.input));
+      var $origInputAmount = $(amount.input);
+      var $vitAmount = $('<input type="text" />').on('blur keyup', function (e) {
+        // Copy the value to the original CiviCRM
+        $origInputAmount.val($vitAmount.val());
+        $origInputAmount.trigger('keyup', e);
+      });
+      $amount.append('<h3 class="vt-heading" >Your donation</h3>', amount.label.text('I would like to give'), $('<div class="vt-donation-amount-input-wrapper"/>').append($vitAmount));
       $container.append($amount, $blurb);
       $niceForm.append($container);
     }
@@ -449,6 +455,8 @@
     }
     function donateMovePaymentBlock() {
       reconfigurePaymentBlock();
+      $original_billing_payment_block.show();
+      console.log($original_billing_payment_block);
     }
     // Returns DOM node.
     function findPaymentProcessorRadioForProcessorType(processorType) {
