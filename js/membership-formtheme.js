@@ -311,7 +311,7 @@
       var $submitButtonWrapper = $form.find('#crm-submit-buttons input').parent().hide();
 
       var $niceSubmitButton = $('<button class="vt-submit"/>').text(text).on('click', function (e) {
-        e.preventDefault();$submitButtonWrapper.find('input[type="submit"]').trigger('click');
+        e.preventDefault();$submitButtonWrapper.find('input[type="submit"]').trigger('click', e);
       });
 
       $niceForm.append($niceSubmitButton);
@@ -394,6 +394,7 @@
       // Reconfigure payment block.
       // Remove the non-unique id from the billing-payment-block.
       $original_billing_payment_block.find('#billing-payment-block').attr('id', 'nested-billing-payment-block');
+
       var $billingBlock = $original_billing_payment_block;
       if ($billingBlock[0].vtTweaksDone) {
         //console.log("Already tweaked it.");
@@ -404,7 +405,7 @@
 
       $billingBlock.find('.credit_card_number-section').after($('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>If you have a UK bank account please consider using Direct Debit, we are charged a lesser fee and more of your money goes to supporting those with Vitiligo.</div><i class="vt-icon vt-icon--padlock"></i></div>'));
       // Strip out some CiviCRM classes that give us grief.
-      $billingBlock.find('.crm-section').removeClass('crm-section');
+      // We can't remove this, Stripe depends on it: $billingBlock.find('.crm-section').removeClass('crm-section');
       $billingBlock.find('div.label').removeClass('label').addClass('vt-payment-label');
       $billingBlock.find('div.content').removeClass('content').addClass('vt-container');
       $billingBlock.find('.clear').remove();
@@ -535,4 +536,3 @@
     }
   });
 })(CRM, CRM.$);
-//# sourceMappingURL=membership-formtheme.js.map
