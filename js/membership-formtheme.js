@@ -21,7 +21,7 @@
     vtDebug("found form ", $form);
 
     var $niceForm = $('<div/>');
-    $form.prepend($niceForm);
+    $form.append($niceForm);
     vtDebug("new form", $niceForm);
 
     function parseStdCiviField(selector) {
@@ -206,7 +206,7 @@
 
         if (m[2] === '.00') m[2] = '';
 
-        var $btn = $('<button/>').text(m[1] + m[2]).on('click', function (e) {
+        var $btn = $('<button/>').text('£' + m[1] + m[2]).on('click', function (e) {
           e.preventDefault();
           $original_input.click();
           showButtonAsSelected($btn);

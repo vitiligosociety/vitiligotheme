@@ -225,6 +225,21 @@ div.crm-container .vt-label label {
   // }}}
 }
 
+// Nicer CiviCRM Messages {{{
+.crm-container .status {
+	background-color: $colour_teal;
+	border: medium none;
+  padding: 1rem;
+	color: white;
+  a {
+    &:link, &:visited {
+      color: white;
+      text-decoration: underline;
+    }
+  }
+}
+// }}}
+
 // Select2 overrides - not used {{{
 //   .select2-container .select2-choice {
 //     border:none;
