@@ -209,6 +209,8 @@
         var $btn = $('<button/>').text('£' + m[1] + m[2]).on('click', function (e) {
           e.preventDefault();
           $original_input.click();
+          // CiviCRM shows this, so we need to hide it!
+          $payment_processor_selection_ui.hide();
           showButtonAsSelected($btn);
         });
         // Save a reference to the button on the input.
