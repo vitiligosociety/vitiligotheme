@@ -101,7 +101,7 @@
 
     // Add name fields.
     var first_name = parseStdCiviField('#editrow-first_name');
-    first_name.label.text('Full Name');
+    first_name.label.html('Full Name<span class="crm-marker" title="This field is required.">*</span>');
     first_name.input.attr('placeholder', 'First name');
     var last_name = parseStdCiviField('#editrow-last_name');
     last_name.input.attr('placeholder', 'Last name');
@@ -121,7 +121,7 @@
     // address.
     $niceForm.append('<hr/>');
     a = parseStdCiviField('#editrow-street_address-Primary');
-    a.label.text('Your address');
+    a.label.html('Your address<span class="crm-marker" title="This field is required.">*</span>');
     a.input.attr('placeholder', 'Address line 1*');
     createStdFields(a.label, [a.input]);
     // ...
@@ -206,6 +206,16 @@
     $container.append($amount, $blurb);
     $niceForm.append($container);
   }
+  function membershipIntro() {
+    const $civicrm_content = $form.find('#membership #priceset fieldset');
+    $niceForm.append(
+      $('<div class="vt-proposition-box"/>')
+      .append(
+        $('<h1 class="vt-proposition-box__header"/>').text($civicrm_content.find('>legend').text()),
+        $('<div class="vt-proposition-box__body"/>').append($civicrm_content.find('#membership-intro'))
+      )
+    );
+  }
   function membershipAmountButtons() {
     var a, b;
     var $priceset = $('#priceset').hide();
@@ -254,7 +264,7 @@
     // Initial show selected button.
     showButtonAsSelected($selectedOption);
 
-    $niceForm.append('<h3 class="vt-heading vt-heading--smaller-grey1">My contribution</h3>');
+    $niceForm.append('<h2 class="vt-heading vt-heading--blue">Your annual contribution</h2>');
     $niceForm.append($container);
     $niceForm.append('<hr/>');
   }
@@ -294,6 +304,11 @@
       .attr('for', stripeRadio ? stripeRadio.id : null);
 
     const $content = $('<div class="vt-payment-box__content"/>');
+    $content.append(`
+      <div class="vt-payment-dd-message">
+        <div class="vt-payment-dd-message__inner dashed"><i class="vt-icon vt-icon--info"></i>You will be asked to securely enter your bank details on the next page to initiate the Direct Debit mandate.</div>
+        <i class="vt-icon vt-icon--padlock"></i>
+      </div>`);
     $payment_processor_switch_wrapper = $header.find('.vt-payment-box__switch-wrapper');
     $paymentDetails.append($header, $content);
     $content.append($form.find('#billing-payment-block'));
@@ -308,15 +323,18 @@
 
     // Card selected if we dno't have a choice. (Donate page)
     if (typeof(selected_processor_id) === 'undefined') {
-      $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd');
+      $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd')
+        .closest('.vt-payment-box').addClass('selected-c').removeClass('selected-dd');
       return;
     }
 
     if (payment_processor_ids.GoCardless.indexOf(selected_processor_id) > -1) {
-      $payment_processor_switch_wrapper.addClass('selected-dd').removeClass('selected-c');
+      $payment_processor_switch_wrapper.addClass('selected-dd').removeClass('selected-c')
+        .closest('.vt-payment-box').addClass('selected-dd').removeClass('selected-c');
     }
     else {
-      $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd');
+      $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd')
+        .closest('.vt-payment-box').addClass('selected-c').removeClass('selected-dd');
     }
   }
   function giftAid() {
@@ -343,8 +361,8 @@
     // Now the grid layout
     const $layout = $('<div class="vt-giftaid-layout-1"/>');
     const $inputs_container = $('<div class="vt-giftaid-inputs" />');
-    $inputs_container.append($yes, $yes_label, $no, $no_label);
-    $layout.append($inputs_container, $('<div class="vt-giftaid-declaration"/>').append($declaration));
+    $inputs_container.append('<div class="vt-giftaid-declaration--label vt-label"><label>Can we reclaim gift aid on your donation?</label></div>', $yes, $yes_label, $no, $no_label);
+    $layout.append($inputs_container, $('<div class="vt-giftaid-declaration"/>').append('<i class="vt-icon vt-icon--info"></i>', $declaration));
     $container.append($layout);
     $niceForm.append($container, '<hr/>');
 
@@ -596,6 +614,7 @@
   if (form_name === 'membership') {
 
     $niceForm.addClass('vt-membership-form');
+    membershipIntro();
     membershipAmountButtons();
     yourInformation();
     whyJoining();
