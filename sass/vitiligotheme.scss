@@ -16,7 +16,8 @@ $box_shadow_2:  1px 2px 4px rgba(0, 0, 0, 0.218807);
 body.vitiligo-theme-civicrm-page {
   div.core.paragraph {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1032px;
+    padding:0 1rem;
   }
 }
 
@@ -311,7 +312,7 @@ div.crm-container .vt-label label {
   padding: 0 1rem;
 }
 .vt-payment-box__gbp {
-  padding:1.2rem 0 0 1rem;
+  padding:1.2rem 0 0 0;
 }
 // Circle £ {{{
 .vt-icon--gbp-circle {
@@ -341,6 +342,7 @@ $payment_cc_width:2.8rem;
   margin-left: 1rem;
   padding:1rem 1rem 1rem 0;
   width:($payment_dd_width + $payment_cc_width + 5.8rem);
+  grid-column: 1 / span 2;
 }
 // To override div.crm-container label
 div.crm-container .vt-payment-box__switch-container label {
@@ -437,7 +439,7 @@ div.crm-container .vt-payment-box__switch-container label {
     text-indent:-99999px;
   }
 }
-.credit_card_info-section {
+#crm-container.crm-public .credit_card_info-section {
 
 
   display: flex;
@@ -590,6 +592,7 @@ h3.vt-heading {
 }
 .vt-giftaid-inputs {
   margin-bottom:1rem;
+  margin-top:1rem;
   input, label { display: inline-block; }
   label { margin-right: 2rem; color: black; font-size:(18rem/16);}
 }
@@ -604,6 +607,7 @@ h3.vt-heading {
   }
   .vt-giftaid-inputs {
     column: 1;
+    margin-top:0;
   }
   .vt-giftaid-declaration {
     column: 2;

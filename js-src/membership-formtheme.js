@@ -416,7 +416,7 @@
           delayed = false;
         }
         // Allow some time for things to settle.
-        delayed = window.setTimeout(vitiligoTweakDynamicPaymentFields, 500);
+        delayed = window.setTimeout(vitiligoTweakDynamicPaymentFields, 300);
       }
     };
 

@@ -1,7 +1,8 @@
 @charset "UTF-8";
 body.vitiligo-theme-civicrm-page div.core.paragraph {
   width: 100%;
-  max-width: 1000px; }
+  max-width: 1032px;
+  padding: 0 1rem; }
 
 #crm-container > .crm-title,
 #printer-friendly {
@@ -40,7 +41,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=32984"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=37594"); }
 
 .vt-icon {
   display: inline-block; }
@@ -223,7 +224,7 @@ div.crm-container .vt-label label {
   padding: 0 1rem; }
 
 .vt-payment-box__gbp {
-  padding: 1.2rem 0 0 1rem; }
+  padding: 1.2rem 0 0 0; }
 
 .vt-icon--gbp-circle {
   display: block; }
@@ -249,7 +250,10 @@ div.crm-container .vt-label label {
 .vt-payment-box__switch-container {
   margin-left: 1rem;
   padding: 1rem 1rem 1rem 0;
-  width: 15.6rem; }
+  width: 15.6rem;
+  -ms-grid-column-span: 2;
+  -ms-grid-column: 1;
+      grid-column: 1 / span 2; }
 
 div.crm-container .vt-payment-box__switch-container label {
   font-size: 19px;
@@ -346,7 +350,7 @@ div.crm-container .vt-payment-box__switch-container label {
     overflow: hidden;
     text-indent: -99999px; }
 
-.credit_card_info-section {
+#crm-container.crm-public .credit_card_info-section {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -354,16 +358,16 @@ div.crm-container .vt-payment-box__switch-container label {
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
   margin: 0 -2rem; }
-  .credit_card_info-section .cvv2-icon,
-  .credit_card_info-section .credit_card_type-section {
+  #crm-container.crm-public .credit_card_info-section .cvv2-icon,
+  #crm-container.crm-public .credit_card_info-section .credit_card_type-section {
     display: none; }
-  .credit_card_info-section .credit_card_number-section,
-  .credit_card_info-section .direct-debit-benefits-para,
-  .credit_card_info-section .credit_card_exp_date-section,
-  .credit_card_info-section .cvv2-section {
+  #crm-container.crm-public .credit_card_info-section .credit_card_number-section,
+  #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para,
+  #crm-container.crm-public .credit_card_info-section .credit_card_exp_date-section,
+  #crm-container.crm-public .credit_card_info-section .cvv2-section {
     padding: 0 2rem;
     margin-bottom: 2rem; }
-  .credit_card_info-section .credit_card_number-section {
+  #crm-container.crm-public .credit_card_info-section .credit_card_number-section {
     margin-bottom: 1rem;
     -webkit-flex: 0 1 24rem;
         -ms-flex: 0 1 24rem;
@@ -371,7 +375,7 @@ div.crm-container .vt-payment-box__switch-container label {
     -webkit-order: 1;
         -ms-flex-order: 1;
             order: 1; }
-  .credit_card_info-section .direct-debit-benefits-para {
+  #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para {
     position: relative;
     margin-bottom: 1rem;
     -webkit-flex: 1 0 50%;
@@ -381,16 +385,16 @@ div.crm-container .vt-payment-box__switch-container label {
         -ms-flex-order: 2;
             order: 2;
     padding-right: 4rem; }
-    .credit_card_info-section .direct-debit-benefits-para .dashed {
+    #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para .dashed {
       padding-left: 4rem; }
-      .credit_card_info-section .direct-debit-benefits-para .dashed .vt-icon {
+      #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para .dashed .vt-icon {
         position: absolute;
         margin-left: -3rem; }
-    .credit_card_info-section .direct-debit-benefits-para .vt-icon--padlock {
+    #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para .vt-icon--padlock {
       position: absolute;
       top: 0;
       right: 2rem; }
-  .credit_card_info-section .credit_card_exp_date-section {
+  #crm-container.crm-public .credit_card_info-section .credit_card_exp_date-section {
     -webkit-order: 3;
         -ms-flex-order: 3;
             order: 3;
@@ -398,17 +402,17 @@ div.crm-container .vt-payment-box__switch-container label {
         -ms-flex: 0 0 auto;
             flex: 0 0 auto;
     max-width: 100%; }
-  .credit_card_info-section .cvv2-section {
+  #crm-container.crm-public .credit_card_info-section .cvv2-section {
     -webkit-order: 4;
         -ms-flex-order: 4;
             order: 4;
     -webkit-flex: 0 0 auto;
         -ms-flex: 0 0 auto;
             flex: 0 0 auto; }
-  .credit_card_info-section .vt-card-expiry {
+  #crm-container.crm-public .credit_card_info-section .vt-card-expiry {
     display: inline-block;
     margin-right: 1rem; }
-    .credit_card_info-section .vt-card-expiry select {
+    #crm-container.crm-public .credit_card_info-section .vt-card-expiry select {
       margin-bottom: 0.5rem; }
 
 .crm-container .billing_name_address-group > legend {
@@ -494,7 +498,8 @@ h3.vt-heading {
     color: #800; }
 
 .vt-giftaid-inputs {
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem;
+  margin-top: 1rem; }
   .vt-giftaid-inputs input, .vt-giftaid-inputs label {
     display: inline-block; }
   .vt-giftaid-inputs label {
@@ -515,7 +520,8 @@ h3.vt-heading {
     -webkit-column-gap: 1rem;
             column-gap: 1rem; }
   .vt-giftaid-inputs {
-    column: 1; }
+    column: 1;
+    margin-top: 0; }
   .vt-giftaid-declaration {
     column: 2; } }
 
