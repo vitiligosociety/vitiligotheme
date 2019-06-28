@@ -267,8 +267,13 @@
   const $payment_processor_selection_ui = $form.find("fieldset.payment_options-group");
   vtDebug('payment processor selection ui', $payment_processor_selection_ui);
   var $payment_processor_switch_wrapper; // set in paymentDetails()
+  /*
+   * Do payment details.
+   */
   function paymentDetails() {
     $payment_processor_selection_ui.hide();
+    const gcRadio = findPaymentProcessorRadioForProcessorType('GoCardless');
+    const stripeRadio = findPaymentProcessorRadioForProcessorType('Stripe');
 
     const $paymentDetails = $('<div class="vt-payment-box"/>');
     const $header = $(`<div class="vt-payment-box__header">
@@ -284,9 +289,9 @@
       `);
     // link the new labels with the old inputs.
     $header.find('label.vt-payment-box__dd')
-      .attr('for', findPaymentProcessorRadioForProcessorType('GoCardless').id);
+      .attr('for', gcRadio ? gcRadio.id : null);
     $header.find('label.vt-payment-box__c')
-      .attr('for', findPaymentProcessorRadioForProcessorType('Stripe').id);
+      .attr('for', stripeRadio ? stripeRadio.id : null);
 
     const $content = $('<div class="vt-payment-box__content"/>');
     $payment_processor_switch_wrapper = $header.find('.vt-payment-box__switch-wrapper');

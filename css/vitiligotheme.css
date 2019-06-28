@@ -41,7 +41,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=37594"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=48189"); }
 
 .vt-icon {
   display: inline-block; }
@@ -580,7 +580,8 @@ h3.vt-heading {
   margin: 0 0 0.5rem; }
 
 .vt-donation-amount-input-wrapper {
-  position: relative; }
+  position: relative;
+  margin-bottom: 1rem; }
   .vt-donation-amount-input-wrapper:after {
     display: block;
     position: absolute;

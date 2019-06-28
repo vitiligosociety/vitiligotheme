@@ -241,14 +241,19 @@
     var $payment_processor_selection_ui = $form.find("fieldset.payment_options-group");
     vtDebug('payment processor selection ui', $payment_processor_selection_ui);
     var $payment_processor_switch_wrapper; // set in paymentDetails()
+    /*
+     * Do payment details.
+     */
     function paymentDetails() {
       $payment_processor_selection_ui.hide();
+      var gcRadio = findPaymentProcessorRadioForProcessorType('GoCardless');
+      var stripeRadio = findPaymentProcessorRadioForProcessorType('Stripe');
 
       var $paymentDetails = $('<div class="vt-payment-box"/>');
       var $header = $('<div class="vt-payment-box__header">\n      <div class="vt-payment-box__gbp"><i class="vt-icon vt-icon--gbp-circle"></i></div>\n      <h3 class="vt-payment-box__heading">Your payment details</h3>\n      <div class="vt-payment-box__payby">Pay by:</div>\n      <div class="vt-payment-box__switch-container">\n        <div class="vt-payment-box__switch-wrapper">\n          <label class="vt-payment-box__dd" >Direct Debit</label>\n          <label class="vt-payment-box__c"  >Card</label>\n        </div>\n      </div>\n      ');
       // link the new labels with the old inputs.
-      $header.find('label.vt-payment-box__dd').attr('for', findPaymentProcessorRadioForProcessorType('GoCardless').id);
-      $header.find('label.vt-payment-box__c').attr('for', findPaymentProcessorRadioForProcessorType('Stripe').id);
+      $header.find('label.vt-payment-box__dd').attr('for', gcRadio ? gcRadio.id : null);
+      $header.find('label.vt-payment-box__c').attr('for', stripeRadio ? stripeRadio.id : null);
 
       var $content = $('<div class="vt-payment-box__content"/>');
       $payment_processor_switch_wrapper = $header.find('.vt-payment-box__switch-wrapper');
