@@ -598,7 +598,7 @@ div.crm-container .vt-payment-box__switch-container label {
 .vt-amount-buttons {
   display:flex;
   flex-wrap:wrap;
-  margin:1rem -0.5rem;
+  margin:1rem -0.5rem 0;
 }
 .vt-amount-buttons__button {
   flex: 0 0 50%;
@@ -651,6 +651,7 @@ h3.vt-heading {
 .vt-your-info {
   display:flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   align-items: baseline;
   margin:2rem 0 1rem;
 
@@ -677,15 +678,16 @@ h3.vt-heading {
 }
 .vt-giftaid-declaration {
   @include dashed;
+  .vt-icon { display: none; }
+}
+.vt-giftaid-declaration--label {
+  margin-bottom:1rem;
+  display:block !important;
 }
 @media screen and (min-width: 768px) {
   .vt-giftaid-layout-1 {
     display: flex;
     justify-content: space-between;
-  }
-  .vt-giftaid-declaration--label {
-    margin-bottom:1rem;
-    display:block !important;
   }
   .vt-giftaid-inputs {
     flex: 0 1 24rem;
@@ -744,6 +746,12 @@ h3.vt-heading {
   &:visited,
   &:link { color: white; }
   &:hover { background-color: rgba(255, 255, 255, 0.2); }
+}
+// Swap order for mobiles.
+@media screen and (max-width: 767px) {
+  .vt-donation-layout { display: flex; flex-direction: column; }
+  .vt-donation-amount-blurb   { order: 1; }
+  .vt-donation-amount-wrapper { order: 2; }
 }
 .vt-donation-amount-blurb-text {
   @include dashed;

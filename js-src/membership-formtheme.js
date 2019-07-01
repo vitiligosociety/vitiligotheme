@@ -220,9 +220,13 @@
     var a, b;
     var $priceset = $('#priceset').hide();
     const $container = $('<div class="vt-container vt-amount-buttons"></div>');
+    const $equiv = $('<p class="vt-membership-amount-equiv"></p>');
     var $selectedOption;
     function showButtonAsSelected($btn) {
       $btn.addClass('selected').parent().siblings().find('button').removeClass('selected');
+      var equivAmount = Math.round(parseFloat($btn.data('amount'))/12*100)/100;
+      console.log("showButtonAsSelected", {btn: $btn, equivAmount});
+      $equiv.text(`Your annual contribution is equal to giving £${equivAmount} per month`);
     }
     $priceset.find('input[data-amount]').each(function() {
       var amount = this.dataset.amount;
@@ -238,6 +242,7 @@
       if (m[2] === '.00') m[2] = '';
 
       const $btn = $('<button/>')
+        .data('amount', m[1]+m[2])
         .text('£' + m[1]+m[2])
         .on('click', function(e) {
           e.preventDefault();
@@ -261,12 +266,14 @@
       // Pre-select the 2nd option if no option selected.
       $selectedOption = $priceset.find('input[data-amount]')[1].vitButton;
     }
-    // Initial show selected button.
-    showButtonAsSelected($selectedOption);
 
     $niceForm.append('<h2 class="vt-heading vt-heading--blue">Your annual contribution</h2>');
     $niceForm.append($container);
+    $niceForm.append($equiv);
     $niceForm.append('<hr/>');
+
+    // Initial show selected button.
+    showButtonAsSelected($selectedOption);
   }
   function whyJoining() {
     var a, b;

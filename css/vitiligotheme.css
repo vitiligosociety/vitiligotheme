@@ -49,7 +49,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=64831"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=96172"); }
 
 .vt-icon {
   display: inline-block; }
@@ -518,7 +518,7 @@ div.crm-container .vt-payment-box__switch-container label {
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
-  margin: 1rem -0.5rem; }
+  margin: 1rem -0.5rem 0; }
 
 .vt-amount-buttons__button {
   -webkit-flex: 0 0 50%;
@@ -569,6 +569,9 @@ h3.vt-heading {
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
   -webkit-align-items: baseline;
       -ms-flex-align: baseline;
           align-items: baseline;
@@ -602,6 +605,12 @@ h3.vt-heading {
 .vt-giftaid-declaration {
   border: dashed 1px #aaa;
   padding: 1rem; }
+  .vt-giftaid-declaration .vt-icon {
+    display: none; }
+
+.vt-giftaid-declaration--label {
+  margin-bottom: 1rem;
+  display: block !important; }
 
 @media screen and (min-width: 768px) {
   .vt-giftaid-layout-1 {
@@ -611,9 +620,6 @@ h3.vt-heading {
     -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
             justify-content: space-between; }
-  .vt-giftaid-declaration--label {
-    margin-bottom: 1rem;
-    display: block !important; }
   .vt-giftaid-inputs {
     -webkit-flex: 0 1 24rem;
         -ms-flex: 0 1 24rem;
@@ -670,6 +676,23 @@ h3.vt-heading {
     color: white; }
   .crm-container a.vt-donation-blurb-readmore:hover {
     background-color: rgba(255, 255, 255, 0.2); }
+
+@media screen and (max-width: 767px) {
+  .vt-donation-layout {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column; }
+  .vt-donation-amount-blurb {
+    -webkit-order: 1;
+        -ms-flex-order: 1;
+            order: 1; }
+  .vt-donation-amount-wrapper {
+    -webkit-order: 2;
+        -ms-flex-order: 2;
+            order: 2; } }
 
 .vt-donation-amount-blurb-text {
   border: dashed 1px #aaa;
