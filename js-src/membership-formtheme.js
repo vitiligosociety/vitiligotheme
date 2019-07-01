@@ -206,12 +206,32 @@
     $container.append($amount, $blurb);
     $niceForm.append($container);
   }
+  function addPropositionTripple() {
+    $niceForm.append(`<div class="vt-propositions-tripple">
+      <h2>Your money supports:</h2>
+      <ul class="vt-propositions-tripple__items">
+        <li class="vt-propositions-tripple__item">
+          <i class="vt-icon vt-icon--medical"></i>
+          <strong>Engagement</strong> with the medical profession
+        </li>
+        <li class="vt-propositions-tripple__item">
+          <i class="vt-icon vt-icon--magnify"></i>
+          <strong>Research</strong> into the causes and treatments for vitiligo
+        </li>
+        <li class="vt-propositions-tripple__item">
+          <i class="vt-icon vt-icon--speaker"></i>
+          <strong>Awareness</strong> increasing vitiligo awareness
+        </li>
+      </ul>
+      </div>`);
+  }
   function membershipIntro() {
     const $civicrm_content = $form.find('#membership #priceset fieldset');
+    // Replace the header provided by WP.
+    $('section.page-header h1').text($civicrm_content.find('>legend').text());
     $niceForm.append(
       $('<div class="vt-proposition-box"/>')
       .append(
-        $('<h1 class="vt-proposition-box__header"/>').text($civicrm_content.find('>legend').text()),
         $('<div class="vt-proposition-box__body"/>').append($civicrm_content.find('#membership-intro'))
       )
     );
@@ -225,8 +245,7 @@
     function showButtonAsSelected($btn) {
       $btn.addClass('selected').parent().siblings().find('button').removeClass('selected');
       var equivAmount = Math.round(parseFloat($btn.data('amount'))/12*100)/100;
-      console.log("showButtonAsSelected", {btn: $btn, equivAmount});
-      $equiv.text(`Your annual contribution is equal to giving £${equivAmount} per month`);
+      $equiv.html(`Your annual contribution is equal to giving <strong>£${equivAmount}</strong> per month`);
     }
     $priceset.find('input[data-amount]').each(function() {
       var amount = this.dataset.amount;
@@ -622,6 +641,7 @@
 
     $niceForm.addClass('vt-membership-form');
     membershipIntro();
+    addPropositionTripple();
     membershipAmountButtons();
     yourInformation();
     whyJoining();
@@ -631,6 +651,7 @@
     renameSubmitButton('Join');
     themeRadiosAndCheckboxes($('body'));
     watchPaymentFields();
+    $('#crm-submit-buttons').hide();
     // Remove left over elements.
     $('fieldset.crm-profile-name-name_and_address').remove();
   }
@@ -638,6 +659,7 @@
 
     $niceForm.addClass('vt-donate-form');
     donateAmountLayout();
+    addPropositionTripple();
     yourInformation();
     giftAid();
     donateOtherComments();
@@ -646,6 +668,7 @@
     gdprFields();
     renameSubmitButton('Donate');
     themeRadiosAndCheckboxes($('body'));
+    $('#crm-submit-buttons').hide();
     // Remove left over elements.
     $('fieldset.crm-profile-name-name_and_address, fieldset.crm-profile-name-supporter_profile').remove();
 

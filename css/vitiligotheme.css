@@ -48,8 +48,8 @@ div.crm-container .vt-label label {
   letter-spacing: -0.174167px;
   color: #666666; }
 
-.vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=96172"); }
+.vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=26046"); }
 
 .vt-icon {
   display: inline-block; }
@@ -73,6 +73,21 @@ div.crm-container .vt-label label {
   background-position: -80px -35px;
   width: 26px;
   height: 26px; }
+
+.vt-icon--speaker {
+  background-position: -125px 0px;
+  width: 68px;
+  height: 68px; }
+
+.vt-icon--medical {
+  background-position: -200px 0px;
+  width: 68px;
+  height: 68px; }
+
+.vt-icon--magnify {
+  background-position: -275px 0px;
+  width: 68px;
+  height: 68px; }
 
 #crm-container.crm-public .vt-select-container {
   position: relative;
@@ -221,15 +236,8 @@ div.crm-container .vt-label label {
     -ms-grid-column: 3;
         grid-column: 3; } }
 
-h1.vt-proposition-box__header {
-  color: white;
-  background: #42AFA7;
-  padding: 1rem 2rem;
-  font-size: 31px;
-  margin: 0; }
-
 .vt-proposition-box__body {
-  padding: 1rem 0;
+  padding-bottom: 1rem;
   margin-bottom: 2rem;
   border-bottom: solid 1px #ddd; }
   .vt-proposition-box__body h1, .vt-proposition-box__body h2 {
@@ -239,7 +247,55 @@ h1.vt-proposition-box__header {
     letter-spacing: -0.961527px;
     color: #363864;
     /* styleguide */
-    font-size: 27px; }
+    font-size: 27px;
+    margin-bottom: 1rem; }
+
+div.vt-propositions-tripple {
+  padding: 1rem 0;
+  margin: 2rem 0; }
+  div.vt-propositions-tripple h2 {
+    font-size: 27px;
+    line-height: 45px;
+    /* or 167% */
+    letter-spacing: -0.961527px;
+    color: #363864;
+    /* styleguide */
+    margin-bottom: 1rem; }
+
+.vt-donate-form div.vt-propositions-tripple {
+  border-top: solid 1px #ddd;
+  border-bottom: solid 1px #ddd; }
+
+ul.vt-propositions-tripple__items {
+  padding: 0;
+  margin: 0; }
+
+li.vt-propositions-tripple__item {
+  padding: 0 2rem 0 5rem;
+  margin: 0 0 1rem;
+  list-style: none;
+  text-indent: 0; }
+  li.vt-propositions-tripple__item i.vt-icon {
+    position: absolute;
+    margin-left: -5rem; }
+  li.vt-propositions-tripple__item strong {
+    display: block;
+    font-size: 27px;
+    line-height: 45px;
+    /* or 167% */
+    letter-spacing: -0.961527px;
+    color: #363864;
+    /* styleguide */ }
+
+@media screen and (min-width: 768px) {
+  ul.vt-propositions-tripple__items {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; }
+  li.vt-propositions-tripple__item {
+    -webkit-flex: 1 0 30%;
+        -ms-flex: 1 0 30%;
+            flex: 1 0 30%; } }
 
 .vt-payment-box__header {
   background: #4E5076;
@@ -553,6 +609,11 @@ div.crm-container .vt-payment-box__switch-container label {
     -webkit-flex: 1 0 5rem;
         -ms-flex: 1 0 5rem;
             flex: 1 0 5rem; } }
+
+.core p.vt-membership-amount-equiv {
+  color: #363864; }
+  .core p.vt-membership-amount-equiv strong {
+    color: #363864; }
 
 h3.vt-heading {
   background: none;
