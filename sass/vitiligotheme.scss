@@ -78,7 +78,7 @@ h1, h2, h3, h4, h5, h6,
   p:empty { display:none; }
 }
 .vt-footer {
-  padding-bottom: 1px; // because the para has margin-bottom.
+  padding-bottom: 0.5rem; // because the para sometimes has margin-bottom.
   color: $colour_grey_headings;
 }
 

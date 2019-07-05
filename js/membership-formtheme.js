@@ -97,7 +97,9 @@
     }
 
     function footerText() {
-      $niceForm.append($('<div class="vt-footer vt-remove-empty-paras dashed vt-allow-left-icon"><i class="vt-icon vt-icon--info" ></i></div>').append($('#footer_text')));
+      if (!$('#footer_text').text().match(/^\s*$/)) {
+        $niceForm.append($('<div class="vt-footer vt-remove-empty-paras dashed vt-allow-left-icon"><i class="vt-icon vt-icon--info" ></i></div>').append($('#footer_text')));
+      }
     }
     function yourInformation() {
       var a, b;
