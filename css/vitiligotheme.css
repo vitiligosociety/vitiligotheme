@@ -37,6 +37,19 @@ h1, h2, h3, h4, h5, h6,
   border: dashed 1px #aaa;
   padding: 1rem; }
 
+.vt-allow-left-icon {
+  padding-left: 4rem; }
+  .vt-allow-left-icon .vt-icon {
+    position: absolute;
+    margin-left: -3rem; }
+
+.vt-remove-empty-paras p:empty {
+  display: none; }
+
+.vt-footer {
+  padding-bottom: 1px;
+  color: #666666; }
+
 .billing_name_address-section label,
 div.crm-container .vt-label label {
   font-family: Arimo;
@@ -49,7 +62,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=26046"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=90327"); }
 
 .vt-icon {
   display: inline-block; }

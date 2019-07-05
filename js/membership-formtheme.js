@@ -96,13 +96,16 @@
       return $container;
     }
 
+    function footerText() {
+      $niceForm.append($('<div class="vt-footer vt-remove-empty-paras dashed vt-allow-left-icon"><i class="vt-icon vt-icon--info" ></i></div>').append($('#footer_text')));
+    }
     function yourInformation() {
       var a, b;
       $niceForm.append('<div class="vt-your-info"><h2>Your information</h2><span>*Required fields</span></div>');
 
       // Add name fields.
       var first_name = parseStdCiviField('#editrow-first_name');
-      first_name.label.html('Full Name<span class="crm-marker" title="This field is required.">*</span>');
+      first_name.label.html('Full name<span class="crm-marker" title="This field is required.">*</span>');
       first_name.input.attr('placeholder', 'First name');
       var last_name = parseStdCiviField('#editrow-last_name');
       last_name.input.attr('placeholder', 'Last name');
@@ -110,6 +113,7 @@
 
       // Add email
       var email = parseStdCiviField('#editrow-email-1, #editrow-email-Primary');
+      email.label.html('Email address<span class="crm-marker" title="This field is required.">*</span>');
       email.input.attr('placeholder', 'Email');
       createStdFields(email.label, [email.input]);
 
@@ -145,6 +149,7 @@
       $niceForm.append('<hr/>');
       // DOB
       a = parseComplexCiviField('#editrow-birth_date');
+      a.label.text('Date of birth');
       a.input.find('.crm-clear-link').hide();
       createStdFields(a.label, [a.input, null]);
 
@@ -251,6 +256,12 @@
       a = parseStdCiviField('#editrow-custom_17');
       a.label.html("<h3 class='vt-heading'>Why are you signing up to membership with the Vitiligo Society?</h3>");
       $niceForm.append($('<div class="vt-container"/>').append(a.label, a.input), '<hr/>');
+    }
+    function donateIntro() {
+      var $civicrm_content = $form.find('#intro_text');
+      // Replace the header provided by WP.
+      // membership only: $('section.page-header h1').text($civicrm_content.find('>legend').text());
+      $niceForm.append($('<div class="vt-proposition-box"/>').append($('<div class="vt-proposition-box__body"/>').append($civicrm_content)));
     }
     var $payment_processor_selection_ui = $form.find("fieldset.payment_options-group");
     vtDebug('payment processor selection ui', $payment_processor_selection_ui);
@@ -554,6 +565,7 @@
       giftAid();
       gdprFields();
       renameSubmitButton('Join');
+      footerText();
       themeRadiosAndCheckboxes($('body'));
       watchPaymentFields();
       $('#crm-submit-buttons').hide();
@@ -562,6 +574,7 @@
     } else if (form_name === 'donate') {
 
       $niceForm.addClass('vt-donate-form');
+      donateIntro();
       donateAmountLayout();
       addPropositionTripple();
       yourInformation();
@@ -570,6 +583,8 @@
       paymentDetails();
       donateMovePaymentBlock();
       gdprFields();
+      footerText();
+
       renameSubmitButton('Donate');
       themeRadiosAndCheckboxes($('body'));
       $('#crm-submit-buttons').hide();

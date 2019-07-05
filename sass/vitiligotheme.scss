@@ -66,6 +66,22 @@ h1, h2, h3, h4, h5, h6,
   padding: 1rem;
 }
 .dashed { @include dashed; }
+.vt-allow-left-icon {
+  padding-left: 4rem;
+  .vt-icon {
+    position: absolute;
+    margin-left: -3rem;
+  }
+}
+
+.vt-remove-empty-paras {
+  p:empty { display:none; }
+}
+.vt-footer {
+  padding-bottom: 1px; // because the para has margin-bottom.
+  color: $colour_grey_headings;
+}
+
 // We need to over-rule this: 'div.crm-container label'
 .billing_name_address-section label,
 div.crm-container .vt-label label {
