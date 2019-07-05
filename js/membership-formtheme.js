@@ -585,9 +585,9 @@
       paymentDetails();
       donateMovePaymentBlock();
       gdprFields();
+      renameSubmitButton('Donate');
       footerText();
 
-      renameSubmitButton('Donate');
       themeRadiosAndCheckboxes($('body'));
       $('#crm-submit-buttons').hide();
       // Remove left over elements.
