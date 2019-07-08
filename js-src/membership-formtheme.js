@@ -306,7 +306,7 @@
   function whyJoining() {
     var a, b;
     a = parseStdCiviField('#editrow-custom_17');
-    a.label.html("<h3 class='vt-heading'>Why are you signing up to membership with the Vitiligo Society?</h3>");
+    a.label.html("<h3 class='vt-heading'>Why are you signing up to membership with The Vitiligo Society?</h3>");
     $niceForm.append($('<div class="vt-container"/>').append(a.label, a.input), '<hr/>');
   }
   function donateIntro() {
