@@ -1,6 +1,6 @@
 ((CRM, $) => $(() => {
 
-'use strict';
+  'use strict';
   // change for empty function.
   const vtDebug = 1 ? console.log : () => {};
 
@@ -256,6 +256,11 @@
       var equivAmount = Math.round(parseFloat($btn.data('amount'))/12*100)/100;
       $equiv.html(`Your annual contribution is equal to giving <strong>£${equivAmount}</strong> per month`);
     }
+    function check1(e) {
+      if (CRM.$('[name="payment_processor_id"]:checked').val() === undefined) {
+        console.warn("payment_processor_id missing: " + e);
+      }
+    }
     $priceset.find('input[data-amount]').each(function() {
       var amount = this.dataset.amount;
       const $original_input=$(this);
@@ -274,6 +279,11 @@
         .text('£' + m[1]+m[2])
         .on('click', function(e) {
           e.preventDefault();
+          // 2019-08-29 The following line seems necessary to ensure the value is properly set.
+          $original_input.prop('checked', true);
+          // We click the input to try to keep as much default CiviCRM behaviour as poss,
+          // however we could consider not doing this as it has caused problems in that it
+          // does not seem to always correctly set the radio on.
           $original_input.click();
           // CiviCRM shows this, so we need to hide it!
           $payment_processor_selection_ui.hide();
@@ -615,9 +625,6 @@
       if (m && m.length === 2 && processorIds.indexOf(m[1])>-1) {
         vtDebug("Found match", this);
         found = this;
-      }
-      else {
-        vtDebug("No match", this);
       }
     });
     vtDebug("processor find result", found);
