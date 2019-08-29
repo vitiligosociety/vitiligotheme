@@ -908,4 +908,8 @@ button.vt-submit {
   border:none;
   border-radius: 0;
   box-shadow: $box_shadow_1;
+  &:disabled {
+    box-shadow: none;
+    opacity: 0.5;
+  }
 }

@@ -366,7 +366,9 @@
       var $submitButtonWrapper = $form.find('#crm-submit-buttons input').parent().hide();
 
       var $niceSubmitButton = $('<button class="vt-submit"/>').text(text).on('click', function (e) {
-        e.preventDefault();$submitButtonWrapper.find('input[type="submit"]').trigger('click', e);
+        e.preventDefault();
+        $submitButtonWrapper.find('input[type="submit"]').trigger('click', e);
+        $niceSubmitButton.prop('disabled', true).text('Please wait...');
       });
 
       $niceForm.append($niceSubmitButton);

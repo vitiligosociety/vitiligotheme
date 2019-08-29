@@ -448,7 +448,11 @@
 
     const $niceSubmitButton = $('<button class="vt-submit"/>')
       .text(text)
-      .on('click', e => {e.preventDefault();$submitButtonWrapper.find('input[type="submit"]').trigger('click', e);});
+      .on('click', e => {
+        e.preventDefault();
+        $submitButtonWrapper.find('input[type="submit"]').trigger('click', e);
+        $niceSubmitButton.prop('disabled', true).text('Please wait...');
+      });
 
     $niceForm.append($niceSubmitButton);
   }
