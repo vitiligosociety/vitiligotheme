@@ -445,16 +445,32 @@
   function renameSubmitButton(text) {
     // Hide the original button, make a new button which clicks it by JS.
     const $submitButtonWrapper = $form.find('#crm-submit-buttons input').parent().hide();
+    var formHasBeenSubmitted = false;
 
     const $niceSubmitButton = $('<button class="vt-submit"/>')
       .text(text)
       .on('click', e => {
         e.preventDefault();
         $submitButtonWrapper.find('input[type="submit"]').trigger('click', e);
+        // Disable the button.
         $niceSubmitButton.prop('disabled', true).text('Please wait...');
+        // ...but come back in 2 seconds and re-enable it if we're still running.
+        // This catches the cases that Stripe tokenisation fails.
+        window.setTimeout( () => {
+          if (!formHasBeenSubmitted) {
+            vtDebug("resetting submit button as form not submitted");
+           $niceSubmitButton.prop('disabled', false).text(text);
+          }
+        }, 2000);
       });
 
     $niceForm.append($niceSubmitButton);
+
+    $form.on('submit', e => {
+      formHasBeenSubmitted = true;
+      vtDebug('Form submitted.');
+      $niceSubmitButton.prop('disabled', true).text('Please wait...');
+    });
   }
   /**
    * We need to look out for changes that are interactively made by CiviCRM.

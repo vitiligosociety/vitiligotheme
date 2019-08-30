@@ -199,7 +199,7 @@ div.crm-container .vt-label label {
         position: absolute;
         left:-200vh;
       }
-      label {
+      label:not(.error) {
         min-height: 30px;
         display:inline-block;
         margin-bottom:1rem;
@@ -207,7 +207,7 @@ div.crm-container .vt-label label {
         padding-left: 36px; // allow for sprite
         padding-top: 4px;
       }
-      label:before {
+      label:not(.error):before {
         position: absolute;
         top: 0;
         left: 0;
@@ -216,11 +216,13 @@ div.crm-container .vt-label label {
         @include sprite(0, 0, 25);
       }
       &.radio {
-        input:checked+label:before { @include spriteAlter(0, 25); }
+        input:checked+label:not(.error):before { @include spriteAlter(0, 25); }
       }
       &.checkbox {
-        label:before { @include spriteAlter(25, 0); }
-        input:checked+label:before { @include spriteAlter(25, 25); }
+        label:not(.error):before { @include spriteAlter(25, 0); }
+        input:checked+label:not(.error):before { @include spriteAlter(25, 25); }
+        // This is the case for js created validation which inserts a label.error before the main label! :-(
+        input:checked+label+label:not(.error):before { @include spriteAlter(25, 25); }
       }
     }
   }
