@@ -371,14 +371,14 @@
         $submitButtonWrapper.find('input[type="submit"]').trigger('click', e);
         // Disable the button.
         $niceSubmitButton.prop('disabled', true).text('Please wait...');
-        // ...but come back in 2 seconds and re-enable it if we're still running.
+        // ...but come back in 1 min and re-enable it if we're still running.
         // This catches the cases that Stripe tokenisation fails.
         window.setTimeout(function () {
           if (!formHasBeenSubmitted) {
             vtDebug("resetting submit button as form not submitted");
             $niceSubmitButton.prop('disabled', false).text(text);
           }
-        }, 2000);
+        }, 60000);
       });
 
       $niceForm.append($niceSubmitButton);
