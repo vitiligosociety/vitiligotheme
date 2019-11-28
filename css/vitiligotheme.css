@@ -61,7 +61,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:not(.error):before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=73762"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=47308"); }
 
 .vt-icon {
   display: inline-block; }
@@ -427,57 +427,36 @@ div.crm-container .vt-payment-box__switch-container label {
 .vt-payment-box.disable-dd .direct-debit-benefits-para .dashed {
   display: none; }
 
-#billing-payment-block #card-element {
-  background: white;
-  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.218807); }
+#billing-payment-block label[for="card-element"] {
+  display: none; }
 
-.crm-container .credit_card_info-group {
+#billing-payment-block .vt-card-element {
+  padding: 1rem 2px 2px;
   background: #E3E3E8;
-  padding: 1rem;
-  margin: 0 0 2rem;
-  border: none;
-  box-shadow: 2px 3px 8px rgba(54, 56, 100, 0.32821); }
-  .crm-container .credit_card_info-group > legend {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    text-indent: -99999px; }
-
-#crm-container.crm-public .credit_card_info-section {
-  display: -webkit-box;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0; }
-  #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para {
+  margin-bottom: 2rem; }
+  #billing-payment-block .vt-card-element .direct-debit-benefits-para {
     position: relative;
     margin-bottom: 1rem;
     -webkit-box-flex: 1;
             flex: 1 0 100%; }
-    #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para .dashed {
+    #billing-payment-block .vt-card-element .direct-debit-benefits-para .dashed {
       padding-left: 4rem; }
-      #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para .dashed .vt-icon {
+      #billing-payment-block .vt-card-element .direct-debit-benefits-para .dashed .vt-icon {
         position: absolute;
         margin-left: -3rem; }
-    #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para .vt-icon--padlock {
+    #billing-payment-block .vt-card-element .direct-debit-benefits-para .vt-icon--padlock {
       display: none;
       position: absolute;
       top: 0;
       right: 2rem; }
 
+#billing-payment-block #card-element {
+  background: white;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.218807); }
+
 @media screen and (min-width: 768px) {
-  .crm-container .credit_card_info-group {
-    padding: 2rem; }
-  #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para {
-    -webkit-box-ordinal-group: 3;
-            order: 2;
-    -webkit-box-flex: 1;
-            flex: 1 0 50%; }
-  #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para {
-    padding: 0 2rem;
-    padding-right: 4rem; }
-  #crm-container.crm-public .credit_card_info-section .vt-icon--padlock {
-    display: block; } }
+  #billing-payment-block .vt-card-element {
+    padding: 2rem; } }
 
 .crm-container .billing_name_address-group > legend {
   position: absolute;

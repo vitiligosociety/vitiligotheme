@@ -501,70 +501,92 @@ div.crm-container .vt-payment-box__switch-container label {
 // }}}
 // Payment: Card details {{{
 #billing-payment-block {
+
+
+  // Hide the Card details label.
+  label[for="card-element"] { display: none; }
+
+  // This is the wrapper that contains the stripe element and the message about DDs being better.
+  .vt-card-element {
+    // For mobile, we need all the space we can get or the card number overlaps
+    // and prevents entry of the other data.
+    padding: 1rem 2px 2px;
+    background: $colour_grey_payment_box_opacity_applied;
+    margin-bottom: 2rem;
+
+    .direct-debit-benefits-para {
+      position:relative;
+      margin-bottom: 1rem;
+      // flex: 1 0 20rem;
+      flex: 1 0 100%;
+
+      .dashed {
+        padding-left:4rem;
+        .vt-icon {
+          position:absolute;
+          margin-left: -3rem;
+        }
+      }
+      .vt-icon--padlock {
+        display : none; // mobile
+        position: absolute;
+        top:0;
+        right: 2rem;
+      }
+    }
+
+  }
+
   #card-element {
     background: white;
     box-shadow: $box_shadow_2;
   }
 }
-.crm-container .credit_card_info-group {
-  background: $colour_grey_payment_box_opacity_applied;
-  padding: 1rem;
-  margin:0 0 2rem;
-  border:none;
-  box-shadow: $box_shadow_1;
-
-  &>legend {
-    position:absolute;
-    width:1px;
-    height: 1px;
-    overflow: hidden;
-    text-indent:-99999px;
-  }
-}
-#crm-container.crm-public .credit_card_info-section {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 ;
-
-  .direct-debit-benefits-para {
-    position:relative;
-    margin-bottom: 1rem;
-    // flex: 1 0 20rem;
-    flex: 1 0 100%;
-
-    .dashed {
-      padding-left:4rem;
-      .vt-icon {
-        position:absolute;
-        margin-left: -3rem;
-      }
-    }
-    .vt-icon--padlock {
-      display : none; // mobile
-      position: absolute;
-      top:0;
-      right: 2rem;
-    }
-  }
-
-}
+// .crm-container .credit_card_info-group {
+//   background: $colour_grey_payment_box_opacity_applied;
+//   padding: 1rem;
+//   margin:0 0 2rem;
+//   border:none;
+//   box-shadow: $box_shadow_1;
+// 
+//   &>legend {
+//     position:absolute;
+//     width:1px;
+//     height: 1px;
+//     overflow: hidden;
+//     text-indent:-99999px;
+//   }
+// }
+// #crm-container.crm-public .credit_card_info-section {
+//   display: flex;
+//   flex-wrap: wrap;
+//   margin: 0 ;
+// 
+// }
 @media screen and (min-width: 768px) {
-  .crm-container .credit_card_info-group {
-    padding: 2rem;
-  }
-  #crm-container.crm-public .credit_card_info-section {
-    .direct-debit-benefits-para { order: 2;    flex: 1 0 50%; }
-  }
-  #crm-container.crm-public .credit_card_info-section {
-    .direct-debit-benefits-para {
-      padding:0 2rem;
-      padding-right:4rem; // 2rem for padlock
-    }
-    .vt-icon--padlock {
-      display : block;
+  #billing-payment-block {
+    .vt-card-element {
+      padding: 2rem;
     }
   }
 }
+
+//   .crm-container .credit_card_info-group {
+//     padding: 2rem;
+//   }
+//   #crm-container.crm-public .credit_card_info-section {
+//     .direct-debit-benefits-para { order: 2;    flex: 1 0 50%; }
+//   }
+//   #crm-container.crm-public .credit_card_info-section {
+//     .direct-debit-benefits-para {
+//       padding:0 2rem;
+//       padding-right:4rem; // 2rem for padlock
+//     }
+//     .vt-icon--padlock {
+//       display : block;
+//     }
+//   }
+// }
 // }}}
 // Payment: Billing details {{{
 .crm-container .billing_name_address-group {

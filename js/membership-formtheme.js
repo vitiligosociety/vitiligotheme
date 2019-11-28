@@ -494,18 +494,22 @@
       //console.log("Already tweaked it.");
     }
     $billingBlock[0].vtTweaksDone = true;
+
     // We'll use this existing container for the address fields.
     const $billingAddressSection = $billingBlock.find('.billing_name_address-section');
 
-    $billingBlock.find('.credit_card_number-section').after($('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>If you have a UK bank account please consider using Direct Debit, we are charged a lesser fee and more of your money goes to supporting those with Vitiligo.</div><i class="vt-icon vt-icon--padlock"></i></div>'));
+    // Wrap the #card-element that holds the new Stripe elements
+    $cardElement = $billingBlock.find('#card-element').wrap('<div class="vt-card-element"/>');
+
+    // Add Para on DD is better.
+    $cardElement.after($('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>If you have a UK bank account please consider using Direct Debit, we are charged a lesser fee and more of your money goes to supporting those with Vitiligo.</div><i class="vt-icon vt-icon--padlock"></i></div>'));
+    console.log({ $cardElement });
+
     // Strip out some CiviCRM classes that give us grief.
     // We can't remove this, Stripe depends on it: $billingBlock.find('.crm-section').removeClass('crm-section');
     $billingBlock.find('div.label').removeClass('label').addClass('vt-payment-label');
     $billingBlock.find('div.content').removeClass('content').addClass('vt-container');
     $billingBlock.find('.clear').remove();
-
-    // Re-class the selects.
-    $billingBlock.find('#credit_card_exp_date_M, #credit_card_exp_date_Y').addClass('vt-select').wrap('<div class="vt-select-container vt-card-expiry"/>');
 
     // If we have a billingAddressSection we need to theme that now.
     if ($billingAddressSection.length) {
