@@ -500,6 +500,12 @@ div.crm-container .vt-payment-box__switch-container label {
 // }}}
 // }}}
 // Payment: Card details {{{
+#billing-payment-block {
+  #card-element {
+    background: white;
+    box-shadow: $box_shadow_2;
+  }
+}
 .crm-container .credit_card_info-group {
   background: $colour_grey_payment_box_opacity_applied;
   padding: 1rem;
@@ -520,26 +526,6 @@ div.crm-container .vt-payment-box__switch-container label {
   flex-wrap: wrap;
   margin: 0 ;
 
-  .cvv2-icon,
-  .credit_card_type-section { display: none; }
-
-  .direct-debit-benefits-para { order: 1; }
-  .credit_card_number-section { order: 2; }
-  .credit_card_exp_date-section { order: 3; }
-  .cvv2-section { order: 4; }
-
-  .credit_card_number-section,
-  .direct-debit-benefits-para,
-  .credit_card_exp_date-section,
-  .cvv2-section {
-    padding:0 ;
-    margin-bottom: 2rem;
-  }
-
-  .credit_card_number-section {
-    margin-bottom: 1rem;
-    flex: 0 1 24rem;
-  }
   .direct-debit-benefits-para {
     position:relative;
     margin-bottom: 1rem;
@@ -561,20 +547,6 @@ div.crm-container .vt-payment-box__switch-container label {
     }
   }
 
-  .credit_card_exp_date-section {
-    flex: 0 0 auto;
-    max-width: 100%; // forces wrap.
-  }
-
-  .cvv2-section {
-    flex: 0 0 auto;
-  }
-
-  .vt-card-expiry {
-    display: inline-block;
-    margin-right:1rem;
-    select { margin-bottom: 0.5rem; } // for mobile
-  }
 }
 @media screen and (min-width: 768px) {
   .crm-container .credit_card_info-group {
@@ -582,9 +554,6 @@ div.crm-container .vt-payment-box__switch-container label {
   }
   #crm-container.crm-public .credit_card_info-section {
     .direct-debit-benefits-para { order: 2;    flex: 1 0 50%; }
-    .credit_card_number-section { order: 1; }
-    .credit_card_exp_date-section { order: 3; }
-    .cvv2-section { order: 4; }
   }
   #crm-container.crm-public .credit_card_info-section {
     .direct-debit-benefits-para {

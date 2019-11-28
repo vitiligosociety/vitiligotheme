@@ -61,7 +61,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:not(.error):before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=91710"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=73762"); }
 
 .vt-icon {
   display: inline-block; }
@@ -148,7 +148,21 @@ div.crm-container .vt-label label {
     font-size: 17px;
     letter-spacing: 0.257704px;
     color: #969696; }
+  #crm-container.crm-public form#Main input[type="text"] ::-moz-placeholder, #crm-container.crm-public form#Main textarea ::-moz-placeholder {
+    font-family: Arimo;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    letter-spacing: 0.257704px;
+    color: #969696; }
   #crm-container.crm-public form#Main input[type="text"] :-ms-input-placeholder, #crm-container.crm-public form#Main textarea :-ms-input-placeholder {
+    font-family: Arimo;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    letter-spacing: 0.257704px;
+    color: #969696; }
+  #crm-container.crm-public form#Main input[type="text"] ::-ms-input-placeholder, #crm-container.crm-public form#Main textarea ::-ms-input-placeholder {
     font-family: Arimo;
     font-style: normal;
     font-weight: normal;
@@ -223,32 +237,25 @@ div.crm-container .vt-label label {
 
 @media screen and (min-width: 768px) {
   .vt-grid1 {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 33.3333fr 33.3333fr 33.3333fr;
-        grid-template-columns: 33.3333fr 33.3333fr 33.3333fr;
+    grid-template-columns: 33.3333fr 33.3333fr 33.3333fr;
     -webkit-column-gap: 26px;
+       -moz-column-gap: 26px;
             column-gap: 26px;
     row-gap: 38px;
-    -webkit-align-items: center;
-        -ms-flex-align: center;
+    -webkit-box-align: center;
             align-items: center;
     padding: 0.75rem 0; }
     .vt-grid1 .vt-label {
       padding-right: 1rem; }
   .vt-col-1 {
-    -ms-grid-column: 1;
-        grid-column: 1; }
+    grid-column: 1; }
   .vt-col-2 {
-    -ms-grid-column: 2;
-        grid-column: 2; }
+    grid-column: 2; }
   .vt-col-2-span-2 {
-    -ms-grid-column-span: 2;
-    -ms-grid-column: 2;
-        grid-column: 2 / span 2; }
+    grid-column: 2 / span 2; }
   .vt-col-3 {
-    -ms-grid-column: 3;
-        grid-column: 3; } }
+    grid-column: 3; } }
 
 .vt-proposition-box__body {
   padding-bottom: 1rem;
@@ -303,22 +310,19 @@ li.vt-propositions-tripple__item {
 
 @media screen and (min-width: 768px) {
   ul.vt-propositions-tripple__items {
-    display: -webkit-flex;
-    display: -ms-flexbox;
+    display: -webkit-box;
     display: flex; }
   li.vt-propositions-tripple__item {
-    -webkit-flex: 1 0 30%;
-        -ms-flex: 1 0 30%;
+    -webkit-box-flex: 1;
             flex: 1 0 30%; } }
 
 .vt-payment-box__header {
   background: #4E5076;
-  display: -ms-grid;
   display: grid;
   -webkit-column-gap: 1rem;
+     -moz-column-gap: 1rem;
           column-gap: 1rem;
-  -ms-grid-columns: 42px 1fr;
-      grid-template-columns: 42px 1fr;
+  grid-template-columns: 42px 1fr;
   padding: 0 1rem; }
 
 .vt-payment-box__gbp {
@@ -337,9 +341,7 @@ li.vt-propositions-tripple__item {
   color: white; }
 
 .vt-payment-box__payby {
-  -ms-grid-column-span: 2;
-  -ms-grid-column: 1;
-      grid-column: 1 / span 2;
+  grid-column: 1 / span 2;
   padding: 0 1rem;
   color: white;
   font-size: 22px;
@@ -349,9 +351,7 @@ li.vt-propositions-tripple__item {
   margin-left: 1rem;
   padding: 1rem 1rem 1rem 0;
   width: 15.6rem;
-  -ms-grid-column-span: 2;
-  -ms-grid-column: 1;
-      grid-column: 1 / span 2; }
+  grid-column: 1 / span 2; }
 
 div.crm-container .vt-payment-box__switch-container label {
   font-size: 19px;
@@ -359,38 +359,32 @@ div.crm-container .vt-payment-box__switch-container label {
 
 @media screen and (min-width: 768px) {
   .vt-payment-box__header {
-    -webkit-align-items: center;
-        -ms-flex-align: center;
+    -webkit-box-align: center;
             align-items: center;
     padding: 0;
-    -ms-grid-columns: 4rem 1fr 5rem 16.8rem;
-        grid-template-columns: 4rem 1fr 5rem 16.8rem; }
+    grid-template-columns: 4rem 1fr 5rem 16.8rem; }
   .vt-payment-box__gbp {
     padding: 1rem 0 1rem 1rem;
-    -ms-grid-column: 1;
-        grid-column: 1; }
+    grid-column: 1; }
   .crm-container .vt-payment-box__heading {
-    -ms-grid-column: 2;
-        grid-column: 2;
+    grid-column: 2;
     font-size: 35px; }
   .vt-payment-box__payby {
-    -ms-grid-column: 3;
-        grid-column: 3;
+    grid-column: 3;
     padding: 1rem 0; }
   .vt-payment-box__switch-container {
-    -ms-grid-column: 4;
-        grid-column: 4;
+    grid-column: 4;
     margin-left: 0; } }
 
 .vt-payment-box__switch-wrapper {
-  display: -webkit-flex;
-  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
   border-radius: 2rem;
   background: #363864;
   padding: 6px;
   position: relative; }
   .vt-payment-box__switch-wrapper:before {
+    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     content: '';
     top: 6px;
@@ -419,13 +413,11 @@ div.crm-container .vt-payment-box__switch-container label {
   color: #363864; }
 
 .vt-payment-box__dd {
-  -webkit-flex: 0 0 9rem;
-      -ms-flex: 0 0 9rem;
+  -webkit-box-flex: 0;
           flex: 0 0 9rem; }
 
 .vt-payment-box__c {
-  -webkit-flex: 0 0 4.8rem;
-      -ms-flex: 0 0 4.8rem;
+  -webkit-box-flex: 0;
           flex: 0 0 4.8rem; }
 
 .vt-payment-box.disable-dd .vt-payment-box__payby,
@@ -434,6 +426,10 @@ div.crm-container .vt-payment-box__switch-container label {
 
 .vt-payment-box.disable-dd .direct-debit-benefits-para .dashed {
   display: none; }
+
+#billing-payment-block #card-element {
+  background: white;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.218807); }
 
 .crm-container .credit_card_info-group {
   background: #E3E3E8;
@@ -449,48 +445,14 @@ div.crm-container .vt-payment-box__switch-container label {
     text-indent: -99999px; }
 
 #crm-container.crm-public .credit_card_info-section {
-  display: -webkit-flex;
-  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
   margin: 0; }
-  #crm-container.crm-public .credit_card_info-section .cvv2-icon,
-  #crm-container.crm-public .credit_card_info-section .credit_card_type-section {
-    display: none; }
-  #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para {
-    -webkit-order: 1;
-        -ms-flex-order: 1;
-            order: 1; }
-  #crm-container.crm-public .credit_card_info-section .credit_card_number-section {
-    -webkit-order: 2;
-        -ms-flex-order: 2;
-            order: 2; }
-  #crm-container.crm-public .credit_card_info-section .credit_card_exp_date-section {
-    -webkit-order: 3;
-        -ms-flex-order: 3;
-            order: 3; }
-  #crm-container.crm-public .credit_card_info-section .cvv2-section {
-    -webkit-order: 4;
-        -ms-flex-order: 4;
-            order: 4; }
-  #crm-container.crm-public .credit_card_info-section .credit_card_number-section,
-  #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para,
-  #crm-container.crm-public .credit_card_info-section .credit_card_exp_date-section,
-  #crm-container.crm-public .credit_card_info-section .cvv2-section {
-    padding: 0;
-    margin-bottom: 2rem; }
-  #crm-container.crm-public .credit_card_info-section .credit_card_number-section {
-    margin-bottom: 1rem;
-    -webkit-flex: 0 1 24rem;
-        -ms-flex: 0 1 24rem;
-            flex: 0 1 24rem; }
   #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para {
     position: relative;
     margin-bottom: 1rem;
-    -webkit-flex: 1 0 100%;
-        -ms-flex: 1 0 100%;
+    -webkit-box-flex: 1;
             flex: 1 0 100%; }
     #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para .dashed {
       padding-left: 4rem; }
@@ -502,43 +464,15 @@ div.crm-container .vt-payment-box__switch-container label {
       position: absolute;
       top: 0;
       right: 2rem; }
-  #crm-container.crm-public .credit_card_info-section .credit_card_exp_date-section {
-    -webkit-flex: 0 0 auto;
-        -ms-flex: 0 0 auto;
-            flex: 0 0 auto;
-    max-width: 100%; }
-  #crm-container.crm-public .credit_card_info-section .cvv2-section {
-    -webkit-flex: 0 0 auto;
-        -ms-flex: 0 0 auto;
-            flex: 0 0 auto; }
-  #crm-container.crm-public .credit_card_info-section .vt-card-expiry {
-    display: inline-block;
-    margin-right: 1rem; }
-    #crm-container.crm-public .credit_card_info-section .vt-card-expiry select {
-      margin-bottom: 0.5rem; }
 
 @media screen and (min-width: 768px) {
   .crm-container .credit_card_info-group {
     padding: 2rem; }
   #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para {
-    -webkit-order: 2;
-        -ms-flex-order: 2;
+    -webkit-box-ordinal-group: 3;
             order: 2;
-    -webkit-flex: 1 0 50%;
-        -ms-flex: 1 0 50%;
+    -webkit-box-flex: 1;
             flex: 1 0 50%; }
-  #crm-container.crm-public .credit_card_info-section .credit_card_number-section {
-    -webkit-order: 1;
-        -ms-flex-order: 1;
-            order: 1; }
-  #crm-container.crm-public .credit_card_info-section .credit_card_exp_date-section {
-    -webkit-order: 3;
-        -ms-flex-order: 3;
-            order: 3; }
-  #crm-container.crm-public .credit_card_info-section .cvv2-section {
-    -webkit-order: 4;
-        -ms-flex-order: 4;
-            order: 4; }
   #crm-container.crm-public .credit_card_info-section .direct-debit-benefits-para {
     padding: 0 2rem;
     padding-right: 4rem; }
@@ -582,17 +516,13 @@ div.crm-container .vt-payment-box__switch-container label {
     max-width: 30rem; } }
 
 .vt-amount-buttons {
-  display: -webkit-flex;
-  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
   margin: 1rem -0.5rem 0; }
 
 .vt-amount-buttons__button {
-  -webkit-flex: 0 0 50%;
-      -ms-flex: 0 0 50%;
+  -webkit-box-flex: 0;
           flex: 0 0 50%;
   padding: 0 0.5rem;
   margin-bottom: 1rem; }
@@ -616,12 +546,9 @@ div.crm-container .vt-payment-box__switch-container label {
 
 @media screen and (min-width: 768px) {
   .vt-amount-buttons {
-    -webkit-flex-wrap: nowrap;
-        -ms-flex-wrap: nowrap;
-            flex-wrap: nowrap; }
+    flex-wrap: nowrap; }
   .vt-amount-buttons__button {
-    -webkit-flex: 1 0 5rem;
-        -ms-flex: 1 0 5rem;
+    -webkit-box-flex: 1;
             flex: 1 0 5rem; } }
 
 .core p.vt-membership-amount-equiv {
@@ -638,17 +565,12 @@ h3.vt-heading {
   color: #666666; }
 
 .vt-your-info {
-  display: -webkit-flex;
-  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
+  -webkit-box-pack: justify;
           justify-content: space-between;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-  -webkit-align-items: baseline;
-      -ms-flex-align: baseline;
+  flex-wrap: wrap;
+  -webkit-box-align: baseline;
           align-items: baseline;
   margin: 2rem 0 1rem; }
   .vt-your-info h2 {
@@ -689,22 +611,18 @@ h3.vt-heading {
 
 @media screen and (min-width: 768px) {
   .vt-giftaid-layout-1 {
-    display: -webkit-flex;
-    display: -ms-flexbox;
+    display: -webkit-box;
     display: flex;
-    -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
+    -webkit-box-pack: justify;
             justify-content: space-between; }
   .vt-giftaid-inputs {
-    -webkit-flex: 0 1 24rem;
-        -ms-flex: 0 1 24rem;
+    -webkit-box-flex: 0;
             flex: 0 1 24rem;
     margin-top: 0; }
     .vt-giftaid-inputs .vt-checkbox-radio-wrapper {
       display: inline-block; }
   .vt-giftaid-declaration {
-    -webkit-flex: 0 1 29rem;
-        -ms-flex: 0 1 29rem;
+    -webkit-box-flex: 0;
             flex: 0 1 29rem;
     padding-left: 4rem; }
     .vt-giftaid-declaration .vt-icon {
@@ -716,17 +634,14 @@ h3.vt-heading {
 
 .vt-donation-amount-blurb-header {
   background-color: #363864;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
+  -webkit-box-align: center;
           align-items: center;
   padding: 0.5rem 1rem; }
 
 .vt-donation-blurb-title {
-  -webkit-flex: 1 1 10rem;
-      -ms-flex: 1 1 10rem;
+  -webkit-box-flex: 1;
           flex: 1 1 10rem;
   font-weight: bold;
   font-size: 21.5px;
@@ -738,8 +653,7 @@ h3.vt-heading {
     margin-left: -42px; }
 
 .crm-container a.vt-donation-blurb-readmore {
-  -webkit-flex: 0 0 auto;
-      -ms-flex: 0 0 auto;
+  -webkit-box-flex: 0;
           flex: 0 0 auto;
   display: block;
   border: solid 2px white;
@@ -754,19 +668,16 @@ h3.vt-heading {
 
 @media screen and (max-width: 767px) {
   .vt-donation-layout {
-    display: -webkit-flex;
-    display: -ms-flexbox;
+    display: -webkit-box;
     display: flex;
-    -webkit-flex-direction: column;
-        -ms-flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
             flex-direction: column; }
   .vt-donation-amount-blurb {
-    -webkit-order: 1;
-        -ms-flex-order: 1;
+    -webkit-box-ordinal-group: 2;
             order: 1; }
   .vt-donation-amount-wrapper {
-    -webkit-order: 2;
-        -ms-flex-order: 2;
+    -webkit-box-ordinal-group: 3;
             order: 2; } }
 
 .vt-donation-amount-blurb-text {
@@ -804,22 +715,18 @@ h3.vt-heading {
 
 @media screen and (min-width: 768px) {
   .vt-donation-layout {
-    display: -webkit-flex;
-    display: -ms-flexbox;
+    display: -webkit-box;
     display: flex;
-    -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
+    -webkit-box-pack: justify;
             justify-content: space-between; }
   .vt-donation-amount-wrapper {
-    -webkit-flex: 0 1 18rem;
-        -ms-flex: 0 1 18rem;
+    -webkit-box-flex: 0;
             flex: 0 1 18rem; }
     .vt-donation-amount-wrapper .vt-heading {
       margin-top: 0; }
   .vt-donation-amount-blurb {
     padding-left: 2rem;
-    -webkit-flex: 0 1 38rem;
-        -ms-flex: 0 1 38rem;
+    -webkit-box-flex: 0;
             flex: 0 1 38rem; } }
 
 div.crm-container .vt-donate-other-comment label {
@@ -848,17 +755,14 @@ div.crm-container .vt-donate-other-comment label {
 
 @media screen and (min-width: 768px) {
   .vt-gdpr {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 50fr 50fr;
-        grid-template-columns: 50fr 50fr;
+    grid-template-columns: 50fr 50fr;
     -webkit-column-gap: 2rem;
+       -moz-column-gap: 2rem;
             column-gap: 2rem;
     row-gap: 1rem; }
     .vt-gdpr .vt-gdpr__text {
-      -ms-grid-column-span: 2;
-      -ms-grid-column: 1;
-          grid-column: 1 / span 2; } }
+      grid-column: 1 / span 2; } }
 
 button.vt-submit {
   margin: 2rem 0;

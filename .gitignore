@@ -1,1 +1,2 @@
-.npm/
+*.map
+node_modules
