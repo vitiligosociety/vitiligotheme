@@ -61,7 +61,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:not(.error):before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=47308"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=98549"); }
 
 .vt-icon {
   display: inline-block; }
@@ -191,7 +191,7 @@ div.crm-container .vt-label label {
       padding-top: 4px; }
     #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:not(.error):before {
       position: absolute;
-      top: 0;
+      top: 0.3rem;
       left: 0;
       display: inline-block;
       content: '';
@@ -470,7 +470,7 @@ div.crm-container .vt-payment-box__switch-container label {
 
 .vt-payment-dd-message {
   background: #E3E3E8;
-  padding: 0.5rem;
+  padding: 2.5rem 0.5rem;
   position: relative; }
   .vt-payment-dd-message > .vt-icon {
     display: none;
@@ -486,7 +486,7 @@ div.crm-container .vt-payment-box__switch-container label {
 
 @media screen and (min-width: 768px) {
   .vt-payment-dd-message {
-    padding: 4rem 6rem; }
+    padding: 5.5rem 6rem; }
     .vt-payment-dd-message > .vt-icon {
       display: block; }
   .vt-payment-dd-message__inner {

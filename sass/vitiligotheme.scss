@@ -209,7 +209,7 @@ div.crm-container .vt-label label {
       }
       label:not(.error):before {
         position: absolute;
-        top: 0;
+        top: 0.3rem;
         left: 0;
         display: inline-block;
         content: '';
@@ -605,7 +605,7 @@ div.crm-container .vt-payment-box__switch-container label {
 .selected-c .vt-payment-dd-message { display: none; }
 .vt-payment-dd-message {
   background: $colour_grey_payment_box_opacity_applied;
-  padding: 0.5rem;
+  padding: 2.5rem 0.5rem;
   position: relative;
   &>.vt-icon {
     display:none;
@@ -623,7 +623,7 @@ div.crm-container .vt-payment-box__switch-container label {
 }
 @media screen and (min-width: 768px) {
   .vt-payment-dd-message {
-    padding: 4rem 6rem;
+    padding: 5.5rem 6rem;
     &>.vt-icon {
       display:block;
     }
