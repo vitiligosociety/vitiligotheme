@@ -432,6 +432,7 @@
 
     $niceForm.append($niceGdpr);
     $gdpr.remove();
+    $('div.recaptcha-section').appendTo('.vt-gdpr');
   }
   function donateOtherComments() {
     const c = parseStdCiviField('#editrow-custom_17');
