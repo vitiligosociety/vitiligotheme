@@ -24,7 +24,7 @@ The following files/directories can optionally be deleted (they are not needed i
 
 ### Building
 
-You need a nodejs environmnet. Clone the repo and enter the dir and type `npm i` to download the node modules.
+You need a nodejs environment. Clone the repo and enter the dir and type `npm i` to download the node modules.
 
 Single build:
 

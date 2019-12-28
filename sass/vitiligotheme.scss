@@ -548,7 +548,7 @@ div.crm-container .vt-payment-box__switch-container label {
 //   margin:0 0 2rem;
 //   border:none;
 //   box-shadow: $box_shadow_1;
-// 
+//
 //   &>legend {
 //     position:absolute;
 //     width:1px;
@@ -561,7 +561,7 @@ div.crm-container .vt-payment-box__switch-container label {
 //   display: flex;
 //   flex-wrap: wrap;
 //   margin: 0 ;
-// 
+//
 // }
 @media screen and (min-width: 768px) {
   #billing-payment-block {
@@ -761,7 +761,7 @@ h3.vt-heading {
   }
 }
 .vt-donation-amount-blurb {
-  
+
 }
 .vt-donation-amount-blurb-header {
   background-color: $colour_deep_blue;
@@ -875,6 +875,13 @@ div.crm-container .vt-donate-other-comment {
 
   }
   label { color: $colour_grey_headings; }
+}
+// Align recaptcha to left
+td.recaptcha_label {
+  display: none;
+}
+div.recaptcha-section .form-layout-compressed tbody tr td {
+  padding: 0;
 }
 // Two column layout above mobile.
 @media screen and (min-width: 768px) {

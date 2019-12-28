@@ -61,7 +61,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:not(.error):before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=98549"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=99451"); }
 
 .vt-icon {
   display: inline-block; }
@@ -731,6 +731,12 @@ div.crm-container .vt-donate-other-comment label {
 
 .vt-gdpr label {
   color: #666666; }
+
+td.recaptcha_label {
+  display: none; }
+
+div.recaptcha-section .form-layout-compressed tbody tr td {
+  padding: 0; }
 
 @media screen and (min-width: 768px) {
   .vt-gdpr {
