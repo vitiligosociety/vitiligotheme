@@ -799,6 +799,7 @@ h3.vt-heading {
   .vt-donation-layout { display: flex; flex-direction: column; }
   .vt-donation-amount-blurb   { order: 1; }
   .vt-donation-amount-wrapper { order: 2; }
+  div.recaptcha-section { margin-top: 26px; }
 }
 .vt-donation-amount-blurb-text {
   @include dashed;

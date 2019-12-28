@@ -61,7 +61,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:not(.error):before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=99451"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=60565"); }
 
 .vt-icon {
   display: inline-block; }
@@ -657,7 +657,9 @@ h3.vt-heading {
             order: 1; }
   .vt-donation-amount-wrapper {
     -webkit-box-ordinal-group: 3;
-            order: 2; } }
+            order: 2; }
+  div.recaptcha-section {
+    margin-top: 26px; } }
 
 .vt-donation-amount-blurb-text {
   border: dashed 1px #aaa;
