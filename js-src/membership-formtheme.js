@@ -450,19 +450,13 @@
 
     const $niceSubmitButton = $('<button class="vt-submit"/>')
       .text(text)
+      // Save the original button text to the button for later restore
+      .data('text', text)
       .on('click', e => {
         e.preventDefault();
-        $submitButtonWrapper.find('input[type="submit"]').trigger('click', e);
         // Disable the button.
         $niceSubmitButton.prop('disabled', true).text('Please wait...');
-        // ...but come back in 1 min and re-enable it if we're still running.
-        // This catches the cases that Stripe tokenisation fails.
-        window.setTimeout( () => {
-          if (!formHasBeenSubmitted) {
-            vtDebug("resetting submit button as form not submitted");
-           $niceSubmitButton.prop('disabled', false).text(text);
-          }
-        }, 60000);
+        $submitButtonWrapper.find('input[type="submit"]').trigger('click', e);
       });
 
     $niceForm.append($niceSubmitButton);
@@ -471,6 +465,11 @@
       formHasBeenSubmitted = true;
       vtDebug('Form submitted.');
       $niceSubmitButton.prop('disabled', true).text('Please wait...');
+    });
+
+    $form.on('crmBillingFormNotValid', e => {
+      vtDebug("resetting submit button as form not submitted");
+      $niceSubmitButton.prop('disabled', false).text($niceSubmitButton.data('text'));
     });
   }
   /**
