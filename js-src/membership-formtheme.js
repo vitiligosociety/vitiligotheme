@@ -14,6 +14,7 @@
   if (!$form.length) {
     return;
   }
+  blockUI();
   vtDebug("found form ", $form);
 
   const $niceForm = $('<div/>');
@@ -373,11 +374,13 @@
     $niceForm.append($paymentDetails);
     alterPaymentMethodsAvailable();
     selectPaymentMethod();
+    unblockUI();
   }
   function selectPaymentMethod() {
+    blockUI();
     const selected_processor_id = $payment_processor_selection_ui.find('input:checked').val();
 
-    // Card selected if we dno't have a choice. (Donate page)
+    // Card selected if we don't have a choice. (Donate page)
     if (typeof(selected_processor_id) === 'undefined') {
       $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd')
         .closest('.vt-payment-box').addClass('selected-c').removeClass('selected-dd');
@@ -488,6 +491,7 @@
       observer.disconnect();
       reconfigurePaymentBlock();
       $original_billing_payment_block.fadeIn('fast');
+      unblockUI();
       observer.observe(wrapper, config);
     };
 
@@ -540,7 +544,7 @@
     const $billingAddressSection = $billingBlock.find('.billing_name_address-section');
 
     // Wrap the #card-element that holds the new Stripe elements
-    $cardElement = $billingBlock.find('#card-element')
+    const $cardElement = $billingBlock.find('#card-element')
       .wrap('<div class="vt-card-element"/>');
 
     // Add Para on DD is better.
@@ -610,7 +614,6 @@
         '.billing_country_id-5-section',
       ].join(',')).hide();
     }
-
   }
   function themeRadiosAndCheckboxes($context) {
     $context.find('input[type="radio"], input[type="checkbox"]').each(function() {
@@ -635,6 +638,7 @@
     reconfigurePaymentBlock();
     $original_billing_payment_block.show();
     console.log($original_billing_payment_block);
+    unblockUI();
   }
   // Returns DOM node.
   function findPaymentProcessorRadioForProcessorType(processorType) {
@@ -725,6 +729,24 @@
     // Remove left over elements.
     $('fieldset.crm-profile-name-name_and_address, fieldset.crm-profile-name-supporter_profile').remove();
 
+    unblockUI();
   }
+
+  function blockUI() {
+    vtDebug('blocking UI');
+    CRM.$.blockUI({
+      message: '<div class="fa-3x"><i class="fa fa-spinner fa-spin"></i></div>',
+      css: {
+        backgroundColor: 'transparent',
+        border: 'none'
+      },
+    });
+  }
+
+  function unblockUI() {
+    vtDebug('unblocking UI');
+    $.unblockUI();
+  }
+
 }))(CRM, CRM.$);
 
