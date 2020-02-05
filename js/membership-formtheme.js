@@ -447,11 +447,16 @@
       formHasBeenSubmitted = true;
       vtDebug('Form submitted.');
       $niceSubmitButton.prop('disabled', true).text('Please wait...');
+      if (!$form.valid()) {
+        e.preventDefault();
+        $form.trigger('crmBillingFormNotValid');
+      }
     });
 
     $form.on('crmBillingFormNotValid', e => {
       vtDebug("resetting submit button as form not submitted");
       $niceSubmitButton.prop('disabled', false).text($niceSubmitButton.data('text'));
+      Swal.fire({ icon: 'error', title: '', text: ts('Please check and fill in all required fields!') });
     });
   }
 
