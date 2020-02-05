@@ -1,8 +1,6 @@
 ((CRM, $) => $(() => {
 
   'use strict';
-  // change for empty function.
-  const vtDebug = 1 ? console.log : () => {};
 
   $('body').addClass('vitiligo-theme-civicrm-page');
 
@@ -506,54 +504,25 @@
   function watchPaymentFields() {
     const wrapper = $original_billing_payment_block[0];
     const config = { childList: true, subtree: true };
-    var delayed = false;
+
+    $form.on('crmBillingFormReloadComplete', e => {
+      vtDebug('crmBillingFormReloadComplete');
+      vitiligoTweakDynamicPaymentFields();
+    });
 
     // This function deals with re-presenting card payment fields in the billing-payment-block
     const vitiligoTweakDynamicPaymentFields = function() {
-      observer.disconnect();
+      vtDebug('tweak dynamic payment fields');
       reconfigurePaymentBlock();
       $original_billing_payment_block.fadeIn('fast');
       unblockUI();
-      observer.observe(wrapper, config);
     };
 
-    // This callback is used in the mutation observer.
-    // Its job is to identify if a DOM mutation is relevant to the billing payment block.
-    // If so it will call vitiligoTweakDynamicPaymentFields after half a second.
-    const callback = function(mutationsList, observer) {
-      var needToTweakUi = false;
-      for(var mutation of mutationsList) {
-        // We need to detect whether the change was the payment block.
-        if (mutation.target.id == 'billing-payment-block') {
-          needToTweakUi = true;
-        }
-      }
-
-      if (needToTweakUi) {
-        // Note CiviCRM ends up creating nested #billing-payment-block elements :-(
-
-        // Hide the element while we build this and mess it around.
-        $original_billing_payment_block.hide();
-
-        // If already queued, requeue with new delay.
-        if (delayed) {
-          window.clearTimeout(delayed);
-          delayed = false;
-        }
-        // Allow some time for things to settle.
-        delayed = window.setTimeout(vitiligoTweakDynamicPaymentFields, 300);
-      }
-    };
-
-    // Create an observer instance linked to the callback function
-    const observer = new MutationObserver(callback);
-
-    // Start observing the target node for configured mutations
-    observer.observe(wrapper, config);
   }
 
   function reconfigurePaymentBlock() {
     // Reconfigure payment block.
+    blockUI();
     // Remove the non-unique id from the billing-payment-block.
     $original_billing_payment_block.find('#billing-payment-block').attr('id', 'nested-billing-payment-block');
 
@@ -571,10 +540,12 @@
       .wrap('<div class="vt-card-element"/>');
 
     // Add Para on DD is better.
-    $cardElement.after(
-      $('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>If you have a UK bank account please consider using Direct Debit, we are charged a lesser fee and more of your money goes to supporting those with Vitiligo.</div><i class="vt-icon vt-icon--padlock"></i></div>')
-    );
-    vtDebug({$cardElement});
+    if ($('div.direct-debit-benefits-para').length === 0) {
+      $cardElement.after(
+        $('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>If you have a UK bank account please consider using Direct Debit, we are charged a lesser fee and more of your money goes to supporting those with Vitiligo.</div><i class="vt-icon vt-icon--padlock"></i></div>')
+      );
+    }
+    vtDebug('cardElement',$cardElement);
 
     // Strip out some CiviCRM classes that give us grief.
     // We can't remove this, Stripe depends on it: $billingBlock.find('.crm-section').removeClass('crm-section');
@@ -770,6 +741,16 @@
   function unblockUI() {
     vtDebug('unblocking UI');
     $.unblockUI();
+  }
+
+  /**
+   * Output debug information
+   * @param {string} message
+   * @param {object} object
+   */
+  function vtDebug(message, object) {
+    // Uncomment the following to debug unexpected returns.
+    console.log(new Date().toISOString() + ' vtDebug: ' + message, object);
   }
 
 }))(CRM, CRM.$);
