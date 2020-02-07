@@ -470,11 +470,11 @@
 
     function setAcceptCheckboxesValid(element, elementName) {
       if (!element.prop('checked')) {
-        $('label#' + elementName + '-error').hide();
+        $('label#' + elementName + '-error').remove();
         $('label[for=' + elementName + ']').addClass('crm-inline-error alert-danger');
       }
       else {
-        $('label#' + elementName + '-error').hide();
+        $('label#' + elementName + '-error').remove();
         $('label[for=' + elementName + ']').removeClass('error crm-inline-error alert-danger');
       }
     }
