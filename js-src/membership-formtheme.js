@@ -559,9 +559,9 @@
     $billingBlock.find('.clear').remove();
 
     // If we have a billingAddressSection we need to theme that now.
-    if ($billingAddressSection.length) {
+    if ($billingAddressSection.length && ($('#billing-address-title').length === 0)) {
       // ... add a title and move the 'same as above' checkbox.
-      $billingAddressSection.append('<h2>Your billing information</h2>',
+      $billingAddressSection.append('<h2 id="billing-address-title">Your billing information</h2>',
         $billingBlock.find('#billingcheckbox'),
         $billingBlock.find('label[for="billingcheckbox"]')
       );
