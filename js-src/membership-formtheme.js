@@ -527,7 +527,6 @@
       $('label[for=accept_tc]').show();
       $('label[for=accept_entity_tc]').text('I accept the Terms & Conditions (REQUIRED)');
       $('label[for=accept_entity_tc]').show();
-      Swal.fire({icon: 'error', title: '', text: ts('Please check and fill in all required fields!')});
     });
   }
 
