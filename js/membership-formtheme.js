@@ -481,6 +481,8 @@
       vtDebug("resetting submit button as form not submitted");
       $niceSubmitButton.prop('disabled', false).text($niceSubmitButton.data('text'));
       // Work around issues with jQuery validate hiding labels/clearing text once stripe has been selected
+      $('label#accept_tc-error').remove();
+      $('label#accept_entity_tc-error').remove();
       $('label[for=accept_tc]').text('I accept the Data Privacy Policy (REQUIRED)');
       $('label[for=accept_tc]').show();
       $('label[for=accept_entity_tc]').text('I accept the Terms & Conditions (REQUIRED)');
