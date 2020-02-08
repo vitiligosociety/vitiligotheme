@@ -19,6 +19,14 @@
   $form.append($niceForm);
   vtDebug("new form", $niceForm);
 
+  // Set defaults for jQuery validate
+  setDefaultsForJQueryValidate();
+
+  function setDefaultsForJQueryValidate() {
+    var validator = $form.validate();
+    validator.settings.ignore = ".novalidate .select2-offscreen, [readonly], :hidden:not(.crm-select2)";
+  }
+
   function parseStdCiviField(selector) {
     var $rowNode = $form.find(selector).hide();
 
@@ -453,32 +461,6 @@
     $niceForm.append($niceGdpr);
     $gdpr.remove();
     $('div.recaptcha-section').appendTo('.vt-gdpr');
-
-    var validator = $form.validate();
-    validator.settings.ignore = ".select2-offscreen, [readonly], :hidden:not(.crm-select2), input#accept_tc, input#accept_entity_tc";
-
-    // "Pseudo" validate checkboxes (as they're hidden and replaced with labels, which breaks a bit with jquery validate)
-    const inputETC = $('input#accept_entity_tc');
-    inputETC.on('change', function() {
-      setAcceptCheckboxesValid(inputETC, 'accept_entity_tc');
-    });
-
-    const inputTC = $('input#accept_tc');
-    inputTC.on('change', function() {
-      setAcceptCheckboxesValid(inputTC, 'accept_tc');
-    });
-
-    function setAcceptCheckboxesValid(element, elementName) {
-      if (!element.prop('checked')) {
-        $('label#' + elementName + '-error').remove();
-        $('label[for=' + elementName + ']').addClass('crm-inline-error alert-danger');
-      }
-      else {
-        $('label#' + elementName + '-error').remove();
-        $('label[for=' + elementName + ']').removeClass('error crm-inline-error alert-danger');
-      }
-    }
-
   }
 
   function donateOtherComments() {
@@ -522,13 +504,12 @@
     $form.on('crmBillingFormNotValid', e => {
       vtDebug("resetting submit button as form not submitted");
       $niceSubmitButton.prop('disabled', false).text($niceSubmitButton.data('text'));
+
       // Work around issues with jQuery validate hiding labels/clearing text once stripe has been selected
-      $('label#accept_tc-error').remove();
-      $('label#accept_entity_tc-error').remove();
-      $('label[for=accept_tc]').text('I accept the Data Privacy Policy (REQUIRED)');
-      $('label[for=accept_tc]').show();
-      $('label[for=accept_entity_tc]').text('I accept the Terms & Conditions (REQUIRED)');
-      $('label[for=accept_entity_tc]').show();
+      $('body').find('input[type=checkbox]:not(:checked)').each(function() {
+        const $input = $(this);
+        $('label[for=' + elementName + ']').addClass('error alert-danger');
+      });
     });
   }
 
@@ -653,7 +634,7 @@
       if ($input.is('.vt-themed')) {
         return;
       }
-      const $label = $input.next();
+      const $label = $("label[for='" + $(this).attr('id') + "']");
       const $wrapper = $('<div class="vt-checkbox-radio-wrapper"/>');
       if ($input.is('input[type="checkbox"]')) {
         $wrapper.addClass('checkbox');
@@ -662,9 +643,33 @@
         $wrapper.addClass('radio');
       }
       $input.before($wrapper);
-      $wrapper.append($input, $label);
-      $input.addClass('vt-themed');
+      var $required = '';
+      if ($input.hasClass('required')) {
+        $required = '<span class="crm-marker"> * </span>';
+      }
+      $wrapper.append($input, $label, $required);
+      $input.addClass('vt-themed novalidate');
     });
+
+    // "Pseudo" validate checkboxes (as they're hidden and replaced with labels, which breaks a bit with jquery validate)
+    const inputETC = $('input#accept_entity_tc');
+    inputETC.on('change', function() {
+      setAcceptCheckboxesValid(inputETC, 'accept_entity_tc');
+    });
+
+    const inputTC = $('input#accept_tc');
+    inputTC.on('change', function() {
+      setAcceptCheckboxesValid(inputTC, 'accept_tc');
+    });
+
+    function setAcceptCheckboxesValid(element, elementName) {
+      if (!element.prop('checked')) {
+        $('label[for=' + elementName + ']').addClass('error alert-danger');
+      }
+      else {
+        $('label[for=' + elementName + ']').removeClass('error alert-danger');
+      }
+    }
   }
 
   function donateMovePaymentBlock() {
