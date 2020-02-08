@@ -444,6 +444,10 @@
     // Save the original button text to the button for later restore
     .data('text', text).on('click', e => {
       e.preventDefault();
+      $form.data('crmBillingFormValid', true);
+      if (!$('input#accept_tc:checked').length || !$('input#accept_entity_tc:checked').length) {
+        $form.data('crmBillingFormValid', false);
+      }
       // Disable the button.
       $niceSubmitButton.prop('disabled', true).text('Please wait...');
       $submitButtonWrapper.find('input[type="submit"]').trigger('click', e);
@@ -468,8 +472,15 @@
       // Work around issues with jQuery validate hiding labels/clearing text once stripe has been selected
       $('body').find('input[type=checkbox]:not(:checked)').each(function () {
         const $input = $(this);
-        $('label[for=' + elementName + ']').addClass('error alert-danger');
+        const elementName = $(this).attr('id');
+        $('label[for=' + elementName + ']').addClass('pseudo-error');
+        if (typeof $('label[for=' + elementName + ']').data('text') !== 'undefined') {
+          $('label[for=' + elementName + ']').text($('label[for=' + elementName + ']').data('text'));
+          $('label[for=' + elementName + ']').prepend('<span class="checkbox-radio"></span>');
+        }
+        $('label#' + elementName + '-error').remove();
       });
+      notifyUser('error', '', ts('Please check and fill in all required fields!'), '.vt-your-info');
     });
   }
 
@@ -517,7 +528,7 @@
 
     // Add Para on DD is better.
     if ($('div.direct-debit-benefits-para').length === 0) {
-      $cardElement.after($('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>If you have a UK bank account please consider using Direct Debit, we are charged a lesser fee and more of your money goes to supporting those with Vitiligo.</div><i class="vt-icon vt-icon--padlock"></i></div>'));
+      $cardElement.after($('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>Are you using a UK bank account? Please consider using Direct Debit. We are charged a lesser fee and more of your money goes to supporting those with vitiligo!</div><i class="vt-icon vt-icon--padlock"></i></div>'));
     }
     vtDebug('cardElement', $cardElement);
 
@@ -552,12 +563,14 @@
   }
 
   function themeRadiosAndCheckboxes($context) {
-    $context.find('input[type="radio"], input[type="checkbox"]').each(function () {
+    $context.find('input[type="radio"]:not([name="payment_processor_id"]), input[type="checkbox"]').each(function () {
       const $input = $(this);
       if ($input.is('.vt-themed')) {
         return;
       }
       const $label = $("label[for='" + $(this).attr('id') + "']");
+      $label.prepend('<span class="checkbox-radio"></span>');
+      $label.data('text', $label.text());
       const $wrapper = $('<div class="vt-checkbox-radio-wrapper"/>');
       if ($input.is('input[type="checkbox"]')) {
         $wrapper.addClass('checkbox');
@@ -571,6 +584,8 @@
       }
       $wrapper.append($input, $label, $required);
       $input.addClass('vt-themed novalidate');
+      $input.removeClass('valid required error');
+      $input.removeAttr('aria-required');
     });
 
     // "Pseudo" validate checkboxes (as they're hidden and replaced with labels, which breaks a bit with jquery validate)
@@ -585,10 +600,9 @@
     });
 
     function setAcceptCheckboxesValid(element, elementName) {
+      $('label[for=' + elementName + ']').removeClass('error alert-danger pseudo-error');
       if (!element.prop('checked')) {
-        $('label[for=' + elementName + ']').addClass('error alert-danger');
-      } else {
-        $('label[for=' + elementName + ']').removeClass('error alert-danger');
+        $('label[for=' + elementName + ']').addClass('pseudo-error');
       }
     }
   }
@@ -712,6 +726,36 @@
   function vtDebug(message, object) {
     // Uncomment the following to debug unexpected returns.
     console.log(new Date().toISOString() + ' vtDebug: ' + message, object);
+  }
+
+  /**
+   * If we have the sweetalert2 library popup a nice message to the user.
+   *   Otherwise do nothing
+   * @param {string} icon
+   * @param {string} title
+   * @param {string} text
+   * @param {string} scrollToElement
+   */
+  function notifyUser(icon, title, text, scrollToElement) {
+    if ($('div#card-element').length !== 0) {
+      vtDebug('notify defer to stripe');
+      return;
+    }
+    if (typeof Swal === 'function') {
+      var swalParams = {
+        icon: icon,
+        text: text
+      };
+      if (title) {
+        swalParams.title = title;
+      }
+      if (scrollToElement) {
+        swalParams.onAfterClose = function () {
+          window.scrollTo($(scrollToElement).position());
+        };
+      }
+      Swal.fire(swalParams);
+    }
   }
 }))(CRM, CRM.$);
 //# sourceMappingURL=membership-formtheme.js.map

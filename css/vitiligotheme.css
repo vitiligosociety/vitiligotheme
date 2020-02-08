@@ -60,8 +60,8 @@ div.crm-container .vt-label label {
   letter-spacing: -0.174167px;
   color: #666666; }
 
-.vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:not(.error):before {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=56231"); }
+.vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label span.checkbox-radio {
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=88949"); }
 
 .vt-icon {
   display: inline-block; }
@@ -182,29 +182,32 @@ div.crm-container .vt-label label {
     #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper input {
       position: absolute;
       left: -200vh; }
-    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:not(.error) {
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label {
       min-height: 30px;
       display: inline-block;
       margin-bottom: 1rem;
       position: relative;
       padding-left: 36px;
-      padding-top: 4px; }
-    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label:not(.error):before {
+      padding-top: 4px;
+      padding-right: 2px; }
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label.pseudo-error {
+      border: 1.5px solid red; }
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label span.checkbox-radio {
       position: absolute;
       top: 0.3rem;
-      left: 0;
+      left: 4px;
       display: inline-block;
       content: '';
       background-position: 0px 0px;
       width: 25px;
       height: 25px; }
-    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.radio input:checked + label:not(.error):before {
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.radio input:checked + label span.checkbox-radio {
       background-position: 0px -25px; }
-    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.checkbox label:not(.error):before {
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.checkbox label span.checkbox-radio {
       background-position: -25px 0px; }
-    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.checkbox input:checked + label:not(.error):before {
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.checkbox input:checked + label span.checkbox-radio {
       background-position: -25px -25px; }
-    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.checkbox input:checked + label + label:not(.error):before {
+    #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper.checkbox input:checked + label + label span.checkbox-radio {
       background-position: -25px -25px; }
 
 #crm-container.crm-public .vt-container textarea,
