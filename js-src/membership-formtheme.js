@@ -7,6 +7,7 @@
   // The config placeholder here is replaced by php. Do not alter the line below at all.
   var payment_processor_ids = {};//%config%
   var form_name = '';//%formname%
+  var unblockUITimeout;
 
   var $form = $('form#Main');
   if (!$form.length) {
@@ -784,6 +785,9 @@
 
   function blockUI() {
     vtDebug('blocking UI');
+    // We add a timeout in here to be sure that we unblock the UI even if something went wrong
+    window.clearTimeout(unblockUITimeout);
+    unblockUITimeout = window.setTimeout(unblockUI(), 5000);
     CRM.$.blockUI({
       message: '<div class="fa-3x"><i class="fa fa-spinner fa-spin"></i></div>',
       css: {
@@ -796,6 +800,7 @@
   function unblockUI() {
     vtDebug('unblocking UI');
     $.unblockUI();
+    window.clearTimeout(unblockUITimeout);
   }
 
   /**
