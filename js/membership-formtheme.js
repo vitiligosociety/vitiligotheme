@@ -728,10 +728,10 @@
    * @param {string} message
    * @param {object} object
    */
-  function vtDebug(message, object) {
-    // Uncomment the following to debug unexpected returns.
-    console.log(new Date().toISOString() + ' vtDebug: ' + message, object);
-  }
+  function vtDebug(message, object) {}
+  // Uncomment the following to debug unexpected returns.
+  //console.log(new Date().toISOString() + ' vtDebug: ' + message, object);
+
 
   /**
    * If we have the sweetalert2 library popup a nice message to the user.

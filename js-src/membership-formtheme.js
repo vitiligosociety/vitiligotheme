@@ -810,7 +810,7 @@
    */
   function vtDebug(message, object) {
     // Uncomment the following to debug unexpected returns.
-    console.log(new Date().toISOString() + ' vtDebug: ' + message, object);
+    //console.log(new Date().toISOString() + ' vtDebug: ' + message, object);
   }
 
   /**
