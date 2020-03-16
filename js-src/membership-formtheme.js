@@ -402,6 +402,13 @@
   }
 
   function selectPaymentMethod() {
+    if ((this.className === 'vt-payment-box__c') && $payment_processor_switch_wrapper.hasClass('selected-c')) {
+      return;
+    }
+    else if ((this.className === 'vt-payment-box__dd') && $payment_processor_switch_wrapper.hasClass('selected-dd')) {
+      return;
+    }
+
     blockUI();
     const selected_processor_id = $payment_processor_selection_ui.find('input:checked').val();
 
@@ -409,16 +416,28 @@
     if (typeof(selected_processor_id) === 'undefined') {
       $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd')
         .closest('.vt-payment-box').addClass('selected-c').removeClass('selected-dd');
-      return;
     }
-
-    if (payment_processor_ids.GoCardless.indexOf(selected_processor_id) > -1) {
-      $payment_processor_switch_wrapper.addClass('selected-dd').removeClass('selected-c')
-        .closest('.vt-payment-box').addClass('selected-dd').removeClass('selected-c');
+    else if (payment_processor_ids.GoCardless.indexOf(selected_processor_id) > -1) {
+      if ($payment_processor_switch_wrapper.hasClass('selected-dd')) {
+        unblockUI();
+      } else {
+        $payment_processor_switch_wrapper.addClass('selected-dd')
+          .removeClass('selected-c')
+          .closest('.vt-payment-box')
+          .addClass('selected-dd')
+          .removeClass('selected-c');
+      }
     }
     else {
-      $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd')
-        .closest('.vt-payment-box').addClass('selected-c').removeClass('selected-dd');
+      if ($payment_processor_switch_wrapper.hasClass('selected-c')) {
+        unblockUI();
+      } else {
+        $payment_processor_switch_wrapper.addClass('selected-c')
+          .removeClass('selected-dd')
+          .closest('.vt-payment-box')
+          .addClass('selected-c')
+          .removeClass('selected-dd');
+      }
     }
   }
 
