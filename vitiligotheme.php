@@ -193,7 +193,7 @@ function vitiligotheme_civicrm_buildForm($formName, &$form) {
     //$js .= file_get_contents(__DIR__ . '/js/fix-radio-checkbox-layout.js');
     $css = file_get_contents(__DIR__ . '/css/vitiligotheme.css');
   }
-  elseif ($form->_id === VITILIGO_DONATION_FORM_ID) {
+  elseif ($form->_id == VITILIGO_DONATION_FORM_ID) {
     $js = file_get_contents(__DIR__ . '/js/membership-formtheme.js');
     $js = strtr($js, [
       'var form_name = \'\'; //%formname%' => 'var form_name = "donate";',
