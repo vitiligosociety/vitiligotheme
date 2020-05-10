@@ -217,8 +217,7 @@
     </div>`);
     const amount = parseStdCiviField('.other_amount-section');
     const $origInputAmount = $(amount.input);
-    const $vitAmount = $('<input type="text" />')
-      .on('blur keyup', (e) => {
+    const $vitAmount = $('<input type="text" class="required"/>').on('blur keyup', e => {
         // Copy the value to the original CiviCRM
         $origInputAmount.val($vitAmount.val());
         $origInputAmount.trigger('keyup', e);
@@ -458,10 +457,10 @@
     // Remove the remaining help text.
     $helpRow.remove();
 
-    // Remove the required class from the individual inputs
-    $yes.removeClass('required');
-    $yes4.removeClass('required');
-    $no.removeClass('required');
+    // Flag these as required so they are picked up by validation
+    $yes.addClass('required');
+    $yes4.addClass('required');
+    $no.addClass('required');
 
     // Now re-assemble.
     const $container = $('<div class="vt-container"></div>');
@@ -682,12 +681,16 @@
       $input.before($wrapper);
       var $required = '';
       if ($input.hasClass('required')) {
-        $required = '<span class="crm-marker"> * </span>';
+        if (!$input.is('input[name=custom_1]')) {
+          $required = '<span class="crm-marker"> * </span>';
+        }
       }
       $wrapper.append($input, $label, $required);
       $input.addClass('vt-themed novalidate');
-      $input.removeClass('valid required error');
-      $input.removeAttr('aria-required');
+      if (!$input.is('input[name=custom_1]')) {
+        $input.removeClass('valid required error');
+        $input.removeAttr('aria-required');
+      }
     });
 
     // "Pseudo" validate checkboxes (as they're hidden and replaced with labels, which breaks a bit with jquery validate)
@@ -765,6 +768,11 @@
     // have a way to select those.
     $(ddProcessor).prop('disabled', !allow_dd);
   }
+
+  // Configure the validator per Stripe (see https://github.com/civicrm/civicrm-core/pull/16495) and note this will need updating from error to crm-inline-error at some point.
+  var validator = $($form).validate();
+  validator.settings.errorClass = 'error alert-danger';
+  validator.settings.ignore = '.select2-offscreen, [readonly], :hidden:not(.crm-select2)';
 
   if (form_name === 'membership') {
     $niceForm.addClass('vt-membership-form');
