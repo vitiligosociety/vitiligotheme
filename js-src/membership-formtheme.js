@@ -73,7 +73,10 @@
     $rowNode.find('input[type="radio"]').each(function() {
       const $originalInput = $(this);
       $option = $('<option/>').attr('value', this.value).text($originalInput.next('label').text())
-        .on('click', e => { e.preventDefault(); $originalInput.click(); } );
+        .on('click', e => {
+          e.preventDefault();
+          $originalInput.click();
+        });
       $select.append($option);
     });
 
@@ -445,11 +448,11 @@
     const $gaRow = $('#editrow-custom_1');
     const $inputs = $gaRow.find('input');
     const $yes4 = $inputs.eq(0);
-    const $yes4_label = $yes4.next();
+    const $yes4_label = $gaRow.find('label[for=' + $yes4.id + ']');
     const $yes = $inputs.eq(1);
-    const $yes_label = $yes.next();
+    const $yes_label = $gaRow.find('label[for=' + $yes.id + ']');
     const $no = $inputs.eq(2);
-    const $no_label = $no.next();
+    const $no_label = $gaRow.find('label[for=' + $no.id + ']');
     const $helpRow = $('#helprow-custom_1>div');
     const $intro = $helpRow.find('>p').slice(3, 5);
     const $declaration = $helpRow.find('p').eq(0).add($helpRow.find('ol').eq(0));
@@ -472,6 +475,12 @@
     $layout.append($inputs_container, $('<div class="vt-giftaid-declaration"/>').append('<i class="vt-icon vt-icon--info"></i>', $declaration));
     $container.append($layout);
     $niceForm.append($container, '<hr/>');
+
+    // jquery validate adds a label "this field is required". It needs removing once a selection has been made or the image based radios don't work.
+    $('input[name=custom_1').on('change', function() {
+      console.log('changed');
+      $('label#custom_1-error').remove();
+    });
   }
 
   function gdprFields() {
