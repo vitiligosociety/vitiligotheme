@@ -401,22 +401,21 @@
   }
 
   function giftAid() {
-    //editrow-custom_10
-    const $gaRow = $('#editrow-custom_10');
+    //editrow-custom_1
+    const $gaRow = $('#editrow-custom_1');
     const $inputs = $gaRow.find('input');
-    const $yes = $inputs.eq(0);
+    const $yes4 = $inputs.eq(0);
+    const $yes4_label = $yes4.next();
+    const $yes = $inputs.eq(1);
     const $yes_label = $yes.next();
-    const $no = $inputs.eq(1);
+    const $no = $inputs.eq(2);
     const $no_label = $no.next();
-    const $helpRow = $('#helprow-custom_10>div');
+    const $helpRow = $('#helprow-custom_1>div');
     const $intro = $helpRow.find('>p').slice(3, 5);
     const $declaration = $helpRow.find('p').eq(0).add($helpRow.find('ol').eq(0));
 
     // Remove the remaining help text.
     $helpRow.remove();
-
-    // Remove the third input ("Yes, in the past 4 years")
-    $inputs.eq(2).parent().parent().remove();
 
     // Now re-assemble.
     const $container = $('<div class="vt-container"></div>');
@@ -424,7 +423,7 @@
     // Now the grid layout
     const $layout = $('<div class="vt-giftaid-layout-1"/>');
     const $inputs_container = $('<div class="vt-giftaid-inputs" />');
-    $inputs_container.append('<div class="vt-giftaid-declaration--label vt-label"><label>Can we reclaim gift aid on your donation?</label></div>', $yes, $yes_label, $no, $no_label);
+    $inputs_container.append('<div class="vt-giftaid-declaration--label vt-label"><label>Can we reclaim gift aid on your donation?</label></div>', $yes4, $yes4_label, $yes, $yes_label, $no, $no_label);
     $layout.append($inputs_container, $('<div class="vt-giftaid-declaration"/>').append('<i class="vt-icon vt-icon--info"></i>', $declaration));
     $container.append($layout);
     $niceForm.append($container, '<hr/>');

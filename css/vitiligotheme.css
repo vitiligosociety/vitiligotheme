@@ -61,7 +61,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label span.checkbox-radio {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=54492"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=3843"); }
 
 .vt-icon {
   display: inline-block; }
@@ -242,12 +242,10 @@ div.crm-container .vt-label label {
   .vt-grid1 {
     display: grid;
     grid-template-columns: 33.3333fr 33.3333fr 33.3333fr;
-    -webkit-column-gap: 26px;
-       -moz-column-gap: 26px;
-            column-gap: 26px;
+    -moz-column-gap: 26px;
+         column-gap: 26px;
     row-gap: 38px;
-    -webkit-box-align: center;
-            align-items: center;
+    align-items: center;
     padding: 0.75rem 0; }
     .vt-grid1 .vt-label {
       padding-right: 1rem; }
@@ -313,18 +311,15 @@ li.vt-propositions-tripple__item {
 
 @media screen and (min-width: 768px) {
   ul.vt-propositions-tripple__items {
-    display: -webkit-box;
     display: flex; }
   li.vt-propositions-tripple__item {
-    -webkit-box-flex: 1;
-            flex: 1 0 30%; } }
+    flex: 1 0 30%; } }
 
 .vt-payment-box__header {
   background: #4E5076;
   display: grid;
-  -webkit-column-gap: 1rem;
-     -moz-column-gap: 1rem;
-          column-gap: 1rem;
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
   grid-template-columns: 42px 1fr;
   padding: 0 1rem; }
 
@@ -362,8 +357,7 @@ div.crm-container .vt-payment-box__switch-container label {
 
 @media screen and (min-width: 768px) {
   .vt-payment-box__header {
-    -webkit-box-align: center;
-            align-items: center;
+    align-items: center;
     padding: 0;
     grid-template-columns: 4rem 1fr 5rem 16.8rem; }
   .vt-payment-box__gbp {
@@ -380,14 +374,12 @@ div.crm-container .vt-payment-box__switch-container label {
     margin-left: 0; } }
 
 .vt-payment-box__switch-wrapper {
-  display: -webkit-box;
   display: flex;
   border-radius: 2rem;
   background: #363864;
   padding: 6px;
   position: relative; }
   .vt-payment-box__switch-wrapper:before {
-    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     content: '';
     top: 6px;
@@ -416,12 +408,10 @@ div.crm-container .vt-payment-box__switch-container label {
   color: #363864; }
 
 .vt-payment-box__dd {
-  -webkit-box-flex: 0;
-          flex: 0 0 9rem; }
+  flex: 0 0 9rem; }
 
 .vt-payment-box__c {
-  -webkit-box-flex: 0;
-          flex: 0 0 4.8rem; }
+  flex: 0 0 4.8rem; }
 
 .vt-payment-box.disable-dd .vt-payment-box__payby,
 .vt-payment-box.disable-dd .vt-payment-box__switch-container {
@@ -440,8 +430,7 @@ div.crm-container .vt-payment-box__switch-container label {
   #billing-payment-block .vt-card-element .direct-debit-benefits-para {
     position: relative;
     margin-bottom: 1rem;
-    -webkit-box-flex: 1;
-            flex: 1 0 100%; }
+    flex: 1 0 100%; }
     #billing-payment-block .vt-card-element .direct-debit-benefits-para .dashed {
       padding-left: 4rem; }
       #billing-payment-block .vt-card-element .direct-debit-benefits-para .dashed .vt-icon {
@@ -498,14 +487,12 @@ div.crm-container .vt-payment-box__switch-container label {
     max-width: 30rem; } }
 
 .vt-amount-buttons {
-  display: -webkit-box;
   display: flex;
   flex-wrap: wrap;
   margin: 1rem -0.5rem 0; }
 
 .vt-amount-buttons__button {
-  -webkit-box-flex: 0;
-          flex: 0 0 50%;
+  flex: 0 0 50%;
   padding: 0 0.5rem;
   margin-bottom: 1rem; }
   .vt-amount-buttons__button button {
@@ -530,8 +517,7 @@ div.crm-container .vt-payment-box__switch-container label {
   .vt-amount-buttons {
     flex-wrap: nowrap; }
   .vt-amount-buttons__button {
-    -webkit-box-flex: 1;
-            flex: 1 0 5rem; } }
+    flex: 1 0 5rem; } }
 
 .core p.vt-membership-amount-equiv {
   color: #363864; }
@@ -547,13 +533,10 @@ h3.vt-heading {
   color: #666666; }
 
 .vt-your-info {
-  display: -webkit-box;
   display: flex;
-  -webkit-box-pack: justify;
-          justify-content: space-between;
+  justify-content: space-between;
   flex-wrap: wrap;
-  -webkit-box-align: baseline;
-          align-items: baseline;
+  align-items: baseline;
   margin: 2rem 0 1rem; }
   .vt-your-info h2 {
     padding: 0;
@@ -593,19 +576,15 @@ h3.vt-heading {
 
 @media screen and (min-width: 768px) {
   .vt-giftaid-layout-1 {
-    display: -webkit-box;
     display: flex;
-    -webkit-box-pack: justify;
-            justify-content: space-between; }
+    justify-content: space-between; }
   .vt-giftaid-inputs {
-    -webkit-box-flex: 0;
-            flex: 0 1 24rem;
+    flex: 0 1 24rem;
     margin-top: 0; }
     .vt-giftaid-inputs .vt-checkbox-radio-wrapper {
       display: inline-block; }
   .vt-giftaid-declaration {
-    -webkit-box-flex: 0;
-            flex: 0 1 29rem;
+    flex: 0 1 29rem;
     padding-left: 4rem; }
     .vt-giftaid-declaration .vt-icon {
       position: absolute;
@@ -616,15 +595,12 @@ h3.vt-heading {
 
 .vt-donation-amount-blurb-header {
   background-color: #363864;
-  display: -webkit-box;
   display: flex;
-  -webkit-box-align: center;
-          align-items: center;
+  align-items: center;
   padding: 0.5rem 1rem; }
 
 .vt-donation-blurb-title {
-  -webkit-box-flex: 1;
-          flex: 1 1 10rem;
+  flex: 1 1 10rem;
   font-weight: bold;
   font-size: 21.5px;
   color: white;
@@ -635,8 +611,7 @@ h3.vt-heading {
     margin-left: -42px; }
 
 .crm-container a.vt-donation-blurb-readmore {
-  -webkit-box-flex: 0;
-          flex: 0 0 auto;
+  flex: 0 0 auto;
   display: block;
   border: solid 2px white;
   padding: 0.2rem 0.5rem;
@@ -650,17 +625,12 @@ h3.vt-heading {
 
 @media screen and (max-width: 767px) {
   .vt-donation-layout {
-    display: -webkit-box;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-            flex-direction: column; }
+    flex-direction: column; }
   .vt-donation-amount-blurb {
-    -webkit-box-ordinal-group: 2;
-            order: 1; }
+    order: 1; }
   .vt-donation-amount-wrapper {
-    -webkit-box-ordinal-group: 3;
-            order: 2; }
+    order: 2; }
   div.recaptcha-section {
     margin-top: 26px; } }
 
@@ -699,19 +669,15 @@ h3.vt-heading {
 
 @media screen and (min-width: 768px) {
   .vt-donation-layout {
-    display: -webkit-box;
     display: flex;
-    -webkit-box-pack: justify;
-            justify-content: space-between; }
+    justify-content: space-between; }
   .vt-donation-amount-wrapper {
-    -webkit-box-flex: 0;
-            flex: 0 1 18rem; }
+    flex: 0 1 18rem; }
     .vt-donation-amount-wrapper .vt-heading {
       margin-top: 0; }
   .vt-donation-amount-blurb {
     padding-left: 2rem;
-    -webkit-box-flex: 0;
-            flex: 0 1 38rem; } }
+    flex: 0 1 38rem; } }
 
 div.crm-container .vt-donate-other-comment label {
   font-size: 23px;
@@ -747,9 +713,8 @@ div.recaptcha-section .form-layout-compressed tbody tr td {
   .vt-gdpr {
     display: grid;
     grid-template-columns: 50fr 50fr;
-    -webkit-column-gap: 2rem;
-       -moz-column-gap: 2rem;
-            column-gap: 2rem;
+    -moz-column-gap: 2rem;
+         column-gap: 2rem;
     row-gap: 1rem; }
     .vt-gdpr .vt-gdpr__text {
       grid-column: 1 / span 2; } }

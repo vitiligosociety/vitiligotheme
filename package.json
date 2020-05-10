@@ -9,7 +9,7 @@
   "author": "Rich Lott",
   "license": "GPL3+",
   "devDependencies": {
-    "autoprefixer": "^9.7.2",
+    "autoprefixer": "^9.7.6",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "del": "^5.1.0",
@@ -18,7 +18,7 @@
     "gulp-cli": "^2.2.0",
     "gulp-postcss": "^8.0.0",
     "gulp-replace": "^1.0.0",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.6.5"
   }
 }
