@@ -233,6 +233,10 @@ div.crm-container .vt-label label {
 
   .vt-container {
 
+    label.alert-danger {
+      color: red;
+    }
+
     textarea,
     input[type="text"] {
       width: 100%;
