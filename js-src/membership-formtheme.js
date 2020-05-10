@@ -478,7 +478,6 @@
 
     // jquery validate adds a label "this field is required". It needs removing once a selection has been made or the image based radios don't work.
     $('input[name=custom_1').on('change', function() {
-      console.log('changed');
       $('label#custom_1-error').remove();
     });
   }
