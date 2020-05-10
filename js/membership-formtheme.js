@@ -417,13 +417,18 @@
     // Remove the remaining help text.
     $helpRow.remove();
 
+    // Remove the required class from the individual inputs
+    $yes.removeClass('required');
+    $yes4.removeClass('required');
+    $no.removeClass('required');
+
     // Now re-assemble.
     const $container = $('<div class="vt-container"></div>');
     $container.append('<h3 class="vt-heading">Gift Aid</h3>', $intro);
     // Now the grid layout
     const $layout = $('<div class="vt-giftaid-layout-1"/>');
     const $inputs_container = $('<div class="vt-giftaid-inputs" />');
-    $inputs_container.append('<div class="vt-giftaid-declaration--label vt-label"><label>Can we reclaim gift aid on your donation?</label></div>', $yes4, $yes4_label, $yes, $yes_label, $no, $no_label);
+    $inputs_container.append('<div class="vt-giftaid-declaration--label vt-label"><label>Can we reclaim gift aid on your donation?<span class="crm-marker"> * </span></label></div>', $yes4, $yes4_label, $yes, $yes_label, $no, $no_label);
     $layout.append($inputs_container, $('<div class="vt-giftaid-declaration"/>').append('<i class="vt-icon vt-icon--info"></i>', $declaration));
     $container.append($layout);
     $niceForm.append($container, '<hr/>');
