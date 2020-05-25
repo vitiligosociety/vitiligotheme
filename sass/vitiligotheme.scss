@@ -729,7 +729,7 @@ h3.vt-heading {
   margin-bottom:1rem;
   margin-top:1rem;
   input, label { display: inline-block; }
-  label { margin-right: 2rem; color: black; font-size:(18rem/16);}
+  label { margin-right: 2rem; font-size:(18rem/16);}
 }
 .vt-giftaid-declaration {
   @include dashed;
