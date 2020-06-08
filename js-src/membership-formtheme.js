@@ -632,7 +632,7 @@
         ]
       ));
 
-      // Move Street addres.,
+      // Move Street address.,
       $billingAddressSection.append(buildStdContainer(
         $billingBlock.find('.billing_street_address-5-section label').text('Address'),
         [$billingBlock.find('.billing_street_address-5-section input').attr('placeholder', 'Address line 1*')]
@@ -826,7 +826,7 @@
     vtDebug('blocking UI');
     // We add a timeout in here to be sure that we unblock the UI even if something went wrong
     window.clearTimeout(unblockUITimeout);
-    unblockUITimeout = window.setTimeout(unblockUI(), 5000);
+    unblockUITimeout = window.setTimeout(unblockUI, 5000);
     CRM.$.blockUI({
       message: '<div class="fa-3x"><i class="fa fa-spinner fa-spin"></i></div>',
       css: {
@@ -847,7 +847,7 @@
    * @param {string} message
    * @param {object} object
    */
-  function vtDebug(message, object) {
+  function vtDebug(message, object = null) {
     // Uncomment the following to debug unexpected returns.
     //console.log(new Date().toISOString() + ' vtDebug: ' + message, object);
   }
