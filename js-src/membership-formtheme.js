@@ -696,7 +696,7 @@
       $wrapper.append($input, $label, $required);
       $input.addClass('vt-themed novalidate');
       if (!$input.is('input[name=custom_1]')) {
-        $input.removeClass('valid required error');
+        $input.removeClass('valid required crm-inline-error');
         $input.removeAttr('aria-required');
       }
     });
@@ -713,7 +713,7 @@
     });
 
     function setAcceptCheckboxesValid(element, elementName) {
-      $('label[for=' + elementName + ']').removeClass('error alert-danger pseudo-error');
+      $('label[for=' + elementName + ']').removeClass('crm-inline-error alert-danger pseudo-error');
       if (!element.prop('checked')) {
         $('label[for=' + elementName + ']').addClass('pseudo-error');
       }
@@ -779,7 +779,7 @@
 
   // Configure the validator per Stripe (see https://github.com/civicrm/civicrm-core/pull/16495) and note this will need updating from error to crm-inline-error at some point.
   var validator = $($form).validate();
-  validator.settings.errorClass = 'error alert-danger';
+  validator.settings.errorClass = 'crm-inline-error alert-danger';
   validator.settings.ignore = '.select2-offscreen, [readonly], :hidden:not(.crm-select2)';
 
   if (form_name === 'membership') {
