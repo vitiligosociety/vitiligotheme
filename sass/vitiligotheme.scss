@@ -235,6 +235,7 @@ div.crm-container .vt-label label {
 
     label.alert-danger {
       color: red;
+      background: inherit;
     }
 
     textarea,
@@ -250,7 +251,6 @@ div.crm-container .vt-label label {
       }
       &.crm-inline-error {
         border-color: red;
-        background: inherit;
       }
     }
 
