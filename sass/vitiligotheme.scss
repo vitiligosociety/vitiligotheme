@@ -248,7 +248,7 @@ div.crm-container .vt-label label {
       &:focus {
         border-color: $colour_deep_blue;
       }
-      &.error {
+      &.crm-inline-error {
         border-color: red;
       }
     }

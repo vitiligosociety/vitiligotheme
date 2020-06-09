@@ -61,7 +61,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label span.checkbox-radio {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=35094"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=97419"); }
 
 .vt-icon {
   display: inline-block; }
@@ -223,8 +223,8 @@ div.crm-container .vt-label label {
   #crm-container.crm-public .vt-container textarea:focus,
   #crm-container.crm-public .vt-container input[type="text"]:focus {
     border-color: #363864; }
-  #crm-container.crm-public .vt-container textarea.error,
-  #crm-container.crm-public .vt-container input[type="text"].error {
+  #crm-container.crm-public .vt-container textarea.crm-inline-error,
+  #crm-container.crm-public .vt-container input[type="text"].crm-inline-error {
     border-color: red; }
 
 .crm-container .status {
