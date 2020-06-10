@@ -359,7 +359,7 @@
     const $content = $('<div class="vt-payment-box__content"/>');
     $content.append(`
       <div class="vt-payment-dd-message">
-        <div class="vt-payment-dd-message__inner dashed"><i class="vt-icon vt-icon--info"></i>You will be asked to securely enter your bank details on the next page to initiate the Direct Debit mandate.</div>
+        <div class="vt-payment-dd-message__inner dashed"><i class="vt-icon vt-icon--info"></i><i class="vt-icon vt-icon--padlock"></i>You will be asked to securely enter your bank details on the next page to initiate the Direct Debit mandate.</div>
         <i class="vt-icon vt-icon--padlock"></i>
       </div>`);
     $payment_processor_switch_wrapper = $header.find('.vt-payment-box__switch-wrapper');
