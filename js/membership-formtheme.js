@@ -305,7 +305,7 @@
       $selectedOption = $priceset.find('input[data-amount]')[1].vitButton;
     }
 
-    $niceForm.append('<h2 class="vt-heading vt-heading--blue">Your annual contribution</h2>');
+    $niceForm.append('<h2 class="vt-heading vt-heading--blue">Your annual recurring contribution</h2>');
     $niceForm.append($container);
     $niceForm.append($equiv);
     $niceForm.append('<hr/>');
