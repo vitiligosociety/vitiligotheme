@@ -506,7 +506,7 @@
 
   function renameSubmitButton(text) {
     // Hide the original button, make a new button which clicks it by JS.
-    const $submitButtonWrapper = $form.find('#crm-submit-buttons input').parent().hide();
+    const $submitButtonWrapper = $form.find('#crm-submit-buttons button').parent().hide();
     var formHasBeenSubmitted = false;
 
     const $niceSubmitButton = $('<button class="vt-submit"/>')
@@ -521,7 +521,7 @@
         }
         // Disable the button.
         $niceSubmitButton.prop('disabled', true).text('Please wait...');
-        $submitButtonWrapper.find('input[type="submit"]').trigger('click', e);
+        $submitButtonWrapper.find('button[type="submit"]').trigger('click', e);
       });
 
     $niceForm.append($niceSubmitButton);

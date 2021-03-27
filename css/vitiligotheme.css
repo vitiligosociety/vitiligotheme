@@ -61,7 +61,7 @@ div.crm-container .vt-label label {
   color: #666666; }
 
 .vt-icon, .vt-icon--gbp-circle, .vt-icon--info, .vt-icon--padlock, .vt-icon--member, .vt-icon--speaker, .vt-icon--medical, .vt-icon--magnify, #crm-container.crm-public form#Main .vt-checkbox-radio-wrapper label span.checkbox-radio {
-  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=264"); }
+  background-image: url("/wp-content/uploads/civicrm/ext/vitiligotheme/images/theme-sprite.svg?r=91306"); }
 
 .vt-icon {
   display: inline-block; }
@@ -141,13 +141,6 @@ div.crm-container .vt-label label {
     border: medium none;
     background-color: #ddd;
     margin: 0.75rem 0; }
-  #crm-container.crm-public form#Main input[type="text"] ::-webkit-input-placeholder, #crm-container.crm-public form#Main textarea ::-webkit-input-placeholder {
-    font-family: Arimo;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 17px;
-    letter-spacing: 0.257704px;
-    color: #969696; }
   #crm-container.crm-public form#Main input[type="text"] ::-moz-placeholder, #crm-container.crm-public form#Main textarea ::-moz-placeholder {
     font-family: Arimo;
     font-style: normal;
@@ -156,13 +149,6 @@ div.crm-container .vt-label label {
     letter-spacing: 0.257704px;
     color: #969696; }
   #crm-container.crm-public form#Main input[type="text"] :-ms-input-placeholder, #crm-container.crm-public form#Main textarea :-ms-input-placeholder {
-    font-family: Arimo;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 17px;
-    letter-spacing: 0.257704px;
-    color: #969696; }
-  #crm-container.crm-public form#Main input[type="text"] ::-ms-input-placeholder, #crm-container.crm-public form#Main textarea ::-ms-input-placeholder {
     font-family: Arimo;
     font-style: normal;
     font-weight: normal;
