@@ -440,16 +440,32 @@
     });
   }
 
-  function gdprFields() {
+  function addGDPRFields() {
     const $gdpr = $('#gdpr-terms-conditions');
     const $niceGdpr = $('<div class="vt-gdpr"></div>');
     $niceGdpr.append($('<div class="vt-gdpr__text"/>').append('<h2>Terms and conditions</h2>', $gdpr.find('.terms-conditions-acceptance-intro')));
-
     $niceGdpr.append($gdpr.find('.terms-conditions-item'));
-
     $niceForm.append($niceGdpr);
     $gdpr.remove();
+  }
+
+  function addReCAPTCHA() {
     $('div.recaptcha-section').appendTo('.vt-gdpr');
+  }
+
+  function addCommsPrefs() {
+    const $container = $('<div class="vt-commsprefs-inputs" />');
+    $('.crm-profile-name-Communications_Preferences_20 legend').remove();
+    const $label = $('div.vt-commsprefs--label');
+    const $inputs = $('div#editrow-custom_85');
+    $('div.vt-commsprefs--label').remove();
+    $('div#editrow-custom_85').remove();
+    $container.append('<h3 class="vt-heading">Communications</h3>', $('.crm-profile-name-Communications_Preferences_20').text());
+    $container.append($label);
+    $container.append($inputs);
+    $('div#editrow-custom_85 > div.content > div.radio').css('display', 'inline-block');
+    $('.crm-profile-name-Communications_Preferences_20').parent('div').remove();
+    $niceForm.append($container);
   }
 
   function donateOtherComments() {
@@ -703,7 +719,9 @@
     whyJoining();
     paymentDetails();
     giftAid();
-    gdprFields();
+    addGDPRFields();
+    addCommsPrefs();
+    addReCAPTCHA();
     renameSubmitButton('Join');
     footerText();
     themeRadiosAndCheckboxes($('body'));
@@ -721,7 +739,9 @@
     donateOtherComments();
     paymentDetails();
     donateMovePaymentBlock();
-    gdprFields();
+    addGDPRFields();
+    addCommsPrefs();
+    addReCAPTCHA();
     renameSubmitButton('Donate');
     footerText();
 
