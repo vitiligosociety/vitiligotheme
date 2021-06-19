@@ -450,7 +450,7 @@
   }
 
   function addReCAPTCHA() {
-    $('div.recaptcha-section').appendTo('.vt-gdpr');
+    $niceForm.append($('div.recaptcha-section'));
   }
 
   function addCommsPrefs() {
