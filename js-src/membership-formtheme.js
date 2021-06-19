@@ -500,8 +500,14 @@
     $('.crm-profile-name-Communications_Preferences_20 legend').remove();
     const $label = $('div.vt-commsprefs--label');
     const $inputs = $('div#editrow-custom_85');
+    $inputs.append($('div#editrow-custom_83'));
+    $inputs.append($('div#editrow-custom_84'));
+    $inputs.append($('div#editrow-custom_86'));
     $('div.vt-commsprefs--label').remove();
     $('div#editrow-custom_85').remove();
+    $('div#editrow-custom_83').remove();
+    $('div#editrow-custom_84').remove();
+    $('div#editrow-custom_86').remove();
     $container.append('<h3 class="vt-heading">Communications</h3>', $('.crm-profile-name-Communications_Preferences_20').text());
     $container.append($label)
     $container.append($inputs);
