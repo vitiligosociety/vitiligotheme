@@ -941,7 +941,8 @@ button.vt-submit {
   }
 }
 
-div#editrow-custom_85 > div.content > div.radio {
+div#editrow-custom_85 > div.content > div.radio,
+div#editrow-custom_85 > div > div.content > div.radio {
   display: inline-block;
 }
 
