@@ -455,7 +455,8 @@
 
   function addCommsPrefs() {
     const $container = $('<div class="vt-commsprefs-inputs" />');
-    $('.crm-profile-name-Communications_Preferences_20 legend').remove();
+    const profileID = CRM.$('.crm-profile-name-Communications_Preferences_20').length === 0 ? 21 : 20;
+    $('.crm-profile-name-Communications_Preferences_' + profileID + ' legend').remove();
     const $label = $('div.vt-commsprefs--label');
     const $inputs = $('div#editrow-custom_85');
     $inputs.append($('div#editrow-custom_83'));
@@ -466,11 +467,13 @@
     $('div#editrow-custom_83').remove();
     $('div#editrow-custom_84').remove();
     $('div#editrow-custom_86').remove();
-    $container.append('<h3 class="vt-heading">Communications</h3>', $('.crm-profile-name-Communications_Preferences_20').text());
+    $container.append('<h3 class="vt-heading">Contacting you</h3>');
+    $container.append($('.crm-profile-name-Communications_Preferences_' + profileID + ' p.vt-commsprefs-pre-text'));
     $container.append($label);
     $container.append($inputs);
+    $container.append($('.crm-profile-name-Communications_Preferences_' + profileID + ' p.vt-commsprefs-post-text'));
     $('div#editrow-custom_85 > div.content > div.radio').css('display', 'inline-block');
-    $('.crm-profile-name-Communications_Preferences_20').parent('div').remove();
+    $('.crm-profile-name-Communications_Preferences_' + profileID).parent('div').remove();
     $niceForm.append($container);
   }
 
