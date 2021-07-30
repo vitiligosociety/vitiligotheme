@@ -457,6 +457,7 @@
     const $container = $('<div class="vt-commsprefs-inputs" />');
     const profileID = CRM.$('.crm-profile-name-Communications_Preferences_20').length === 0 ? 21 : 20;
     $('.crm-profile-name-Communications_Preferences_' + profileID + ' legend').remove();
+    $('div.vt-commsprefs--label span.crm-marker').remove();
     const $label = $('div.vt-commsprefs--label');
     const $inputs = $('div#editrow-custom_85');
     $inputs.append($('div#editrow-custom_83'));
