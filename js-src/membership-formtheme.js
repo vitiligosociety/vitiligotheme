@@ -727,6 +727,10 @@
       }
     });
 
+    // This removes the "double" required marker.
+    $('label[for=accept_tc] span.crm-marker').remove();
+    $('label[for=accept_entity_tc] span.crm-marker').remove();
+
     // "Pseudo" validate checkboxes (as they're hidden and replaced with labels, which breaks a bit with jquery validate)
     const inputETC = $('input#accept_entity_tc');
     inputETC.on('change', function() {
