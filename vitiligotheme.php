@@ -186,6 +186,9 @@ function vitiligotheme_civicrm_buildForm($formName, &$form) {
     // round-trip.
     // Also note 'Note: WP support is inconsistent pending refactor.' - from link above.
     $js = file_get_contents(__DIR__ . '/js/membership-formtheme.js');
+    if ($form->_id == 8) {
+      $js = file_get_contents(__DIR__ . '/js/membership-formtheme2.js');
+    }
     $js = strtr($js, [
       'var payment_processor_ids = {}; //%config%' => "var payment_processor_ids = $config;",
       'var form_name = \'\'; //%formname%'          => 'var form_name = "membership";',

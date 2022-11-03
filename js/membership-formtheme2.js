@@ -1,12 +1,12 @@
 ((CRM, $) => $(() => {
 
-  "use strict";
+  ;;
 
   $('body').addClass('vitiligo-theme-civicrm-page');
 
   // The config placeholder here is replaced by php. Do not alter the line below at all.
-  var payment_processor_ids = {};//%config%
-  var form_name = '';//%formname%
+  var payment_processor_ids = {}; //%config%
+  var form_name = ''; //%formname%
   var unblockUITimeout;
 
   var $form = $('form#Main');
@@ -33,7 +33,7 @@
 
     const rtn = {
       label: $rowNode.find('div.label label'),
-      input: $rowNode.find('div.content input'),
+      input: $rowNode.find('div.content input')
     };
     if (rtn.input.length === 0) {
       rtn.input = $rowNode.find('div.content textarea');
@@ -51,39 +51,36 @@
   }
 
   function killSelect2($select) {
-    return $('<div class="vt-select-container"/>').append(
-      $select.select2('destroy').removeClass('crm-select2 crm-chain-select-target crm-form-select').addClass('vt-select')
-    );
+    return $('<div class="vt-select-container"/>').append($select.select2('destroy').removeClass('crm-select2 crm-chain-select-target crm-form-select').addClass('vt-select'));
   }
 
   function parseComplexCiviField(selector) {
     var $rowNode = $form.find(selector).hide();
     return {
       label: $rowNode.find('div.label label'),
-      input: $rowNode.find('div.content').removeClass('content'),
+      input: $rowNode.find('div.content').removeClass('content')
     };
   }
 
   function parseRadiosIntoSelect(selector) {
     var $rowNode = $form.find(selector).hide();
     const $select = $('<select class="vt-select" />');
-    $select.append(
-      $('<option value="">--Please select--</option>')
-        .on('click', function() { $rowNode.find('input:checked').prop('checked', false); }));
-    $rowNode.find('input[type="radio"]').each(function() {
+    $select.append($('<option value="">--Please select--</option>').on('click', function () {
+      $rowNode.find('input:checked').prop('checked', false);
+    }));
+    $rowNode.find('input[type="radio"]').each(function () {
       const $originalInput = $(this);
-      $option = $('<option/>').attr('value', this.value).text($originalInput.next('label').text())
-        .on('click', e => {
-          e.preventDefault();
-          $originalInput.click();
-        });
+      $option = $('<option/>').attr('value', this.value).text($originalInput.next('label').text()).on('click', e => {
+        e.preventDefault();
+        $originalInput.click();
+      });
       $select.append($option);
     });
 
     const $selectFix = $('<div class="vt-select-container" />').append($select);
     return {
       label: $rowNode.find('div.label label'),
-      input: $selectFix,
+      input: $selectFix
     };
   }
 
@@ -101,22 +98,18 @@
 
     if (fields.length === 1) {
       $container.append($('<div class="vt-input vt-col-2-span-2"></div>').append(fields[0]));
-    }
-    else if (fields.length === 2) {
+    } else if (fields.length === 2) {
       $container.append($('<div class="vt-input vt-col-2"></div>').append(fields[0]));
       $container.append($('<div class="vt-input vt-col-3"></div>').append(fields[1]));
-    }
-    else {
+    } else {
       console.error("fields must be 1 or two big.", fields);
     }
     return $container;
   }
 
   function footerText() {
-    if (! $('#footer_text').text().match(/^\s*$/)) {
-      $niceForm.append(
-        $(`<div class="vt-footer vt-remove-empty-paras dashed vt-allow-left-icon"><i class="vt-icon vt-icon--info" ></i></div>`).append($('#footer_text'))
-      );
+    if (!$('#footer_text').text().match(/^\s*$/)) {
+      $niceForm.append($(`<div class="vt-footer vt-remove-empty-paras dashed vt-allow-left-icon"><i class="vt-icon vt-icon--info" ></i></div>`).append($('#footer_text')));
     }
   }
 
@@ -167,7 +160,6 @@
     // We also need to hook up the country selector to the payment selector logic.
     b.input.find('select').on('change', alterPaymentMethodsAvailable);
 
-
     $niceForm.append('<hr/>');
     // DOB
     a = parseComplexCiviField('#editrow-birth_date');
@@ -181,8 +173,7 @@
     function showHideEthnicityOther() {
       if (ethnicitySelect.input.find('select').val() == 18) {
         ethnicityOther.input.show();
-      }
-      else {
+      } else {
         ethnicityOther.input.hide().find('input').val("");
       }
     }
@@ -221,14 +212,11 @@
     const amount = parseStdCiviField('.other_amount-section');
     const $origInputAmount = $(amount.input);
     const $vitAmount = $('<input type="text" class="required"/>').on('blur keyup', e => {
-        // Copy the value to the original CiviCRM
-        $origInputAmount.val($vitAmount.val());
-        $origInputAmount.trigger('keyup', e);
-      });
-    $amount.append('<h3 class="vt-heading" >Your donation</h3>',
-      amount.label.text('I would like to give'),
-      $('<div class="vt-donation-amount-input-wrapper"/>').append($vitAmount)
-    );
+      // Copy the value to the original CiviCRM
+      $origInputAmount.val($vitAmount.val());
+      $origInputAmount.trigger('keyup', e);
+    });
+    $amount.append('<h3 class="vt-heading" >Your donation</h3>', amount.label.text('I would like to give'), $('<div class="vt-donation-amount-input-wrapper"/>').append($vitAmount));
     $container.append($amount, $blurb);
     $niceForm.append($container);
   }
@@ -257,12 +245,7 @@
     const $civicrm_content = $form.find('#membership #priceset fieldset');
     // Replace the header provided by WP.
     $('section.page-header h1').text($civicrm_content.find('>legend').text());
-    $niceForm.append(
-      $('<div class="vt-proposition-box"/>')
-        .append(
-          $('<div class="vt-proposition-box__body"/>').append($civicrm_content.find('#membership-intro'))
-        )
-    );
+    $niceForm.append($('<div class="vt-proposition-box"/>').append($('<div class="vt-proposition-box__body"/>').append($civicrm_content.find('#membership-intro'))));
   }
 
   function membershipAmountButtons() {
@@ -292,9 +275,9 @@
     $container.append($('<div class="vt-amount-buttons__button"></div>').append('<div className="vt-amount-buttons__button"><h3>Annual:</h3></div>'));
     $containerMonth.append($('<div class="vt-amount-buttons__button"></div>').append('<div className="vt-amount-buttons__button"><h3>Monthly:</h3></div>'));
 
-    $priceset.find('input[data-amount]').each(function() {
+    $priceset.find('input[data-amount]').each(function () {
       var amount = this.dataset.amount;
-      const $original_input=$(this);
+      const $original_input = $(this);
       // Reformat amount.
       var m = amount.match(/(\d+)(?:(\.\d\d)0*)?$/);
       if (!m) return;
@@ -302,32 +285,28 @@
       if (m[1] === '0') return;
       if (m[2] === '.00') m[2] = '';
 
-      const $btn = $('<button/>')
-        .data('amount', m[1]+m[2])
-        .text('£' + m[1]+m[2])
-        .on('click', function(e) {
-          e.preventDefault();
-          // 2019-08-29 The following line seems necessary to ensure the value is properly set.
-          $original_input.prop('checked', true);
-          // We click the input to try to keep as much default CiviCRM behaviour as poss,
-          // however we could consider not doing this as it has caused problems in that it
-          // does not seem to always correctly set the radio on.
-          $original_input.click();
-          // CiviCRM shows this, so we need to hide it!
-          $payment_processor_selection_ui.hide();
-          showButtonAsSelected($btn);
-        });
+      const $btn = $('<button/>').data('amount', m[1] + m[2]).text('£' + m[1] + m[2]).on('click', function (e) {
+        e.preventDefault();
+        // 2019-08-29 The following line seems necessary to ensure the value is properly set.
+        $original_input.prop('checked', true);
+        // We click the input to try to keep as much default CiviCRM behaviour as poss,
+        // however we could consider not doing this as it has caused problems in that it
+        // does not seem to always correctly set the radio on.
+        $original_input.click();
+        // CiviCRM shows this, so we need to hide it!
+        $payment_processor_selection_ui.hide();
+        showButtonAsSelected($btn);
+      });
       // Save a reference to the button on the input.
       $original_input[0].vitButton = $btn;
 
       if ($(this).attr('membership-type') == 17) {
         $containerMonth.append($('<div class="vt-amount-buttons__button"></div>').append($btn));
-      }
-      else {
+      } else {
         $container.append($('<div class="vt-amount-buttons__button"></div>').append($btn));
       }
       if ($original_input.is(':checked')) {
-        $selectedOption= $btn;
+        $selectedOption = $btn;
       }
     });
     if (!$selectedOption) {
@@ -369,12 +348,7 @@
     const $civicrm_content = $form.find('#intro_text');
     // Replace the header provided by WP.
     // membership only: $('section.page-header h1').text($civicrm_content.find('>legend').text());
-    $niceForm.append(
-      $('<div class="vt-proposition-box"/>')
-        .append(
-          $('<div class="vt-proposition-box__body"/>').append($civicrm_content)
-        )
-    );
+    $niceForm.append($('<div class="vt-proposition-box"/>').append($('<div class="vt-proposition-box__body"/>').append($civicrm_content)));
   }
 
   const $payment_processor_selection_ui = $form.find("fieldset.payment_options-group");
@@ -402,10 +376,8 @@
       </div>
       `);
     // link the new labels with the old inputs.
-    $header.find('label.vt-payment-box__dd')
-      .attr('for', gcRadio ? gcRadio.id : null);
-    $header.find('label.vt-payment-box__c')
-      .attr('for', stripeRadio ? stripeRadio.id : null);
+    $header.find('label.vt-payment-box__dd').attr('for', gcRadio ? gcRadio.id : null);
+    $header.find('label.vt-payment-box__c').attr('for', stripeRadio ? stripeRadio.id : null);
 
     const $content = $('<div class="vt-payment-box__content"/>');
     $content.append(`
@@ -425,10 +397,9 @@
   }
 
   function selectPaymentMethod() {
-    if ((this.className === 'vt-payment-box__c') && $payment_processor_switch_wrapper.hasClass('selected-c')) {
+    if (this.className === 'vt-payment-box__c' && $payment_processor_switch_wrapper.hasClass('selected-c')) {
       return;
-    }
-    else if ((this.className === 'vt-payment-box__dd') && $payment_processor_switch_wrapper.hasClass('selected-dd')) {
+    } else if (this.className === 'vt-payment-box__dd' && $payment_processor_switch_wrapper.hasClass('selected-dd')) {
       return;
     }
 
@@ -436,30 +407,19 @@
     const selected_processor_id = $payment_processor_selection_ui.find('input:checked').val();
 
     // Card selected if we don't have a choice. (Donate page)
-    if (typeof(selected_processor_id) === 'undefined') {
-      $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd')
-        .closest('.vt-payment-box').addClass('selected-c').removeClass('selected-dd');
-    }
-    else if (payment_processor_ids.GoCardless.indexOf(selected_processor_id) > -1) {
+    if (typeof selected_processor_id === 'undefined') {
+      $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd').closest('.vt-payment-box').addClass('selected-c').removeClass('selected-dd');
+    } else if (payment_processor_ids.GoCardless.indexOf(selected_processor_id) > -1) {
       if ($payment_processor_switch_wrapper.hasClass('selected-dd')) {
         unblockUI();
       } else {
-        $payment_processor_switch_wrapper.addClass('selected-dd')
-          .removeClass('selected-c')
-          .closest('.vt-payment-box')
-          .addClass('selected-dd')
-          .removeClass('selected-c');
+        $payment_processor_switch_wrapper.addClass('selected-dd').removeClass('selected-c').closest('.vt-payment-box').addClass('selected-dd').removeClass('selected-c');
       }
-    }
-    else {
+    } else {
       if ($payment_processor_switch_wrapper.hasClass('selected-c')) {
         unblockUI();
       } else {
-        $payment_processor_switch_wrapper.addClass('selected-c')
-          .removeClass('selected-dd')
-          .closest('.vt-payment-box')
-          .addClass('selected-c')
-          .removeClass('selected-dd');
+        $payment_processor_switch_wrapper.addClass('selected-c').removeClass('selected-dd').closest('.vt-payment-box').addClass('selected-c').removeClass('selected-dd');
       }
     }
   }
@@ -498,7 +458,7 @@
     $niceForm.append($container, '<hr/>');
 
     // jquery validate adds a label "this field is required". It needs removing once a selection has been made or the image based radios don't work.
-    $('input[name=custom_1').on('change', function() {
+    $('input[name=custom_1').on('change', function () {
       $('label#custom_1-error').remove();
     });
   }
@@ -519,7 +479,7 @@
 
   function addCommsPrefs() {
     const $container = $('<div class="vt-commsprefs-inputs" />');
-    const profileID = (CRM.$('.crm-profile-name-Communications_Preferences_20').length === 0) ? 21 : 20;
+    const profileID = CRM.$('.crm-profile-name-Communications_Preferences_20').length === 0 ? 21 : 20;
     $('.crm-profile-name-Communications_Preferences_' + profileID + ' legend').remove();
     $('div.vt-commsprefs--label span.crm-marker').remove();
     const $label = $('div.vt-commsprefs--label');
@@ -533,10 +493,10 @@
     $('div#editrow-custom_84').remove();
     $('div#editrow-custom_86').remove();
     $container.append('<h3 class="vt-heading">Contacting you</h3>');
-    $container.append($('.crm-profile-name-Communications_Preferences_' + profileID + ' p.vt-commsprefs-pre-text'))
-    $container.append($label)
+    $container.append($('.crm-profile-name-Communications_Preferences_' + profileID + ' p.vt-commsprefs-pre-text'));
+    $container.append($label);
     $container.append($inputs);
-    $container.append($('.crm-profile-name-Communications_Preferences_' + profileID + ' p.vt-commsprefs-post-text'))
+    $container.append($('.crm-profile-name-Communications_Preferences_' + profileID + ' p.vt-commsprefs-post-text'));
     $('div#editrow-custom_85 > div.content > div.radio').css('display', 'inline-block');
     $('.crm-profile-name-Communications_Preferences_' + profileID).parent('div').remove();
     $niceForm.append($container);
@@ -544,12 +504,7 @@
 
   function donateOtherComments() {
     const c = parseStdCiviField('#editrow-custom_17');
-    $niceForm.append(
-      $('<div class="vt-container vt-donate-other-comment"/>')
-        .append(
-          c.label.text('Any other comments?'),
-          c.input.attr('placeholder', 'Type here...'))
-    );
+    $niceForm.append($('<div class="vt-container vt-donate-other-comment"/>').append(c.label.text('Any other comments?'), c.input.attr('placeholder', 'Type here...')));
   }
 
   function renameSubmitButton(text) {
@@ -557,20 +512,18 @@
     const $submitButtonWrapper = $form.find('#crm-submit-buttons button').parent().hide();
     var formHasBeenSubmitted = false;
 
-    const $niceSubmitButton = $('<button class="vt-submit"/>')
-      .text(text)
-      // Save the original button text to the button for later restore
-      .data('text', text)
-      .on('click', e => {
-        e.preventDefault();
-        $form.data('crmBillingFormValid', true);
-        if (!$('input#accept_tc:checked').length || !$('input#accept_entity_tc:checked').length) {
-          $form.data('crmBillingFormValid', false);
-        }
-        // Disable the button.
-        $niceSubmitButton.prop('disabled', true).text('Please wait...');
-        $submitButtonWrapper.find('button[type="submit"]').trigger('click', e);
-      });
+    const $niceSubmitButton = $('<button class="vt-submit"/>').text(text)
+    // Save the original button text to the button for later restore
+    .data('text', text).on('click', e => {
+      e.preventDefault();
+      $form.data('crmBillingFormValid', true);
+      if (!$('input#accept_tc:checked').length || !$('input#accept_entity_tc:checked').length) {
+        $form.data('crmBillingFormValid', false);
+      }
+      // Disable the button.
+      $niceSubmitButton.prop('disabled', true).text('Please wait...');
+      $submitButtonWrapper.find('button[type="submit"]').trigger('click', e);
+    });
 
     $niceForm.append($submitButtonWrapper);
     $niceForm.append($niceSubmitButton);
@@ -590,7 +543,7 @@
       $niceSubmitButton.prop('disabled', false).text($niceSubmitButton.data('text'));
 
       // Work around issues with jQuery validate hiding labels/clearing text once stripe has been selected
-      $('body').find('input[type=checkbox]:not(:checked)').each(function() {
+      $('body').find('input[type=checkbox]:not(:checked)').each(function () {
         const $input = $(this);
         const elementName = $(this).attr('id');
         $('label[for=' + elementName + ']').addClass('pseudo-error');
@@ -607,8 +560,8 @@
   /**
    * We need to look out for changes that are interactively made by CiviCRM.
    */
-    // CiviCRM ends up creating nested versions of this :-(
-    // So make a reference to the original.
+  // CiviCRM ends up creating nested versions of this :-(
+  // So make a reference to the original.
   const $original_billing_payment_block = $('#billing-payment-block');
   function watchPaymentFields() {
     const wrapper = $original_billing_payment_block[0];
@@ -620,13 +573,12 @@
     });
 
     // This function deals with re-presenting card payment fields in the billing-payment-block
-    const vitiligoTweakDynamicPaymentFields = function() {
+    const vitiligoTweakDynamicPaymentFields = function () {
       vtDebug('tweak dynamic payment fields');
       reconfigurePaymentBlock();
       $original_billing_payment_block.fadeIn('fast');
       unblockUI();
     };
-
   }
 
   function reconfigurePaymentBlock() {
@@ -645,16 +597,13 @@
     const $billingAddressSection = $billingBlock.find('.billing_name_address-section');
 
     // Wrap the #card-element that holds the new Stripe elements
-    const $cardElement = $billingBlock.find('#card-element')
-      .wrap('<div class="vt-card-element"/>');
+    const $cardElement = $billingBlock.find('#card-element').wrap('<div class="vt-card-element"/>');
 
     // Add Para on DD is better.
     if ($('div.direct-debit-benefits-para').length === 0) {
-      $cardElement.after(
-        $('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>Are you using a UK bank account? Please consider using Direct Debit. We are charged a lesser fee and more of your money goes to supporting those with vitiligo!</div><i class="vt-icon vt-icon--padlock"></i></div>')
-      );
+      $cardElement.after($('<div class="direct-debit-benefits-para"><div class="dashed" ><i class="vt-icon vt-icon--info"></i>Are you using a UK bank account? Please consider using Direct Debit. We are charged a lesser fee and more of your money goes to supporting those with vitiligo!</div><i class="vt-icon vt-icon--padlock"></i></div>'));
     }
-    vtDebug('cardElement',$cardElement);
+    vtDebug('cardElement', $cardElement);
 
     // Strip out some CiviCRM classes that give us grief.
     // We can't remove this, Stripe depends on it: $billingBlock.find('.crm-section').removeClass('crm-section');
@@ -663,64 +612,31 @@
     $billingBlock.find('.clear').remove();
 
     // If we have a billingAddressSection we need to theme that now.
-    if ($billingAddressSection.length && ($('#billing-address-title').length === 0)) {
+    if ($billingAddressSection.length && $('#billing-address-title').length === 0) {
       // ... add a title and move the 'same as above' checkbox.
-      $billingAddressSection.append('<h2 id="billing-address-title">Your billing information</h2>',
-        $billingBlock.find('#billingcheckbox'),
-        $billingBlock.find('label[for="billingcheckbox"]')
-      );
+      $billingAddressSection.append('<h2 id="billing-address-title">Your billing information</h2>', $billingBlock.find('#billingcheckbox'), $billingBlock.find('label[for="billingcheckbox"]'));
       // Theme the "My billing address is same..."
       themeRadiosAndCheckboxes($billingAddressSection);
 
       // Move the Name fields.
-      $billingAddressSection.append(buildStdContainer(
-        $billingBlock.find('.billing_first_name-section label').text('Name on card'),
-        [
-          $billingBlock.find('.billing_first_name-section input'),
-          $billingBlock.find('.billing_last_name-section input'),
-        ]
-      ));
+      $billingAddressSection.append(buildStdContainer($billingBlock.find('.billing_first_name-section label').text('Name on card'), [$billingBlock.find('.billing_first_name-section input'), $billingBlock.find('.billing_last_name-section input')]));
 
       // Move Street address.,
-      $billingAddressSection.append(buildStdContainer(
-        $billingBlock.find('.billing_street_address-5-section label').text('Address'),
-        [$billingBlock.find('.billing_street_address-5-section input').attr('placeholder', 'Address line 1*')]
-      ));
+      $billingAddressSection.append(buildStdContainer($billingBlock.find('.billing_street_address-5-section label').text('Address'), [$billingBlock.find('.billing_street_address-5-section input').attr('placeholder', 'Address line 1*')]));
 
       // Move City., county.
-      $billingAddressSection.append(buildStdContainer(
-        null,
-        [
-          $billingBlock.find('.billing_city-5-section input').attr('placeholder', 'Town/City'),
-          killSelect2($billingBlock.find('.billing_state_province_id-5-section select'))
-        ]
-      ));
+      $billingAddressSection.append(buildStdContainer(null, [$billingBlock.find('.billing_city-5-section input').attr('placeholder', 'Town/City'), killSelect2($billingBlock.find('.billing_state_province_id-5-section select'))]));
 
       // Move Post code, country.
-      $billingAddressSection.append(buildStdContainer(
-        null,
-        [
-          $billingBlock.find('.billing_postal_code-5-section input').attr('placeholder', 'Postcode'),
-          killSelect2($billingBlock.find('.billing_country_id-5-section select'))
-        ]
-      ));
+      $billingAddressSection.append(buildStdContainer(null, [$billingBlock.find('.billing_postal_code-5-section input').attr('placeholder', 'Postcode'), killSelect2($billingBlock.find('.billing_country_id-5-section select'))]));
 
       // Hide left over crud.
-      $billingBlock.find([
-        '.billing_first_name-section',
-        '.billing_middle_name-section',
-        '.billing_last_name-section',
-        '.billing_street_address-5-section',
-        '.billing_city-5-section',
-        '.billing_state_province_id-5-section',
-        '.billing_postal_code-5-section',
-        '.billing_country_id-5-section',
-      ].join(',')).hide();
+      $billingBlock.find(['.billing_first_name-section', '.billing_middle_name-section', '.billing_last_name-section', '.billing_street_address-5-section', '.billing_city-5-section', '.billing_state_province_id-5-section', '.billing_postal_code-5-section', '.billing_country_id-5-section'].join(',')).hide();
     }
   }
 
   function themeRadiosAndCheckboxes($context) {
-    $context.find('input[type="radio"]:not([name="payment_processor_id"]), input[type="checkbox"]').each(function() {
+    $context.find('input[type="radio"]:not([name="payment_processor_id"]), input[type="checkbox"]').each(function () {
       const $input = $(this);
       if ($input.is('.vt-themed')) {
         return;
@@ -731,8 +647,7 @@
       const $wrapper = $('<div class="vt-checkbox-radio-wrapper"/>');
       if ($input.is('input[type="checkbox"]')) {
         $wrapper.addClass('checkbox');
-      }
-      else {
+      } else {
         $wrapper.addClass('radio');
       }
       $input.before($wrapper);
@@ -756,12 +671,12 @@
 
     // "Pseudo" validate checkboxes (as they're hidden and replaced with labels, which breaks a bit with jquery validate)
     const inputETC = $('input#accept_entity_tc');
-    inputETC.on('change', function() {
+    inputETC.on('change', function () {
       setAcceptCheckboxesValid(inputETC, 'accept_entity_tc');
     });
 
     const inputTC = $('input#accept_tc');
-    inputTC.on('change', function() {
+    inputTC.on('change', function () {
       setAcceptCheckboxesValid(inputTC, 'accept_tc');
     });
 
@@ -786,9 +701,9 @@
     vtDebug("Looking for processor type", processorType, " matching ids:", processorIds);
 
     var found;
-    $('fieldset.payment_options-group [name="payment_processor_id"]').each(function() {
-      var m =this.id.match(/CIVICRM_QFID_(\d+)_payment_processor_id$/);
-      if (m && m.length === 2 && processorIds.indexOf(m[1])>-1) {
+    $('fieldset.payment_options-group [name="payment_processor_id"]').each(function () {
+      var m = this.id.match(/CIVICRM_QFID_(\d+)_payment_processor_id$/);
+      if (m && m.length === 2 && processorIds.indexOf(m[1]) > -1) {
         vtDebug("Found match", this);
         found = this;
       }
@@ -813,8 +728,7 @@
     if (allow_dd) {
       // Allow DD and Card.
       vt_payment.removeClass('disable-dd');
-    }
-    else {
+    } else {
       // Disable DD payments.
       vt_payment.addClass('disable-dd');
       // If currently selected processor is DD then do the change now.
@@ -854,8 +768,7 @@
     $('#crm-submit-buttons').hide();
     // Remove left over elements.
     $('fieldset.crm-profile-name-name_and_address').remove();
-  }
-  else if (form_name === 'donate') {
+  } else if (form_name === 'donate') {
     $niceForm.addClass('vt-donate-form');
     donateIntro();
     donateAmountLayout();
@@ -889,7 +802,7 @@
       css: {
         backgroundColor: 'transparent',
         border: 'none'
-      },
+      }
     });
   }
 
@@ -904,10 +817,10 @@
    * @param {string} message
    * @param {object} object
    */
-  function vtDebug(message, object = null) {
-    // Uncomment the following to debug unexpected returns.
-    //console.log(new Date().toISOString() + ' vtDebug: ' + message, object);
-  }
+  function vtDebug(message, object = null) {}
+  // Uncomment the following to debug unexpected returns.
+  //console.log(new Date().toISOString() + ' vtDebug: ' + message, object);
+
 
   /**
    * If we have the sweetalert2 library popup a nice message to the user.
@@ -931,11 +844,12 @@
         swalParams.title = title;
       }
       if (scrollToElement) {
-        swalParams.didClose = function() { window.scrollTo($(scrollToElement).position()); };
+        swalParams.didClose = function () {
+          window.scrollTo($(scrollToElement).position());
+        };
       }
       Swal.fire(swalParams);
     }
   }
-
 }))(CRM, CRM.$);
-
+//# sourceMappingURL=membership-formtheme.js.map
