@@ -342,7 +342,7 @@
     const $vitAmount = $('<input type="text" class="required"/>').on('blur keyup', e => {
       $('.vt-amount-buttons__button button').removeClass('selected');
       // Copy the value to the original CiviCRM
-      $('.membership_amount-row11 input').trigger('click');
+      $('.membership_amount-row10 input').trigger('click');
       $origInputAmount.val($vitAmount.val());
       $origInputAmount.trigger('keyup', e);
     });
