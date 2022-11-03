@@ -98,7 +98,7 @@ function vitiligotheme_civicrm_buildForm($formName, &$form) {
   }
 
   $js = $css = '';
-  if (in_array($form->_id, [VITILIGO_MEMBERSHIP_FORM_ID, VITILIGO_MEMBERSHIP_RENEWAL_FORM_ID])) {
+  if (in_array($form->_id, [VITILIGO_MEMBERSHIP_FORM_ID, VITILIGO_MEMBERSHIP_RENEWAL_FORM_ID,8])) {
     // We need to lookup Stripe and GoCardless payment processors' IDs.
 
     // Lookup Stripe and GoCardless payment procesor types; create an array like <ID> => 'type'
