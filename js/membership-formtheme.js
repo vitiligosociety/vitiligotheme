@@ -450,6 +450,7 @@
   }
 
   function addReCAPTCHA() {
+    $niceForm.append($('div.crm-submit-buttons'));
     $niceForm.append($('div.recaptcha-section'));
   }
 
