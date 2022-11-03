@@ -1,7 +1,7 @@
 // Put this file in .npm in theme dir gulpfile.js
 var gulp = require('gulp');
 var es2015 = require('babel-preset-env');
-var sass = require('gulp-sass');
+var sass = require('gulp-sass')(require('sass'));
 var babel = require('gulp-babel');
 var sourcemaps   = require('gulp-sourcemaps');
 var autoprefixer = require('autoprefixer');

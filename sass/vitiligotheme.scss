@@ -479,7 +479,7 @@ div.crm-container .vt-payment-box__switch-container label {
     z-index:1;
   }
   &.selected-dd:before { left:6px; width:($payment_dd_width + 2rem); }
-  &.selected-c:before { left:($payment_dd_width +2.4rem); width:($payment_cc_width + 2rem); }
+  &.selected-c:before { left:($payment_dd_width + 2.4rem); width:($payment_cc_width + 2rem); }
 }
 
 .crm-container {
