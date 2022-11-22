@@ -520,6 +520,14 @@
       if (!$('input#accept_tc:checked').length || !$('input#accept_entity_tc:checked').length) {
         $form.data('crmBillingFormValid', false);
       }
+      if (CRM.payment.getTotalAmount() < 2) {
+        $form.data('crmBillingFormValid', false);
+        CRM.payment.swalFire({
+          icon: 'warning',
+          text: '',
+          title: ts('The minimum amount is £2')
+        }, '.vt-donation-amount-input-wrapper', true);
+      }
       // Disable the button.
       $niceSubmitButton.prop('disabled', true).text('Please wait...');
       $submitButtonWrapper.find('button[type="submit"]').trigger('click', e);
