@@ -345,6 +345,7 @@
       $('.membership_amount-row10 input').trigger('click');
       $origInputAmount.val($vitAmount.val());
       $origInputAmount.trigger('keyup', e);
+      $payment_processor_selection_ui.hide();
     });
     $amount.append($('<div class="vt-donation-amount-input-wrapper"/>').append($vitAmount));
     $containerMonth.append($amount);
