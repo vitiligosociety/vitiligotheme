@@ -576,6 +576,8 @@
     const vitiligoTweakDynamicPaymentFields = function () {
       vtDebug('tweak dynamic payment fields');
       reconfigurePaymentBlock();
+      // Stripe will show/hide the submit button so we need to hide it again
+      $('#crm-submit-buttons').hide();
       $original_billing_payment_block.fadeIn('fast');
       unblockUI();
     };
@@ -765,7 +767,6 @@
     footerText();
     themeRadiosAndCheckboxes($('body'));
     watchPaymentFields();
-    $('#crm-submit-buttons').hide();
     // Remove left over elements.
     $('fieldset.crm-profile-name-name_and_address').remove();
   } else if (form_name === 'donate') {
@@ -785,7 +786,6 @@
     footerText();
 
     themeRadiosAndCheckboxes($('body'));
-    $('#crm-submit-buttons').hide();
     // Remove left over elements.
     $('fieldset.crm-profile-name-name_and_address, fieldset.crm-profile-name-supporter_profile').remove();
 
