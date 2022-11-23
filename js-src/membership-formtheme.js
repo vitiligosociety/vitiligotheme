@@ -299,6 +299,10 @@
       var m = amount.match(/(\d+)(?:(\.\d\d)0*)?$/);
       if (!m) return;
 
+      // @todo remove this, it's just while we apparently need to keep the £26 option
+      // but not display it.
+      if (m[1] === '26') return;
+
       if (m[1] === '0') return;
       if (m[2] === '.00') m[2] = '';
 
@@ -575,6 +579,7 @@
             text: '',
             title: ts('The minimum amount is £2')
           }, '.vt-donation-amount-input-wrapper', true)
+          return;
         }
         // Disable the button.
         $niceSubmitButton.prop('disabled', true).text('Please wait...');
