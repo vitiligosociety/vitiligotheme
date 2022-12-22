@@ -572,12 +572,12 @@
         if (!$('input#accept_tc:checked').length || !$('input#accept_entity_tc:checked').length) {
           $form.data('crmBillingFormValid', false);
         }
-        if (CRM.payment.getTotalAmount() < 2) {
+        if (CRM.payment.getTotalAmount() < 3) {
           $form.data('crmBillingFormValid', false);
           CRM.payment.swalFire({
             icon: 'warning',
             text: '',
-            title: ts('The minimum amount is £2')
+            title: ts('The minimum amount is £3')
           }, '.vt-donation-amount-input-wrapper', true)
           return;
         }
