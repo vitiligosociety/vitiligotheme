@@ -252,13 +252,18 @@
     var a, b;
     var $priceset = $('#priceset').hide();
     const $container = $('<div class="vt-container vt-amount-buttons"></div>');
+    const $containerMonth = $('<div class="vt-container vt-amount-buttons"></div>');
     const $equiv = $('<p class="vt-membership-amount-equiv"></p>');
     var $selectedOption;
 
     function showButtonAsSelected($btn) {
-      $btn.addClass('selected').parent().siblings().find('button').removeClass('selected');
-      var equivAmount = Math.round(parseFloat($btn.data('amount')) / 12 * 100) / 100;
-      $equiv.html(`Your annual contribution is equal to giving <strong>£${equivAmount}</strong> per month`);
+      $('.vt-amount-buttons__button button').removeClass('selected');
+      $('.vt-donation-amount-input-wrapper input').val('');
+      $('#price_14').val('');
+      $('#price_14').trigger('keyup');
+      $btn.addClass('selected'); // .parent().siblings().find('button').removeClass('selected');
+      // var equivAmount = Math.round(parseFloat($btn.data('amount')) / 12 * 100) / 100;
+      // $equiv.html(`Your annual contribution is equal to giving <strong>£${equivAmount}</strong> per month`);
     }
 
     function check1(e) {
@@ -266,6 +271,9 @@
         console.warn("payment_processor_id missing: " + e);
       }
     }
+
+    $container.append($('<div class="vt-amount-buttons__button"></div>').append('<div className="vt-amount-buttons__button"><h3>Annual:</h3></div>'));
+    $containerMonth.append($('<div class="vt-amount-buttons__button"></div>').append('<div className="vt-amount-buttons__button"><h3>Monthly:</h3></div>'));
 
     $priceset.find('input[data-amount]').each(function () {
       var amount = this.dataset.amount;
@@ -278,6 +286,7 @@
       // but not display it.
       if (m[1] === '26') return;
 
+      if (m[1] === '0') return;
       if (m[2] === '.00') m[2] = '';
 
       const $btn = $('<button/>').data('amount', m[1] + m[2]).text('£' + m[1] + m[2]).on('click', function (e) {
@@ -295,7 +304,11 @@
       // Save a reference to the button on the input.
       $original_input[0].vitButton = $btn;
 
-      $container.append($('<div class="vt-amount-buttons__button"></div>').append($btn));
+      if ($(this).attr('membership-type') == 17) {
+        $containerMonth.append($('<div class="vt-amount-buttons__button"></div>').append($btn));
+      } else {
+        $container.append($('<div class="vt-amount-buttons__button"></div>').append($btn));
+      }
       if ($original_input.is(':checked')) {
         $selectedOption = $btn;
       }
@@ -305,8 +318,23 @@
       $selectedOption = $priceset.find('input[data-amount]')[1].vitButton;
     }
 
-    $niceForm.append('<h2 class="vt-heading vt-heading--blue">Your annual recurring contribution</h2>');
+    $niceForm.append('<h2 class="vt-heading vt-heading--blue">Choose your recurring contribution</h2>');
+    const $amount = $('<div class="vt-donation-amount-wrapper"></div>');
+    const amount = parseStdCiviField('#price_14');
+    const $origInputAmount = $('#price_14');
+    const $vitAmount = $('<input type="text" class="required"/>').on('blur keyup', e => {
+      $('.vt-amount-buttons__button button').removeClass('selected');
+      // Copy the value to the original CiviCRM
+      $('.membership_amount-row10 input').trigger('click');
+      $origInputAmount.val($vitAmount.val());
+      $origInputAmount.trigger('keyup', e);
+      $payment_processor_selection_ui.hide();
+    });
+    $amount.append($('<div class="vt-donation-amount-input-wrapper"/>').append($vitAmount));
+    $containerMonth.append($amount);
+
     $niceForm.append($container);
+    $niceForm.append($containerMonth);
     $niceForm.append($equiv);
     $niceForm.append('<hr/>');
 
@@ -497,11 +525,21 @@
       if (!$('input#accept_tc:checked').length || !$('input#accept_entity_tc:checked').length) {
         $form.data('crmBillingFormValid', false);
       }
+      if (CRM.payment.getTotalAmount() < 3) {
+        $form.data('crmBillingFormValid', false);
+        CRM.payment.swalFire({
+          icon: 'warning',
+          text: '',
+          title: ts('The minimum amount is £3')
+        }, '.vt-donation-amount-input-wrapper', true);
+        return;
+      }
       // Disable the button.
       $niceSubmitButton.prop('disabled', true).text('Please wait...');
       $submitButtonWrapper.find('button[type="submit"]').trigger('click', e);
     });
 
+    $niceForm.append($submitButtonWrapper);
     $niceForm.append($niceSubmitButton);
 
     $form.on('submit', e => {
@@ -820,7 +858,7 @@
         swalParams.title = title;
       }
       if (scrollToElement) {
-        swalParams.onAfterClose = function () {
+        swalParams.didClose = function () {
           window.scrollTo($(scrollToElement).position());
         };
       }

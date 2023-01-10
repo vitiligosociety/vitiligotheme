@@ -98,7 +98,7 @@ function vitiligotheme_civicrm_buildForm($formName, &$form) {
   }
 
   $js = $css = '';
-  if (in_array($form->_id, [VITILIGO_MEMBERSHIP_FORM_ID, VITILIGO_MEMBERSHIP_RENEWAL_FORM_ID,8])) {
+  if (in_array($form->_id, [VITILIGO_MEMBERSHIP_FORM_ID, VITILIGO_MEMBERSHIP_RENEWAL_FORM_ID])) {
     // We need to lookup Stripe and GoCardless payment processors' IDs.
 
     // Lookup Stripe and GoCardless payment procesor types; create an array like <ID> => 'type'
@@ -129,9 +129,6 @@ function vitiligotheme_civicrm_buildForm($formName, &$form) {
     // round-trip.
     // Also note 'Note: WP support is inconsistent pending refactor.' - from link above.
     $js = file_get_contents(__DIR__ . '/js/membership-formtheme.js');
-    if ($form->_id == 8) {
-      $js = file_get_contents(__DIR__ . '/js/membership-formtheme2.js');
-    }
     $js = strtr($js, [
       'var payment_processor_ids = {}; //%config%' => "var payment_processor_ids = $config;",
       'var form_name = \'\'; //%formname%'          => 'var form_name = "membership";',
