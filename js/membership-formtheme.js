@@ -322,7 +322,7 @@
     const $amount = $('<div class="vt-donation-amount-wrapper"></div>');
     const amount = parseStdCiviField('#price_14');
     const $origInputAmount = $('#price_14');
-    const $vitAmount = $('<input type="text" class="required"/>').on('blur keyup', e => {
+    const $vitAmount = $('<input type="text" />').on('blur keyup', e => {
       $('.vt-amount-buttons__button button').removeClass('selected');
       $('input[name=price_11]').prop('checked', false);
       // Copy the value to the original CiviCRM
