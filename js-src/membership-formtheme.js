@@ -335,8 +335,8 @@
         $selectedOption= $btn;
       }
     });
-    if (!$selectedOption) {
-      // Pre-select the 2nd option if no option selected.
+    if (!$selectedOption && !$('input#CIVICRM_QFID_127_price_11:checked').length) {
+      // Pre-select the 2nd option if no annual option selected and monthly option (127) is not selected.
       $selectedOption = $priceset.find('input[data-amount]')[1].vitButton;
     }
 
