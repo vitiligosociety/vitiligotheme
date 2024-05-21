@@ -31,59 +31,12 @@ function vitiligotheme_civicrm_install() {
 }
 
 /**
- * Implements hook_civicrm_postInstall().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_postInstall
- */
-function vitiligotheme_civicrm_postInstall() {
-  _vitiligotheme_civix_civicrm_postInstall();
-}
-
-/**
- * Implements hook_civicrm_uninstall().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
- */
-function vitiligotheme_civicrm_uninstall() {
-  _vitiligotheme_civix_civicrm_uninstall();
-}
-
-/**
  * Implements hook_civicrm_enable().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_enable
  */
 function vitiligotheme_civicrm_enable() {
   _vitiligotheme_civix_civicrm_enable();
-}
-
-/**
- * Implements hook_civicrm_disable().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_disable
- */
-function vitiligotheme_civicrm_disable() {
-  _vitiligotheme_civix_civicrm_disable();
-}
-
-/**
- * Implements hook_civicrm_upgrade().
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_upgrade
- */
-function vitiligotheme_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
-  return _vitiligotheme_civix_civicrm_upgrade($op, $queue);
-}
-
-/**
- * Implements hook_civicrm_entityTypes().
- *
- * Declare entity types provided by this module.
- *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_entityTypes
- */
-function vitiligotheme_civicrm_entityTypes(&$entityTypes) {
-  _vitiligotheme_civix_civicrm_entityTypes($entityTypes);
 }
 
 /**
@@ -146,6 +99,7 @@ function vitiligotheme_civicrm_buildForm($formName, &$form) {
   }
 
   if ($js || $css) {
+    if (empty(CRM_Core_Session::getLoggedInContactID())) { return; }
     CRM_Core_Region::instance('page-body')->add(['markup' => "<script>$js</script><style>$css</style>"]);
   }
 }
