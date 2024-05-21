@@ -259,6 +259,7 @@
     function showButtonAsSelected($btn) {
       $('.vt-amount-buttons__button button').removeClass('selected');
       $('.vt-donation-amount-input-wrapper input').val('');
+      // "other amount" field
       $('#price_14').val('');
       $('#price_14').trigger('keyup');
       $btn.addClass('selected'); // .parent().siblings().find('button').removeClass('selected');
@@ -318,7 +319,7 @@
       $selectedOption = $priceset.find('input[data-amount]')[1].vitButton;
     }
 
-    $niceForm.append('<h2 class="vt-heading vt-heading--blue">Choose your recurring contribution</h2>');
+    $niceForm.append('<h2 class="vt-heading vt-heading--blue vt-choose-recur-amount">Choose your recurring contribution</h2>');
     const $amount = $('<div class="vt-donation-amount-wrapper"></div>');
     const amount = parseStdCiviField('#price_14');
     const $origInputAmount = $('#price_14');
@@ -329,6 +330,10 @@
       $('.membership_amount-row10 input').trigger('click');
       $origInputAmount.val($vitAmount.val());
       $origInputAmount.trigger('keyup', e);
+      if ($vitAmount.val() > 0) {
+        // Force selection of "Monthly membership"
+        $('#CIVICRM_QFID_127_price_11').click();
+      }
       $payment_processor_selection_ui.hide();
     });
     $amount.append($('<div class="vt-donation-amount-input-wrapper"/>').append($vitAmount));
@@ -526,12 +531,21 @@
       if (!$('input#accept_tc:checked').length || !$('input#accept_entity_tc:checked').length) {
         $form.data('crmBillingFormValid', false);
       }
+      if ($('input[name=price_11]:checked').val() === undefined) {
+        $form.data('crmBillingFormValid', false);
+        CRM.payment.swalFire({
+          icon: 'warning',
+          text: ts('You must select a recurring contribution amount'),
+          title: ts('Invalid selection')
+        }, '.vt-choose-recur-amount', true);
+        return;
+      }
       if (CRM.payment.getTotalAmount() < 3) {
         $form.data('crmBillingFormValid', false);
         CRM.payment.swalFire({
           icon: 'warning',
-          text: '',
-          title: ts('The minimum amount is £3')
+          text: ts('The minimum amount is £3'),
+          title: ts('Invalid selection')
         }, '.vt-donation-amount-input-wrapper', true);
         return;
       }
