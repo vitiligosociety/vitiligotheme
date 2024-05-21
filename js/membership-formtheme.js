@@ -345,7 +345,9 @@
     $niceForm.append('<hr/>');
 
     // Initial show selected button.
-    showButtonAsSelected($selectedOption);
+    if ($selectedOption) {
+      showButtonAsSelected($selectedOption);
+    }
   }
 
   function whyJoining() {
